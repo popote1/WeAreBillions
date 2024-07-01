@@ -128,8 +128,6 @@ MonoBehaviour:
     m_Bits: 128
   IsSelectable: 0
   SelectionSprite: {fileID: 3759194787182890189}
-  _hpMax: 3
-  _hp: 3
   _prefabDeathPS: {fileID: 540054392838581951, guid: 0af1e0599763dda47be91aad1e77c51d,
     type: 3}
   _attack:
@@ -212,7 +210,7 @@ AudioSource:
   m_GameObject: {fileID: 789248301505723519}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: -3968851879507577013, guid: 8cff5d6055fc3da428b0cb43fd992ea1,
+  OutputAudioMixerGroup: {fileID: -9209615163539298928, guid: 8cff5d6055fc3da428b0cb43fd992ea1,
     type: 2}
   m_audioClip: {fileID: 0}
   m_Resource: {fileID: 0}

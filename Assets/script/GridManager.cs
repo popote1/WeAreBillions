@@ -252,8 +252,8 @@ namespace script
 
             for (int i = 0; i < range; i++)
             {
-                foreach (Cell cell in openList)
-                {
+                foreach (Cell cell in openList) {
+                    if (cell == null) continue;
                     foreach (Cell neighbor in Get4Neighbors(cell))
                     {
                         if (cell.IsBlock) continue;

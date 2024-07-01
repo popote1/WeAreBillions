@@ -158,7 +158,7 @@ public class GridAgent : MonoBehaviour
         Subgrid.AddChunksToSubGrid(path.ToArray());
     }
 
-    public void SetNewSubGrid(Subgrid subgrid) {
+    public virtual void SetNewSubGrid(Subgrid subgrid) {
         if (subgrid != null) {
             Subgrid = subgrid;
             ChangeStat(GridActorStat.Move);
