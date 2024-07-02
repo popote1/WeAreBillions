@@ -177,7 +177,7 @@ namespace script
             //_audioSource.clip = _spawnSound[Random.Range(0, _spawnSound.Length)];
             //_audioSource.pitch = Random.Range(0.8f, 1.2f);
             //_audioSource.Play();
-            AudioManager.Instance.PlaySFX(_spawnSound[Random.Range(0, _spawnSound.Length)],1,Random.Range(0.8f, 1.2f));
+            AudioManager.Instance?.PlaySFX(_spawnSound[Random.Range(0, _spawnSound.Length)],1,Random.Range(0.8f, 1.2f));
             base.SetNewSubGrid(subgrid);
         }
     }

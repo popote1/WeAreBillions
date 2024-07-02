@@ -24,6 +24,8 @@ namespace script
         public LayerMask SelectingLayer;
         public List<GridAgent> Selected = new List<GridAgent>();
         public GameObject DebugCube;
+        [Header("CameraScroll")] 
+        public int PixelBorder = 50;
         
 
         private Vector2Int originChunkTarget = new Vector2Int(0, 0);
@@ -43,11 +45,18 @@ namespace script
             }
         }
         
-        public void Update() {
+        public void Update()
+        {
+
+            ManageBorderCameraMovement();
             if (Input.GetButton("Fire1")) ManageBoxSelectionDisplay();
            
-            if (Input.GetButtonUp("Fire1")) {
-                ManageBoxSelection();
+            if (Input.GetButtonUp("Fire1")) 
+            {
+                if (_startSelectionBox == (Vector2)Input.mousePosition) ManageRayCastSelection();
+                else ManageBoxSelection();
+                
+
                 _isInSelectionBox = false;
                 if (HUDManager) HUDManager.CloseSelectionBox();
             }
@@ -164,6 +173,17 @@ namespace script
                 else zombieAgent.SetNewSubGrid( subgrid);
             }
         }
+
+        private void ManageRayCastSelection() {
+            RaycastHit hit;
+            if(Physics.Raycast(Camera.ScreenPointToRay(Input.mousePosition), out hit)) {
+                ClearSelection();
+                if (hit.collider.GetComponent<ZombieAgent>()) {
+                    Selected = new List<GridAgent>() {hit.collider.GetComponent<ZombieAgent>()};
+                    Selected[0].IsSelected = true;
+                }
+            }
+        }
         public void ManageBoxSelectionDisplay() {
             if (!_isInSelectionBox) {
                 _startSelectionBox = Input.mousePosition;
@@ -177,6 +197,7 @@ namespace script
             
             if( HUDManager )HUDManager.SetSelectionBox(center, size);
         }
+        
         public void ManageBoxSelection() {
             Vector2[] points2D = new Vector2[4];
             Vector3[] points3D = new Vector3[8];
@@ -382,6 +403,17 @@ namespace script
             if (gridAgent == null) return;
             Selected.Add(gridAgent);
             gridAgent.IsSelected = true;
+        }
+
+        private void ManageBorderCameraMovement()
+        {
+            Vector3 mousePosition = Input.mousePosition;
+            Vector3 dir = Vector3.zero;
+            if( mousePosition.x<PixelBorder) dir+= Vector3.left;
+            if( mousePosition.x>Screen.width-PixelBorder) dir+= Vector3.right;
+            if( mousePosition.y<PixelBorder) dir+= Vector3.back;
+            if( mousePosition.y>Screen.height-PixelBorder) dir+= Vector3.forward;
+            InGameStatic.CameraMoveVector = dir;
         }
     }
     

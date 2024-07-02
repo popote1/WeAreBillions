@@ -6669,8 +6669,8 @@ Terrain:
   serializedVersion: 6
   m_TerrainData: {fileID: 15600000, guid: e382ac999f9305d4da81bd5090b9bca1, type: 2}
   m_TreeDistance: 5000
-  m_TreeBillboardDistance: 50
-  m_TreeCrossFadeLength: 5
+  m_TreeBillboardDistance: 53
+  m_TreeCrossFadeLength: 5.6
   m_TreeMaximumFullLODCount: 50
   m_DetailObjectDistance: 80
   m_DetailObjectDensity: 1
@@ -17272,6 +17272,11 @@ PrefabInstance:
       propertyPath: HUDManager
       value: 
       objectReference: {fileID: 422878161}
+    - target: {fileID: 5713922494004897928, guid: cb7eeefc434f8f9469c648b54a3dd7df,
+        type: 3}
+      propertyPath: zombies.Array.size
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5713922494004897929, guid: cb7eeefc434f8f9469c648b54a3dd7df,
         type: 3}
       propertyPath: m_LocalPosition.x
