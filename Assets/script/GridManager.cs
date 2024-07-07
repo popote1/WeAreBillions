@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.Windows;
@@ -12,18 +13,15 @@ namespace script
     {
         public Vector2Int Size;
         public Vector3 Offset;
-        public TestCell PrefabsDebugCell;
-        public static int FreeWalkMoveCos = 1;
-        public static int BlockMoveCostMoveCost = 1000;
-        public static int DestructibleMoveCost = 20;
-        [Header("FlowFiled")] public bool DisplayDebugDirection;
-        public int MoveCost = 10;
-        public int DiagonalMoveCost = 14;
-        public LayerMask LayerMaskGrund;
-        public Cell Origin;
-        public bool IsCalculating;
-        public int CellParFrame = 500;
-        public bool DisplayChunkLinks;
+        //public TestCell PrefabsDebugCell;
+        //[Header("FlowFiled")] public bool DisplayDebugDirection;
+        //public int MoveCost = 10;
+        //public int DiagonalMoveCost = 14;
+        //public LayerMask LayerMaskGrund;
+        //public Cell Origin;
+        //public bool IsCalculating;
+        //public int CellParFrame = 500;
+        //public bool DisplayChunkLinks;
         [Header(" SaveData")] 
         [SerializeField] private bool _LoadLocoDataOnAwake=true;
         public TerrainLocomotionData TerrainLocomotionData;
@@ -51,23 +49,17 @@ namespace script
                 LoadLocomotionData();
             }
             else {
-                GenerateCells();
-                CheckColliders();
+                Debug.LogWarning("NoLocomotion Data Found");
+                //GenerateCells();
+                //CheckColliders();
             }
         }
-
-        public void Start()
-        {
-            
-        }
-
-        public void Update()
-        {
-            if (DisplayDebugDirection) DisplayDebugDirectionfunction();
-            if (DisplayChunkLinks) DisplayDebugChunkLinks();
-        }
-
+        
         #region Accessor
+
+        public Cell[,] GetAllCells()=>  _cells;
+        public Chunk[] GetAllChunks() => _Chunks.ToArray();
+        
 
         public Cell GetCellFromPos(int x, int y)
         {
@@ -98,12 +90,7 @@ namespace script
             return cells.ToArray();
         }
 
-        public Chunk GetChunk(int x, int y)
-        {
-            if (x < 0 || x >= Size.x || y < 0 || y >= Size.y) return null;
-            int i = x * Size.y + y;
-            return _Chunks[i];
-        }
+       
 
         public List<Chunk> GetNeighborsOfPath(List<Chunk> path)
         {
@@ -160,20 +147,6 @@ namespace script
             return bestChoise;
         }
 
-        private Cell[] GetNeighbors(Cell cell)
-        {
-            Cell[] neighbors = new Cell[8];
-            neighbors[0] = GetCellFromPos(cell.Pos.x - 1, cell.Pos.y + 1);
-            neighbors[1] = GetCellFromPos(cell.Pos.x, cell.Pos.y + 1);
-            neighbors[2] = GetCellFromPos(cell.Pos.x + 1, cell.Pos.y + 1);
-            neighbors[3] = GetCellFromPos(cell.Pos.x + 1, cell.Pos.y);
-            neighbors[4] = GetCellFromPos(cell.Pos.x + 1, cell.Pos.y - 1);
-            neighbors[5] = GetCellFromPos(cell.Pos.x, cell.Pos.y - 1);
-            neighbors[6] = GetCellFromPos(cell.Pos.x - 1, cell.Pos.y - 1);
-            neighbors[7] = GetCellFromPos(cell.Pos.x - 1, cell.Pos.y);
-            return neighbors;
-        }
-
         private Cell[] Get4Neighbors(Cell cell)
         {
             Cell[] neighbors = new Cell[4];
@@ -184,64 +157,6 @@ namespace script
             return neighbors;
         }
 
-        private int[] GetNeighborsID(Chunk chunk)
-        {
-            int[] ids = new int[chunk.neighbors.Count];
-            for (int i = 0; i < chunk.neighbors.Count; i++)
-            {
-                ids[i] = _Chunks.IndexOf(chunk.neighbors[i]);
-            }
-
-            return ids;
-        }
-
-        private List<List<Cell>> GetBlockedCells(Chunk chunk, List<List<Cell>> rooms)
-        {
-            Dictionary<Cell, int> classedCell = new Dictionary<Cell, int>();
-            List<List<Cell>> newClassed = new List<List<Cell>>();
-            for (int i = 0; i < rooms.Count; i++)
-            {
-                newClassed.Add(new List<Cell>());
-            }
-
-            for (int i = 0; i < rooms.Count; i++)
-            {
-                foreach (Cell cell in rooms[i])
-                {
-                    classedCell.Add(cell, i);
-                }
-            }
-
-            foreach (Cell cell in chunk.cells)
-            {
-                if (classedCell.Keys.Contains(cell)) continue;
-                newClassed[GetClosestRoom(cell, classedCell)].Add(cell);
-            }
-
-            for (int i = 0; i < newClassed.Count; i++)
-            {
-                if (newClassed.Count <= 0) continue;
-                rooms[i].AddRange(newClassed[i]);
-            }
-
-            return rooms.ToList();
-        }
-
-        private int GetClosestRoom(Cell cell, Dictionary<Cell, int> classify)
-        {
-            float bestDistance = float.PositiveInfinity;
-            int bestRoom = 1;
-            foreach (var cellsC in classify)
-            {
-                if (Vector2.Distance(cell.Pos, cellsC.Key.Pos) < bestDistance)
-                {
-                    bestDistance = Vector2.Distance(cell.Pos, cellsC.Key.Pos);
-                    bestRoom = cellsC.Value;
-                }
-            }
-
-            return bestRoom;
-        }
 
         public Cell[] GetBreathFirstCells(Cell originCell, int range)
         {
@@ -274,48 +189,6 @@ namespace script
             return closeList.ToArray();
         }
 
-        private List<Cell> GetCellRoom(Cell originCell, Chunk chunk)
-        {
-            List<Cell> OpenList = new List<Cell>();
-            List<Cell> CLoseList = new List<Cell>();
-            OpenList.Add(originCell);
-            while (OpenList.Count > 0)
-            {
-                Cell current = OpenList[0];
-                OpenList.Remove(current);
-                CLoseList.Add(current);
-                foreach (var neighbor in GetNeighbors(current))
-                {
-                    if (!chunk.cells.Contains(neighbor)) continue;
-                    if (neighbor.IsBlock) continue;
-                    if (CLoseList.Contains(neighbor)) continue;
-                    if (OpenList.Contains(neighbor)) continue;
-                    OpenList.Add(neighbor);
-                }
-            }
-
-            return CLoseList;
-        }
-
-        private List<Chunk> GetChunksNeighbors(Chunk chunk)
-        {
-            List<Chunk> chunks = new List<Chunk>();
-            foreach (Cell cell in chunk.cells)
-            {
-                foreach (var neighbor in Get4Neighbors(cell))
-                {
-                    if (neighbor == null) continue;
-                    if (neighbor.IsBlock) continue;
-                    if (chunk.cells.Contains(neighbor)) continue;
-                    if (neighbor.Chunk == chunk) continue;
-                    if (chunks.Contains(neighbor.Chunk)) continue;
-
-                    chunks.Add(neighbor.Chunk);
-                }
-            }
-
-            return chunks;
-        }
         
         #endregion
 
@@ -360,7 +233,6 @@ namespace script
 
             return null;
         }
-
         private List<Chunk> ReturnAStartResult(Chunk start, Chunk target)
         {
             Chunk current = target;
@@ -375,125 +247,11 @@ namespace script
             return returnlist;
         }
 
-        [ContextMenu("GenerateGrid")]
-        public void GenerateCells()
-        {
-            ClearGrid();
-            _Chunks = new List<Chunk>();
-            for (int x = 0; x < Size.x; x++)
-            {
-                for (int y = 0; y < Size.y; y++)
-                {
-                    Chunk chunk = new Chunk(x, y);
-                    _Chunks.Add(chunk);
-                    if (x > 0)
-                    {
-                        Chunk neighbor = GetChunk(x - 1, y);
-                        neighbor.neighbors.Add(chunk);
-                        chunk.neighbors.Add(neighbor);
-                    }
-
-                    if (y > 0)
-                    {
-                        Chunk neighbor = GetChunk(x, y - 1);
-                        neighbor.neighbors.Add(chunk);
-                        chunk.neighbors.Add(neighbor);
-                    }
-                }
-            }
-
-            _cells = new Cell[Size.x * Metrics.chunkSize, Size.y * Metrics.chunkSize];
-            for (int x = 0; x < Size.x * Metrics.chunkSize; x++)
-            {
-                for (int y = 0; y < Size.y * Metrics.chunkSize; y++)
-                {
-                    //Debug.Log(x+";"+ y);
-                    _cells[x, y] = new Cell(x, y, Offset);
-                    _cells[x, y].Chunk = GetChunk(x / Metrics.chunkSize, y / Metrics.chunkSize);
-                    GetChunk(x / Metrics.chunkSize, y / Metrics.chunkSize).cells.Add(_cells[x, y]);
-                }
-            }
-
-            foreach (var chunk in _Chunks)
-            {
-                chunk.CalculatCenter();
-            }
+        public void SetGridData(List<Chunk> chunks, Cell[,] cells) {
+            _Chunks = chunks;
+            _cells = cells;
         }
-
-        [ContextMenu("Display DebugCells")]
-        public void GenerateDebugCells()
-        {
-            foreach (var cell in _cells) {
-                cell.DebugCell = Instantiate(PrefabsDebugCell, cell.WordPos, Quaternion.identity);
-                cell.DebugCell.transform.SetParent(transform);
-
-                if (Metrics.UsDebugCellGroundOffsetting)
-                {
-                    RaycastHit hit;
-                    if (Physics.Raycast(cell.DebugCell.transform.position + new Vector3(0, 50, 0), Vector3.down,
-                        out hit, LayerMaskGrund))
-                    {
-                        cell.DebugCell.transform.position = hit.point+new Vector3(0,0.5f,0);
-                    }
-                    
-                }
-
-            }
-        }
-
-        [ContextMenu("CheckColliders")]
-        public void CheckColliders() {
-            OnClearPathFindingData?.Invoke();
-            ColorAllDebugGridToColor(Color.white);
-            foreach (var cell in _cells) {
-                cell.CheckCellColliders();
-            }
-        }
-
-        public void DisplayDebugDirectionfunction()
-        {
-            foreach (var cell in _cells)
-            {
-                Debug.DrawLine(cell.WordPos,
-                    (new Vector3(cell.DirectionTarget.x, 0, cell.DirectionTarget.y) * 0.8f) + cell.WordPos);
-            }
-        }
-
-        public void DisplayDebugChunkLinks()
-        {
-            foreach (var chunk in _Chunks)
-            {
-                if (chunk == null)
-                {
-                    Debug.Log("Chunk is null");
-                    continue;
-                }
-
-                foreach (var neighbor in chunk.neighbors)
-                {
-                    if (neighbor == null)
-                    {
-                        Debug.DrawLine(chunk.Center, chunk.Center + new Vector3(3f, 3f), Color.red);
-                        continue;
-                    }
-
-                    Debug.DrawLine(chunk.Center, Vector3.Lerp(chunk.Center, neighbor.Center, 0.4f), Color.blue);
-                }
-            }
-        }
-
-        [ContextMenu("colorChunk")]
-        public void ColorChunks()
-        {
-            foreach (var chunk in _Chunks)
-            {
-                Color col = new Color(Random.Range(0, 1f), Random.Range(0, 1f), Random.Range(0, 1f), 1);
-                foreach (var cell in chunk.cells)
-                {
-                    cell.ColorDebugCell(col);
-                }
-            }
-        }
+        
         
         [ContextMenu("Clear DebugCells")]
         public void ClearGrid()
@@ -522,9 +280,8 @@ namespace script
             }
         }
 
-        [ContextMenu("recalculateChunks")]
-        public void RecalculateChunks()
-        {
+        /*[ContextMenu("recalculateChunks")]
+        public void RecalculateChunks() {
             List<Cell> CloseList = new List<Cell>();
             List<List<Cell>> Rooms = new List<List<Cell>>();
 
@@ -592,10 +349,8 @@ namespace script
                     }
                 }
             }
-
-
         }
-        
+        */
         #endregion
 
         #region SaveLoadSystem
@@ -617,7 +372,7 @@ namespace script
                 _cells[cell.Pos.x, cell.Pos.y].IsBlock = cell.IsBlock;
                 if (cell.IsBlock)
                 {
-                    _cells[cell.Pos.x, cell.Pos.y].MoveCost = BlockMoveCostMoveCost;
+                    _cells[cell.Pos.x, cell.Pos.y].MoveCost = Metrics.BlockMoveCostMoveCost;
                 }
                 
             }
@@ -670,6 +425,252 @@ namespace script
 
             Debug.Log("Locomotion Data Loaded");
         }
+        
+        /* public Chunk GetChunk(int x, int y)
+        {
+            if (x < 0 || x >= Size.x || y < 0 || y >= Size.y) return null;
+            int i = x * Size.y + y;
+            return _Chunks[i];
+        }*/
+        
+        /* private List<Cell> GetCellRoom(Cell originCell, Chunk chunk)
+         {
+             List<Cell> OpenList = new List<Cell>();
+             List<Cell> CLoseList = new List<Cell>();
+             OpenList.Add(originCell);
+             while (OpenList.Count > 0)
+             {
+                 Cell current = OpenList[0];
+                 OpenList.Remove(current);
+                 CLoseList.Add(current);
+                 foreach (var neighbor in GetNeighbors(current))
+                 {
+                     if (!chunk.cells.Contains(neighbor)) continue;
+                     if (neighbor.IsBlock) continue;
+                     if (CLoseList.Contains(neighbor)) continue;
+                     if (OpenList.Contains(neighbor)) continue;
+                     OpenList.Add(neighbor);
+                 }
+             }
+ 
+             return CLoseList;
+         }*/
+
+        /*private List<Chunk> GetChunksNeighbors(Chunk chunk)
+        {
+            List<Chunk> chunks = new List<Chunk>();
+            foreach (Cell cell in chunk.cells)
+            {
+                foreach (var neighbor in Get4Neighbors(cell))
+                {
+                    if (neighbor == null) continue;
+                    if (neighbor.IsBlock) continue;
+                    if (chunk.cells.Contains(neighbor)) continue;
+                    if (neighbor.Chunk == chunk) continue;
+                    if (chunks.Contains(neighbor.Chunk)) continue;
+
+                    chunks.Add(neighbor.Chunk);
+                }
+            }
+
+            return chunks;
+        }*/
+        
+        /* private int[] GetNeighborsID(Chunk chunk)
+         {
+             int[] ids = new int[chunk.neighbors.Count];
+             for (int i = 0; i < chunk.neighbors.Count; i++)
+             {
+                 ids[i] = _Chunks.IndexOf(chunk.neighbors[i]);
+             }
+ 
+             return ids;
+         }*/
+
+        /*private List<List<Cell>> GetBlockedCells(Chunk chunk, List<List<Cell>> rooms)
+        {
+            Dictionary<Cell, int> classedCell = new Dictionary<Cell, int>();
+            List<List<Cell>> newClassed = new List<List<Cell>>();
+            for (int i = 0; i < rooms.Count; i++)
+            {
+                newClassed.Add(new List<Cell>());
+            }
+
+            for (int i = 0; i < rooms.Count; i++)
+            {
+                foreach (Cell cell in rooms[i])
+                {
+                    classedCell.Add(cell, i);
+                }
+            }
+
+            foreach (Cell cell in chunk.cells)
+            {
+                if (classedCell.Keys.Contains(cell)) continue;
+                newClassed[GetClosestRoom(cell, classedCell)].Add(cell);
+            }
+
+            for (int i = 0; i < newClassed.Count; i++)
+            {
+                if (newClassed.Count <= 0) continue;
+                rooms[i].AddRange(newClassed[i]);
+            }
+
+            return rooms.ToList();
+        }*/
+
+        /*private int GetClosestRoom(Cell cell, Dictionary<Cell, int> classify)
+        {
+            float bestDistance = float.PositiveInfinity;
+            int bestRoom = 1;
+            foreach (var cellsC in classify)
+            {
+                if (Vector2.Distance(cell.Pos, cellsC.Key.Pos) < bestDistance)
+                {
+                    bestDistance = Vector2.Distance(cell.Pos, cellsC.Key.Pos);
+                    bestRoom = cellsC.Value;
+                }
+            }
+
+            return bestRoom;
+        }*/
+        
+        /* private Cell[] GetNeighbors(Cell cell)
+         {
+             Cell[] neighbors = new Cell[8];
+             neighbors[0] = GetCellFromPos(cell.Pos.x - 1, cell.Pos.y + 1);
+             neighbors[1] = GetCellFromPos(cell.Pos.x, cell.Pos.y + 1);
+             neighbors[2] = GetCellFromPos(cell.Pos.x + 1, cell.Pos.y + 1);
+             neighbors[3] = GetCellFromPos(cell.Pos.x + 1, cell.Pos.y);
+             neighbors[4] = GetCellFromPos(cell.Pos.x + 1, cell.Pos.y - 1);
+             neighbors[5] = GetCellFromPos(cell.Pos.x, cell.Pos.y - 1);
+             neighbors[6] = GetCellFromPos(cell.Pos.x - 1, cell.Pos.y - 1);
+             neighbors[7] = GetCellFromPos(cell.Pos.x - 1, cell.Pos.y);
+             return neighbors;
+         }*/
+
+/// <summary>
+/// -------------------------------------------------------------------------------------
+/// </summary>
+        /*[ContextMenu("GenerateGrid")]
+        public void GenerateCells() {
+            ClearGrid();
+            _Chunks = new List<Chunk>();
+            for (int x = 0; x < Size.x; x++)
+            {
+                for (int y = 0; y < Size.y; y++)
+                {
+                    Chunk chunk = new Chunk(x, y);
+                    _Chunks.Add(chunk);
+                    if (x > 0)
+                    {
+                        Chunk neighbor = GetChunk(x - 1, y);
+                        neighbor.neighbors.Add(chunk);
+                        chunk.neighbors.Add(neighbor);
+                    }
+
+                    if (y > 0)
+                    {
+                        Chunk neighbor = GetChunk(x, y - 1);
+                        neighbor.neighbors.Add(chunk);
+                        chunk.neighbors.Add(neighbor);
+                    }
+                }
+            }
+
+            _cells = new Cell[Size.x * Metrics.chunkSize, Size.y * Metrics.chunkSize];
+            for (int x = 0; x < Size.x * Metrics.chunkSize; x++)
+            {
+                for (int y = 0; y < Size.y * Metrics.chunkSize; y++)
+                {
+                    //Debug.Log(x+";"+ y);
+                    _cells[x, y] = new Cell(x, y, Offset);
+                    _cells[x, y].Chunk = GetChunk(x / Metrics.chunkSize, y / Metrics.chunkSize);
+                    GetChunk(x / Metrics.chunkSize, y / Metrics.chunkSize).cells.Add(_cells[x, y]);
+                }
+            }
+
+            foreach (var chunk in _Chunks)
+            {
+                chunk.CalculatCenter();
+            }
+        }*/
+
+        /*[ContextMenu("Display DebugCells")]
+        public void GenerateDebugCells()
+        {
+            foreach (var cell in _cells) {
+                cell.DebugCell = Instantiate(PrefabsDebugCell, cell.WordPos, Quaternion.identity);
+                cell.DebugCell.transform.SetParent(transform);
+
+                if (Metrics.UsDebugCellGroundOffsetting)
+                {
+                    RaycastHit hit;
+                    if (Physics.Raycast(cell.DebugCell.transform.position + new Vector3(0, 50, 0), Vector3.down,
+                        out hit, LayerMaskGrund))
+                    {
+                        cell.DebugCell.transform.position = hit.point+new Vector3(0,0.5f,0);
+                    }
+                    
+                }
+
+            }
+        }*/
+
+       /*[ContextMenu("CheckColliders")]
+        public void CheckColliders() {
+            OnClearPathFindingData?.Invoke();
+            ColorAllDebugGridToColor(Color.white);
+            foreach (var cell in _cells) {
+                cell.CheckCellColliders();
+            }
+        }*/
+
+        /*public void DisplayDebugDirectionfunction()
+        {
+            foreach (var cell in _cells)
+            {
+                Debug.DrawLine(cell.WordPos,
+                    (new Vector3(cell.DirectionTarget.x, 0, cell.DirectionTarget.y) * 0.8f) + cell.WordPos);
+            }
+        }*/
+
+       /* public void DisplayDebugChunkLinks()
+        {
+            foreach (var chunk in _Chunks)
+            {
+                if (chunk == null)
+                {
+                    Debug.Log("Chunk is null");
+                    continue;
+                }
+
+                foreach (var neighbor in chunk.neighbors)
+                {
+                    if (neighbor == null)
+                    {
+                        Debug.DrawLine(chunk.Center, chunk.Center + new Vector3(3f, 3f), Color.red);
+                        continue;
+                    }
+
+                    Debug.DrawLine(chunk.Center, Vector3.Lerp(chunk.Center, neighbor.Center, 0.4f), Color.blue);
+                }
+            }
+        }*/
+
+       /* [ContextMenu("colorChunk")]
+        public void ColorChunks()
+        {
+            foreach (var chunk in _Chunks)
+            {
+                Color col = new Color(Random.Range(0, 1f), Random.Range(0, 1f), Random.Range(0, 1f), 1);
+                foreach (var cell in chunk.cells)
+                {
+                    cell.ColorDebugCell(col);
+                }
+            }
+        }*/
+        /*
         public void SaveLocomotionData()
         {
             if (TerrainLocomotionData == null)
@@ -703,10 +704,10 @@ namespace script
 
                 }
             }
-            TerrainLocomotionData.Save();
+            //TerrainLocomotionData.Save();
             Debug.Log("Data Sava");
         }
-        
+        */
         #endregion
     }
 }

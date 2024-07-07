@@ -45,4 +45,8 @@ public class MainMenuManager : MonoBehaviour
     public void PlayTheLevel1() {
         SceneManager.LoadScene(1);
     }
+
+    public void Quite() {
+        Application.Quit();
+    }
 }

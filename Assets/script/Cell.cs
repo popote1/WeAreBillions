@@ -54,13 +54,13 @@ namespace script
                     if (col.gameObject.CompareTag("WalkBlocker")) {
                         Stat = true;
                         IsBlock = true;
-                        MoveCost = GridManager.BlockMoveCostMoveCost;
+                        MoveCost = Metrics.BlockMoveCostMoveCost;
                         ColorDebugCell(ColorBlock );
                         return;
                     }
                     if (col.gameObject.CompareTag("Destructible")) {
                         Stat = true;
-                        MoveCost = GridManager.DestructibleMoveCost;
+                        MoveCost = Metrics.DestructibleMoveCost;
                         ColorDebugCell(ColorDesctuctible );
                         return;
                     }
@@ -70,7 +70,7 @@ namespace script
             {
                 Stat = false;
                 ColorDebugCell(ColorFree );
-                MoveCost = GridManager.FreeWalkMoveCos;
+                MoveCost = Metrics.FreeWalkMoveCos;
             }
         }
 

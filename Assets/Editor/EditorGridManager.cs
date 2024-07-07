@@ -45,15 +45,15 @@ public class EditorGridManager : Editor
       base.OnInspectorGUI();
       m_targget = (GridManager) target;
 
-      if( GUILayout.Button("CalculatTheGrid"))m_targget.GenerateCells();
-      if (GUILayout.Button("DisplayCells")) m_targget.GenerateDebugCells();
-      if (GUILayout.Button("CalculateColliders")) m_targget.CheckColliders();
-      if (GUILayout.Button("RecalculateChunks")) m_targget.RecalculateChunks();
-      if (GUILayout.Button("ColorChunks")) m_targget.ColorChunks();
+      //if( GUILayout.Button("CalculatTheGrid"))m_targget.GenerateCells();
+      //if (GUILayout.Button("DisplayCells")) m_targget.GenerateDebugCells();
+      //if (GUILayout.Button("CalculateColliders")) m_targget.CheckColliders();
+      //if (GUILayout.Button("RecalculateChunks")) m_targget.RecalculateChunks();
+      //if (GUILayout.Button("ColorChunks")) m_targget.ColorChunks();
       if (GUILayout.Button("ClearDebugsCells")) m_targget.ClearGrid();
       GUILayout.Space(10);
       if (GUILayout.Button("LoadLocomotionData")) m_targget.LoadLocomotionData();
-      if (GUILayout.Button("SaveLocomotionData")) m_targget.SaveLocomotionData();
+      //if (GUILayout.Button("SaveLocomotionData")) m_targget.SaveLocomotionData();
       
    }
 }

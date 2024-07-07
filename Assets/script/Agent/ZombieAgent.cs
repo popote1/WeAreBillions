@@ -52,13 +52,17 @@ namespace script
 
         protected override void Start() {
             StaticData.ZombieCount++;
+            StaticData.AddZombie(this);
             StaticData.OnZombieGain?.Invoke();
             _audioSource.clip = _spawnSound[Random.Range(0, _spawnSound.Length)];
             _audioSource.Play();
             base.Start();
         }
 
-        public void OnDestroy() => StaticData.ZombieLose();
+        public void OnDestroy() {
+            StaticData.ZombieLose();
+            StaticData.RemoveZombie(this);
+        } 
         public float GetNormalizeHp() => (float) _hp / _maxHp;
         public float GetNormalizeTransformation() =>  _transformationTimer / _totalTransformationTime;
         public bool IsTransforming() => _isTransformting;

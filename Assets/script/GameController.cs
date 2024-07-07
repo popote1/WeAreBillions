@@ -4,6 +4,7 @@ using System.Linq;
 using Unity.Mathematics;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 namespace script
 {
@@ -23,6 +24,7 @@ namespace script
         public LayerMask GroundLayer;
         public LayerMask SelectingLayer;
         public List<GridAgent> Selected = new List<GridAgent>();
+        public float MinimumSelectBoxSize = 0.1f; 
         public GameObject DebugCube;
         [Header("CameraScroll")] 
         public int PixelBorder = 50;
@@ -43,17 +45,26 @@ namespace script
                     Quaternion.identity);
                 zombie.Generate(GridManager);
             }
+            
+            InGameStatic.OnPressEscape += DebugOpenMenuPause;
         }
-        
+
+        private void OnDestroy()
+        {
+            InGameStatic.OnPressEscape -= DebugOpenMenuPause;
+        }
+
         public void Update()
         {
 
             ManageBorderCameraMovement();
+            if (Input.GetKeyDown(KeyCode.Escape))ManagePressEscape();
+            if (Input.GetKeyDown(KeyCode.F2))ManagerSelectAllZombies();
             if (Input.GetButton("Fire1")) ManageBoxSelectionDisplay();
            
             if (Input.GetButtonUp("Fire1")) 
             {
-                if (_startSelectionBox == (Vector2)Input.mousePosition) ManageRayCastSelection();
+                if (!CanBeSelectBox(_startSelectionBox , (Vector2)Input.mousePosition)) ManageRayCastSelection();
                 else ManageBoxSelection();
                 
 
@@ -119,6 +130,7 @@ namespace script
 
             foreach (var zombieAgent in Selected)
             {
+                if (zombieAgent == null) continue;
                 zombieAgent.SetNewSubGrid(subgrid);
             }
             
@@ -164,7 +176,7 @@ namespace script
             
             List<Subgrid> analizeSubgrid = new List<Subgrid>();
             foreach (var zombieAgent in Selected) {
-
+                if (zombieAgent == null) continue;
                 if (zombieAgent.Subgrid != null) {
                     if( analizeSubgrid.Contains(zombieAgent.Subgrid.GetLastSubgrid()))return;
                     zombieAgent.Subgrid.GetLastSubgrid().SetNextSubGrid( subgrid);
@@ -386,6 +398,7 @@ namespace script
             
             foreach (var zombieAgent in Selected)
             {
+                if (zombieAgent == null) continue;
                 zombieAgent.SetNewSubGrid(subgrid);
             }
 
@@ -414,6 +427,33 @@ namespace script
             if( mousePosition.y<PixelBorder) dir+= Vector3.back;
             if( mousePosition.y>Screen.height-PixelBorder) dir+= Vector3.forward;
             InGameStatic.CameraMoveVector = dir;
+        }
+
+        private void ManagePressEscape() {
+            if (Selected.Count > 0) {
+                ClearSelection();
+            }
+            else {
+                Debug.Log("Open Menu Pause 0");
+                InGameStatic.PressEscape(this);
+            }
+        }
+
+        private void DebugOpenMenuPause(object sender, EventArgs e) {
+            Debug.Log("Open Menu Pause");
+        }
+
+        private void ManagerSelectAllZombies() {
+            ClearSelection();
+            foreach (var zombie in StaticData.AllZombies) {
+                AddGridAGentToSelection(zombie);
+            }
+        }
+
+        private bool CanBeSelectBox(Vector2 a, Vector2 b) {
+            if (Mathf.Abs(a.x - b.x) < MinimumSelectBoxSize) return false;
+            if (Mathf.Abs(a.y - b.y) < MinimumSelectBoxSize) return false;
+            return true;
         }
     }
     

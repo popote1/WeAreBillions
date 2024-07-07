@@ -1,14 +1,22 @@
 using System.Collections;
 using System.Collections.Generic;
+using Cinemachine;
 using UnityEngine;
 
 public class CameratargetController : MonoBehaviour
 {
+    [SerializeField] private CinemachineVirtualCamera _camera;
     public float CameraScrollmoveSpeed;
 
     public Vector2 MaxPosition = new Vector2(10,10);
     public Vector2 MinPosition = new Vector2(0,0);
     [SerializeField] private LayerMask _groundLayer;
+
+    //[Space(10), Header("Zoom")] 
+    //[SerializeField] private float _minZoom = 10;
+    //[SerializeField]private float _maxZoom = 40;
+    //[SerializeField]private float _zoomPower = 1;
+    //private float zoomValue;
    
 
     // Update is called once per frame
@@ -25,6 +33,13 @@ public class CameratargetController : MonoBehaviour
         transform.position = new Vector3(Mathf.Clamp(newPos.x, MinPosition.x, MaxPosition.x), y
             ,Mathf.Clamp(newPos.z,MinPosition.y, MaxPosition.y ));
     }
+
+    //private void ManageZoom() {
+    //    float zoom = Input.GetAxis("Mouse ScrollWheel");
+    //    zoomValue += zoom * _zoomPower;
+    //    zoomValue = Mathf.Clamp01(zoomValue);
+    //    _camera.
+    //}
 
     private float GetHight() {
         RaycastHit hit;

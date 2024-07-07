@@ -8,7 +8,7 @@ using UnityEngine.UIElements;
 
 public class PopoteEditorDebugControlPanel : EditorWindow
 {
-   [MenuItem("PopoteTool/DebugControlPanel")]
+   [MenuItem("PopoteTools/DebugControlPanel")]
    public static void ShowWindow()
    {
       PopoteEditorDebugControlPanel window = GetWindow<PopoteEditorDebugControlPanel>();
