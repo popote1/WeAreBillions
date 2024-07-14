@@ -59,9 +59,10 @@ namespace script
             base.Start();
         }
 
-        public void OnDestroy() {
+        protected override void OnDestroy() {
             StaticData.ZombieLose();
             StaticData.RemoveZombie(this);
+            base.OnDestroy();
         } 
         public float GetNormalizeHp() => (float) _hp / _maxHp;
         public float GetNormalizeTransformation() =>  _transformationTimer / _totalTransformationTime;

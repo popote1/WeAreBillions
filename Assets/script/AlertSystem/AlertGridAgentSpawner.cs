@@ -1,31 +1,28 @@
-using System;
-using System.Collections;
 using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
-using Random = UnityEngine.Random;
 
-public class GridAgentSpawner : MonoBehaviour
+public class AlertGridAgentSpawner : AlertEvent
 {
 
+    
+    
     [SerializeField] private float _radius;
     [SerializeField] private GridAgent[] _agentToSpawn;
     
     [SerializeField] private UnitStartOrder _unitStartOrder;
+
+    public float Radius => _radius;
     
-    // Start is called before the first frame update
-    void Start()
-    {
-        
+    public override void DoEvent() {
+        SpawnAndOrder();
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
+    public Vector3 GetMoveTarget() {
+        if (_unitStartOrder != null && _unitStartOrder.Targets.Length > 0 && _unitStartOrder.Targets[0] != null) {
+            return _unitStartOrder.Targets[0];
+        }
+        return transform.position;
     }
-
-    
     [ContextMenu("Spanw And Order")]
     private void SpawnAndOrder() {
         List<GridAgent> agens = SpawnAgent();
@@ -57,4 +54,6 @@ public class GridAgentSpawner : MonoBehaviour
             Gizmos.DrawSphere(transform.position, _radius);
         }
     }
+
+    
 }

@@ -9,5 +9,7 @@
             m_target = (PoliceMan) target;
             Handles.color = Color.red*new Color(1,1,1,0.2f);
             Handles.DrawSolidDisc(m_target.transform.position, Vector3.up, m_target.AttackRange);
+            Handles.color = Color.green;
+            Handles.DrawWireDisc(m_target.transform.position, Vector3.up, m_target.AlertCheckRadius);
         }
     }

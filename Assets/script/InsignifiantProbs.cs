@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using script;
 using UnityEngine;
 
 public class InsignifiantProbs : MonoBehaviour
@@ -17,6 +18,7 @@ public class InsignifiantProbs : MonoBehaviour
     public void Destroy() {
         if (prefabsDebrie) Instantiate(prefabsDebrie, transform.position, transform.rotation);
         if (prefabsFX) Instantiate(prefabsFX, transform.position, transform.rotation);
+        StaticData.DestroyElement();
         Destroy(gameObject);
     }
 }

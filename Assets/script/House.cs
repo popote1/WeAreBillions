@@ -27,6 +27,7 @@ namespace script
             GridManager.OnClearPathFindingData += ClearCellCoordinateData;
             if(!GridManager) Debug.LogWarning(" GridManager non Assigner sur Maison "+name);
             Debug.Log("Added");
+            StaticData.AddBuilding(this);
         }
         
         private void Start()
@@ -51,8 +52,8 @@ namespace script
             if (prefabsDebrie) Instantiate(prefabsDebrie, transform.position, transform.rotation);
             if( PrefabsDestruciotnParticules)Instantiate(PrefabsDestruciotnParticules, transform.position, transform.rotation);
             ManageZombiSpawn();
+            StaticData.HouseDestroy();
             Destroy(gameObject);
-            
         }
         [ExecuteInEditMode]
         private void OnDestroy()

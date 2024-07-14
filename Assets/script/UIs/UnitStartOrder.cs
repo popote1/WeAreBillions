@@ -9,7 +9,7 @@ public class UnitStartOrder : MonoBehaviour
         public GridAgent[] Agents;
         public bool IsLoop;
 
-        public Transform[] Targets;
+        public Vector3[] Targets;
         protected Vector2Int originChunkTarget = new Vector2Int(0, 0);
     
     
@@ -29,8 +29,9 @@ public class UnitStartOrder : MonoBehaviour
         [ContextMenu("Give Simple Order")]
         public void GiveUniteMoveOrder() {
             if (Targets.Length > 0) {
-                if( Targets.Length ==1) GiveSimpleMoveOrder(GridManager.GetCellFromWorldPos(Targets[0].position));
-                else GiveChainMoveOrder(GridManager.GetCellsFromTransforms(Targets));
+                if( Targets.Length ==1) GiveSimpleMoveOrder(GridManager.GetCellFromWorldPos(Targets[0]));
+                else GiveChainMoveOrder(GridManager.GetCellsFromWorldPos(Targets));
+                
             }
         }
         
@@ -44,7 +45,6 @@ public class UnitStartOrder : MonoBehaviour
 
             foreach (var zombieAgent in Agents) {
                 zombieAgent.SetNewSubGrid(subgrid);
-                Debug.Log("OrderGiven");
             }
         }
 
@@ -121,19 +121,20 @@ public class UnitStartOrder : MonoBehaviour
                     if (Targets[i] == null) continue;
                     if (i == 0) {
                         Gizmos.color = Color.green;
-                        Gizmos.DrawCube(Targets[i].position, Vector3.one * 0.25f);
+                        Gizmos.DrawCube(Targets[i], Vector3.one * 0.25f);
                         continue;
                     }
 
                     Gizmos.color = Color.yellow;
-                    Gizmos.DrawSphere(Targets[i].position, 0.25f);
+                    Gizmos.DrawSphere(Targets[i], 0.25f);
                     if (Targets[i - 1] == null) continue;
-                    Gizmos.DrawLine(Targets[i].position, Targets[i - 1].position);
+                    Gizmos.DrawLine(Targets[i], Targets[i - 1]);
                 }
 
                 if (IsLoop && Targets[0] != null && Targets[Targets.Length - 1] != null) {
                     Gizmos.color = Color.yellow;
-                    Gizmos.DrawLine(Targets[0].position, Targets[Targets.Length - 1].position);
+                    Gizmos.DrawLine(Targets[0], Targets[Targets.Length - 1]);
+                    Debug.Log("Draw Loop" );
                 }
             }
 

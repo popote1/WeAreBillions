@@ -53,7 +53,7 @@ public class GridAgent : MonoBehaviour
     
 
     public enum GridActorStat {
-        Idle, Move, Attack , Grabed, Transforming
+        Idle, Move, Attack , Grabed, Transforming, CallingAlert
     }
     
     public bool IsSelected {
@@ -71,6 +71,11 @@ public class GridAgent : MonoBehaviour
             Debug.LogWarning("GridManagerNot Found ", this);
         }
         if( _usWondering)_wonderingDelay = Random.Range(_wonderringDelayMin, _wonderringDelayMax);
+        StaticData.AddGridAgent(this);
+    }
+
+    protected virtual void OnDestroy() {
+        StaticData.RemoveGridAgent(this);
     }
 
 
@@ -91,6 +96,7 @@ public class GridAgent : MonoBehaviour
             case GridActorStat.Attack: ManageAttack(); break;
             case GridActorStat.Grabed: ManageGrabbed(); break;
             case GridActorStat.Transforming: ManageTransformation(); break;
+            case GridActorStat.CallingAlert: ManageAlertCalling(); break;
             default: throw new ArgumentOutOfRangeException();
         }
     }
@@ -175,9 +181,10 @@ public class GridAgent : MonoBehaviour
     protected virtual void ManageGrabbed(){}
     
     protected virtual void ManageTransformation() { }
+    protected virtual void ManageAlertCalling(){}
     
     protected virtual void ChangeStat(GridActorStat stat) {
-        if (Stat == GridActorStat.Attack && Subgrid != null && stat == GridActorStat.Idle) {
+        if ((Stat == GridActorStat.Attack||Stat == GridActorStat.CallingAlert) && Subgrid != null && stat == GridActorStat.Idle) {
             ChangeStat(GridActorStat.Move);
             return;
         } 

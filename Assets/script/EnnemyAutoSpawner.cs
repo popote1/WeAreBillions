@@ -23,7 +23,7 @@ public class EnnemyAutoSpawner : UnitStartOrder {
         Vector3 offset = new Vector3(Random.Range(-_spawnZoneSize, _spawnZoneSize), 0,
             Random.Range(-_spawnZoneSize, _spawnZoneSize));
         
-        Vector3 pos =Targets[0].position + offset;
+        Vector3 pos =Targets[0] + offset;
         RaycastHit hit;
         if (Physics.Raycast(new Ray(pos, Vector3.down), out hit, 10, _groundLayerMask))
         {
@@ -41,19 +41,19 @@ public class EnnemyAutoSpawner : UnitStartOrder {
                 if (Targets[i] == null) continue;
                 if (i == 0) {
                     Gizmos.color = Color.green;
-                    Gizmos.DrawWireCube(Targets[i].position, Vector3.one*_spawnZoneSize);
+                    Gizmos.DrawWireCube(Targets[i], Vector3.one*_spawnZoneSize);
                     continue;
                 }
                 
                 Gizmos.color = Color.yellow;
-                Gizmos.DrawSphere(Targets[i].position, 0.25f);
+                Gizmos.DrawSphere(Targets[i], 0.25f);
                 if (Targets[i - 1] == null) continue;
-                Gizmos.DrawLine(Targets[i].position, Targets[i - 1].position);
+                Gizmos.DrawLine(Targets[i], Targets[i - 1]);
             }
 
             if (IsLoop && Targets[0] != null && Targets[Targets.Length - 1] != null) {
                 Gizmos.color = Color.yellow;
-                Gizmos.DrawLine(Targets[0].position, Targets[Targets.Length - 1].position);
+                Gizmos.DrawLine(Targets[0], Targets[Targets.Length - 1]);
             }
         }
 

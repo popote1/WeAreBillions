@@ -89,6 +89,15 @@ namespace script
             }
             return cells.ToArray();
         }
+        public Cell[] GetCellsFromWorldPos(Vector3[] transforms) {
+            List<Cell> cells = new List<Cell>();
+            for (int i = 0; i < transforms.Length; i++) {
+                if (transforms[i] == null) continue;
+                Cell cell = GetCellFromWorldPos(transforms[i]);
+                if(!cells.Contains(cell))cells.Add(cell);
+            }
+            return cells.ToArray();
+        }
 
        
 

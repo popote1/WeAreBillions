@@ -36,8 +36,7 @@ namespace script
 
         public static Action<GridAgent> AddAgentToSelection; 
         
-        private void Start()
-        {
+        private void Start() {
             AddAgentToSelection += AddGridAGentToSelection;
             if (zombies == null || zombies.Length == 0) return;
             foreach (var z in zombies) {
@@ -46,12 +45,12 @@ namespace script
                 zombie.Generate(GridManager);
             }
             
-            InGameStatic.OnPressEscape += DebugOpenMenuPause;
+            StaticData.OnPressEscape += DebugOpenMenuPause;
         }
 
         private void OnDestroy()
         {
-            InGameStatic.OnPressEscape -= DebugOpenMenuPause;
+            StaticData.OnPressEscape -= DebugOpenMenuPause;
         }
 
         public void Update()
@@ -426,7 +425,7 @@ namespace script
             if( mousePosition.x>Screen.width-PixelBorder) dir+= Vector3.right;
             if( mousePosition.y<PixelBorder) dir+= Vector3.back;
             if( mousePosition.y>Screen.height-PixelBorder) dir+= Vector3.forward;
-            InGameStatic.CameraMoveVector = dir;
+            StaticData.CameraMoveVector = dir;
         }
 
         private void ManagePressEscape() {
@@ -435,7 +434,7 @@ namespace script
             }
             else {
                 Debug.Log("Open Menu Pause 0");
-                InGameStatic.PressEscape(this);
+                StaticData.PressEscape(this);
             }
         }
 

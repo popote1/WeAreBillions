@@ -11,8 +11,6 @@ namespace script
     {
         public TriggerZoneDetector TriggerZoneDetector;
         [Header("Attacks")] 
-        //public float AttackDelay;
-        //public int AttackDamage;
         public float AttackRange;
         public ParticleSystem PSAttack;
         public ZombieAgent Target;
@@ -43,6 +41,7 @@ namespace script
         }
 
         protected override void ManageStat() {
+            if (Stat == GridActorStat.CallingAlert) ManageAlertCalling();
             base.ManageStat();
             if (Stat == GridActorStat.Idle || Stat == GridActorStat.Move) { 
                 ManageLookingForTarget();
@@ -53,6 +52,12 @@ namespace script
             TriggerZoneDetector.CheckOfNull();
             
             if (TriggerZoneDetector.Zombis.Count <= 0) return;
+            if (CheckForAlertCalling()) {
+                StartAlertCalling();
+                AudioSource.clip = GettingTarget[Random.Range(0, GettingTarget.Length)];
+                return;
+            }
+            
             Target =GetTheClosest(TriggerZoneDetector.Zombis);
             AudioSource.clip = GettingTarget[Random.Range(0, GettingTarget.Length)];
             AudioSource.Play();
@@ -81,6 +86,7 @@ namespace script
             _timer += Time.deltaTime;
             if (_timer >= _attack.AttackSpeed) {
                 Target.TakeDamage(_attack.GetDamage(Target.UniteType));
+                AlertSystemManager.Instance?.FireShot();
                 PSAttack.Play();
                 AudioSource.clip = ShotingSound[Random.Range(0, ShotingSound.Length)];
                 AudioSource.Play();
@@ -114,6 +120,9 @@ namespace script
             if (EditorControlStatics.DisplayEnnemisDangerZone) {
                 Gizmos.color = Color.red * new Color(1, 1, 1, 0.4f);
                 Gizmos.DrawSphere(transform.position,  AttackRange);
+                
+                Gizmos.color = Color.green * new Color(1, 1, 1, 0.4f);
+                Gizmos.DrawWireSphere(transform.position,  _alertCheckRadius);
             }
         }
     }
