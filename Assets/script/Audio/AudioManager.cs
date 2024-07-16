@@ -2,13 +2,14 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using JetBrains.Annotations;
+using script;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Audio;
 
 public class AudioManager : MonoBehaviour
 {
-    
+    [SerializeField] private AudioMixer _audioMixer;
     [SerializeField] private AudioMixerGroup _sfxMixer;
     [SerializeField] private AudioMixerGroup _musicMixer;
 
@@ -35,6 +36,7 @@ public class AudioManager : MonoBehaviour
             Debug.LogWarning("Try To Have 2 AudioManager at the same time!");
             Destroy(gameObject);
         }
+        LoadDataFromStatic();
     }
 
 
@@ -160,6 +162,13 @@ public class AudioManager : MonoBehaviour
     [ContextMenu("TestPlayingMusic3")]
     private void TestPlayerMusic3() {
         PlayMusic(_music3, 10);
+    }
+
+    private void LoadDataFromStatic() {
+        _audioMixer.SetFloat("MasterVolume", Mathf.Log10(StaticData.AudioVolumeMaster) * 20);
+        _audioMixer.SetFloat("MusicVolume", Mathf.Log10(StaticData.AudioVolumeMusic) * 20);
+        _audioMixer.SetFloat("SFXVolume", Mathf.Log10(StaticData.AudioVolumeSFX) * 20);
+        _audioMixer.SetFloat("AmbianceVolume", Mathf.Log10(StaticData.AudioVolumeAmbiances) * 20);
     }
     
 }

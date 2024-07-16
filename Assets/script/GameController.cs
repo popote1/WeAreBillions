@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using script.UIs;
 using Unity.Mathematics;
 using Unity.VisualScripting;
 using UnityEngine;
@@ -13,8 +14,7 @@ namespace script
         public Camera Camera;
         public GridManager GridManager;
         public ZombieAgent PrefabsZombieAgent;
-        public GameObject Arrow;
-        public HUDManager HUDManager;
+        [SerializeField] private HUDSelectionBoxDisplayer _hudSelectionBoxDisplayer;
 
         [Header("Strat Zombie")] 
         public Transform[] zombies;
@@ -34,6 +34,7 @@ namespace script
         private bool _isInSelectionBox;
         private Vector2 _startSelectionBox;
 
+        public event EventHandler<List<GridAgent>> OnSelectionChange; 
         public static Action<GridAgent> AddAgentToSelection; 
         
         private void Start() {
@@ -45,12 +46,12 @@ namespace script
                 zombie.Generate(GridManager);
             }
             
-            StaticData.OnPressEscape += DebugOpenMenuPause;
+            StaticData.OnSetGameOnPause += DebugOpenMenuPause;
         }
 
         private void OnDestroy()
         {
-            StaticData.OnPressEscape -= DebugOpenMenuPause;
+            StaticData.OnSetGameOnPause -= DebugOpenMenuPause;
         }
 
         public void Update()
@@ -68,7 +69,7 @@ namespace script
                 
 
                 _isInSelectionBox = false;
-                if (HUDManager) HUDManager.CloseSelectionBox();
+                if (_hudSelectionBoxDisplayer) _hudSelectionBoxDisplayer.CloseSelectionBox();
             }
             
             if (Input.GetButtonDown("Fire2")) {
@@ -192,6 +193,7 @@ namespace script
                 if (hit.collider.GetComponent<ZombieAgent>()) {
                     Selected = new List<GridAgent>() {hit.collider.GetComponent<ZombieAgent>()};
                     Selected[0].IsSelected = true;
+                    OnSelectionChange?.Invoke(this, Selected);
                 }
             }
         }
@@ -206,7 +208,7 @@ namespace script
                 Mathf.Abs(_startSelectionBox.x - Input.mousePosition.x),
                 Mathf.Abs(_startSelectionBox.y - Input.mousePosition.y));
             
-            if( HUDManager )HUDManager.SetSelectionBox(center, size);
+            if( _hudSelectionBoxDisplayer )_hudSelectionBoxDisplayer.SetSelectionBox(center, size);
         }
         
         public void ManageBoxSelection() {
@@ -269,6 +271,7 @@ namespace script
                 Selected.Add(other.GetComponent<ZombieAgent>());
                 other.GetComponent<ZombieAgent>().IsSelected = true;
             }
+            OnSelectionChange?.Invoke(this, Selected);
             
         }
         private void ManagerGiveMoveOrder(Cell targetCell) {
@@ -409,12 +412,14 @@ namespace script
                 if (zombie != null) zombie.IsSelected = false;
             }
             Selected.Clear();
+            OnSelectionChange?.Invoke(this, Selected);
         }
 
         public void AddGridAGentToSelection(GridAgent gridAgent) {
             if (gridAgent == null) return;
             Selected.Add(gridAgent);
             gridAgent.IsSelected = true;
+            OnSelectionChange?.Invoke(this, Selected);
         }
 
         private void ManageBorderCameraMovement()
@@ -434,11 +439,11 @@ namespace script
             }
             else {
                 Debug.Log("Open Menu Pause 0");
-                StaticData.PressEscape(this);
+                StaticData.SetGameOnPause();
             }
         }
 
-        private void DebugOpenMenuPause(object sender, EventArgs e) {
+        private void DebugOpenMenuPause(object sender, bool e) {
             Debug.Log("Open Menu Pause");
         }
 

@@ -20,7 +20,13 @@ namespace script {
         public static bool AllowCameraHeight = true;
         public static bool GamePause = false;
 
+        public static float AudioVolumeMaster = 1;
+        public static float AudioVolumeMusic = 1;
+        public static float AudioVolumeSFX = 1;
+        public static float AudioVolumeAmbiances = 0.5f;
+
         public static List<ZombieAgent> AllZombies=> _allZombieAgents;
+        public static int GridAgentsCounts => _allGridAgents.Count;
         public static int zombieCount => _zombieCount;
         public static int CiviliansCounts => _civiliansCounts;
         public static int DefendersCount => _defendersCount;
@@ -42,16 +48,21 @@ namespace script {
         private static int _destroyElements = 0;
         private static float _gameTimer = 0;
 
-        public static event EventHandler OnPressEscape;
+        public static event EventHandler<bool> OnSetGameOnPause;
 
         public static void HouseDestroy() =>_destroyBuildingsCounts++;
         public static void DestroyElement() => _destroyElements++; 
         
-        public static void PressEscape(object sender) {
-            OnPressEscape?.Invoke(sender, EventArgs.Empty);
+        public static void SetGameOnPause() {
             GamePause = !GamePause;
-            Debug.Log("Games Pause ="+GamePause);
             SetPause(GamePause);
+            
+            OnSetGameOnPause?.Invoke(new object(), GamePause);
+        }
+        public static void SetGameOnPause(bool value) {
+            GamePause = value;
+            SetPause(GamePause);
+            OnSetGameOnPause?.Invoke(new object(), GamePause);
         }
 
         public static void ZombieLose() {

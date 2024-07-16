@@ -9,7 +9,7 @@ using UnityEngine.Rendering;
 public class AlertSystemManager : MonoBehaviour
 {
     public static AlertSystemManager Instance;
-
+    public event EventHandler<int> OnAlertLevelChange; 
     public float AlertScore {
         get => _alertScore;
     }
@@ -32,6 +32,7 @@ public class AlertSystemManager : MonoBehaviour
 
     private AlertLevelData _currentAlertData;
     private float _inGameCombatTimer;
+    private float _defaultMaxValue = 200;
     
     
     private void Awake()
@@ -50,6 +51,13 @@ public class AlertSystemManager : MonoBehaviour
         ManagerBurnDown();
         ManagerInGameCombatTimer();
         _currentAlertData.ManageEventsDuringLevel();
+    }
+
+    public float GetAlertProgress() {
+        if (CanAlertIncrease()) {
+            return (_alertScore -_currentAlertData.MinimumLevel)/ (_alertLevelDatas[_alertLevel + 1].MinimumLevel-_currentAlertData.MinimumLevel);
+        }
+        return (_alertScore - _currentAlertData.MinimumLevel) / _defaultMaxValue ;
     }
     
     [ContextMenu("IncreaseAlert")]
@@ -95,12 +103,14 @@ public class AlertSystemManager : MonoBehaviour
     private void LevelDownAlert() {
         _alertLevel--;
         _currentAlertData = _alertLevelDatas[_alertLevel];
+        OnAlertLevelChange?.Invoke(this, _alertLevel);
     }
 
     private void LevelUpAlert() {
         _alertLevel++;
         _currentAlertData = _alertLevelDatas[_alertLevel];
         _currentAlertData.DoOnStartEvents();
+        OnAlertLevelChange?.Invoke(this, _alertLevel);
     }
     
     private bool CanAlertIncrease() {

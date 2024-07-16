@@ -20,6 +20,8 @@ public class AlertLevelData {
     private float _timeForEvent;
     private float _timerEventsDuringLevel;
 
+    public float MinimumLevel => _minimumLevel;
+
 
     public void GenerateNewTimeForEvent() => _timeForEvent = Random.Range(_minimumTimeForEvent, _maxTimeForEvent);
 

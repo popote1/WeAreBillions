@@ -43,6 +43,9 @@ public class GridAgent : MonoBehaviour
     
     public bool CanBetransform { get => _canBeTransform; }
     public float TransformTime { get => _transformationTime; }
+    public float MaxMoveSpeed => _maxMoveSpeed;
+    public float HP => _maxHp;
+    public Metrics.UniteType UniteTyp=> _uniteType;
     
     protected bool _isSelected;
     protected float _wonderingTimer;

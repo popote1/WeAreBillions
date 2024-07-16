@@ -49,6 +49,8 @@ namespace script
         private bool _isTransformting;
         private float _transformationTimer;
 
+        public AttackStruct Attack => _attack;
+
 
         protected override void Start() {
             StaticData.ZombieCount++;
