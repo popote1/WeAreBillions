@@ -1,5 +1,4 @@
 ﻿using System;
-using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -49,42 +48,6 @@ namespace script.UIs
         
         private void ClickOnPauseButton() {
             StaticData.SetGameOnPause(true);
-        }
-    }
-
-    public class HUDDialogueManager() : MonoBehaviour {
-        [SerializeField] private GameObject _hudDialoguePanel;
-        [SerializeField] private TMP_Text _txtDiaglogue;
-        [SerializeField] private RawImage _imgDialogue;
-
-        private DialogueStep[] _currentDialogue;
-        private int _currentSteop = 0;
-
-        private float _cameraTravelTime;
-        private float _cameraTimer;
-        private void Start() {
-            StaticData.OnPlayDialogue+= StaticDataOnOnPlayDialogue;
-        }
-
-        private void StaticDataOnOnPlayDialogue(object sender, DialogueStep[] e) {
-            StartPlayerDialogue(e);
-        }
-
-        private void StartPlayerDialogue(DialogueStep[] dialogue) {
-            _currentDialogue = dialogue;
-            _currentSteop = 0;
-            StartPlayingStep(_currentDialogue[_currentSteop]);
-        }
-
-        private void StartPlayingStep(DialogueStep step) {
-            _hudDialoguePanel.SetActive(true);
-            _txtDiaglogue.text = step.TxtDialogue;
-            if(step.SpriteDialogue)_imgDialogue.texture = step.SpriteDialogue.texture;
-        }
-
-        private void Update() {
-            if (_currentDialogue == null) return;
-            //if (_currentDialogue[_currentSteop].UsCameraScroll)
         }
     }
 } 

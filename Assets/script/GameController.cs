@@ -56,7 +56,10 @@ namespace script
 
         public void Update()
         {
-
+            
+            
+            
+            if (StaticData.BlockControls) return;
             ManageBorderCameraMovement();
             if (Input.GetKeyDown(KeyCode.Escape))ManagePressEscape();
             if (Input.GetKeyDown(KeyCode.F2))ManagerSelectAllZombies();
