@@ -49,6 +49,7 @@ namespace script {
         private static float _gameTimer = 0;
 
         public static event EventHandler<bool> OnSetGameOnPause;
+        public static event EventHandler<DialogueStep[]> OnPlayDialogue;
 
         public static void HouseDestroy() =>_destroyBuildingsCounts++;
         public static void DestroyElement() => _destroyElements++; 
