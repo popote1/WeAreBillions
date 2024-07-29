@@ -108,6 +108,10 @@ MonoBehaviour:
   GridManager: {fileID: 0}
   _animator: {fileID: 6616199045370517167}
   Rigidbody: {fileID: 6032425623059702544}
+  _maxHp: 0
+  _uniteType: 0
+  _canBeTransform: 1
+  _transformationTime: 2
   _maxMoveSpeed: 3
   _moveSpeed: 10
   _speedModulator: 0.05
@@ -124,13 +128,12 @@ MonoBehaviour:
     m_Bits: 128
   IsSelectable: 0
   SelectionSprite: {fileID: 3759194787182890189}
-  IsGrabable: 0
-  _hpMax: 3
-  _hp: 3
   _prefabDeathPS: {fileID: 540054392838581951, guid: 0af1e0599763dda47be91aad1e77c51d,
     type: 3}
-  _attackDelay: 1
-  _attackDamage: 1
+  _attack:
+    AttackSpeed: 0
+    Damage: 0
+    SpecialAttacks: []
   _prefabsAttackEffect: {fileID: 4266808841945952343, guid: 81a00df2fec0e814e95ed6e1c27414ba,
     type: 3}
   _audioSource: {fileID: 6815450481921267788}
@@ -145,7 +148,8 @@ MonoBehaviour:
   - {fileID: 8300000, guid: aa985475b2f21fe4880dccc2f26b1aa2, type: 3}
   - {fileID: 8300000, guid: bd34efc49cdbd8847bcaff2f74af6bbf, type: 3}
   _dieSound: []
-  _transformationTime: 2
+  _totalTransformationTime: 0
+  _transformationMod: 1
   _prefabZombieAgent: {fileID: 2444219041533692552}
 --- !u!136 &1891030187320269572
 CapsuleCollider:
@@ -333,7 +337,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 1.43}
-  m_SizeDelta: {x: 615, y: 905}
+  m_SizeDelta: {x: 1, y: 1}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!223 &4031779238643451167
 Canvas:

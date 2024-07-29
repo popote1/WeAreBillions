@@ -1059,6 +1059,10 @@ MonoBehaviour:
   GridManager: {fileID: 0}
   _animator: {fileID: 2865205535390336310}
   Rigidbody: {fileID: 8776133592687920192}
+  _maxHp: 0
+  _uniteType: 0
+  _canBeTransform: 1
+  _transformationTime: 3
   _maxMoveSpeed: 3
   _moveSpeed: 2
   _speedModulator: 0.05
@@ -1075,8 +1079,6 @@ MonoBehaviour:
     m_Bits: 128
   IsSelectable: 0
   SelectionSprite: {fileID: 0}
-  IsGrabable: 1
-  _hp: 3
   _prefabDeathPS: {fileID: 540054392838581951, guid: 0af1e0599763dda47be91aad1e77c51d,
     type: 3}
   DetectionDistance: 10
@@ -1373,12 +1375,12 @@ PrefabInstance:
     - target: {fileID: 66369039115507223, guid: df18534e1ea1734459f7b0d5a95385ee,
         type: 3}
       propertyPath: m_SizeDelta.x
-      value: 615
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 66369039115507223, guid: df18534e1ea1734459f7b0d5a95385ee,
         type: 3}
       propertyPath: m_SizeDelta.y
-      value: 905
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 66369039115507223, guid: df18534e1ea1734459f7b0d5a95385ee,
         type: 3}
@@ -1448,7 +1450,7 @@ PrefabInstance:
     - target: {fileID: 5991794082412608324, guid: df18534e1ea1734459f7b0d5a95385ee,
         type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8229872740625256611, guid: df18534e1ea1734459f7b0d5a95385ee,
         type: 3}
