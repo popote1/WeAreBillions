@@ -108,7 +108,7 @@ public class GridAgent : MonoBehaviour
 
     protected virtual void ManageSelfElevation() {
         RaycastHit hit;
-        if (Physics.Raycast(new Ray(transform.position, Vector3.down), out hit, 4, GroundLayer)) {
+        if (Physics.Raycast(new Ray(transform.position+Vector3.up*3, Vector3.down), out hit, 6, GroundLayer)) {
             transform.position = new Vector3(transform.position.x, hit.point.y + HeightOffSetting, transform.position.z);
         }
     }

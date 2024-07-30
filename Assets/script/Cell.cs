@@ -40,6 +40,8 @@ namespace script
             Offset = offset;
         }
 
+        public bool IsDestructible => MoveCost == Metrics.DestructibleMoveCost;
+
         public void ColorDebugCell(Color col) {
             if (DebugCell == null) return;
             DebugCell.Render.color = col;

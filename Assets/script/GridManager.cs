@@ -379,9 +379,12 @@ namespace script
             {
                 _cells[cell.Pos.x, cell.Pos.y] = new Cell(cell.Pos, Offset);
                 _cells[cell.Pos.x, cell.Pos.y].IsBlock = cell.IsBlock;
-                if (cell.IsBlock)
-                {
+                if (cell.IsBlock) {
                     _cells[cell.Pos.x, cell.Pos.y].MoveCost = Metrics.BlockMoveCostMoveCost;
+                }
+
+                if (cell.IsDesctrucible) {
+                    _cells[cell.Pos.x, cell.Pos.y].MoveCost = Metrics.DestructibleMoveCost;
                 }
                 
             }
