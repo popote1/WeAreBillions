@@ -116,6 +116,7 @@ namespace script
                  }
              }
              CalculatFlowFieldC(targets);
+             _targetCellses = targets;
         }
         
         public void CalculatFlowFieldC(Cell origin)

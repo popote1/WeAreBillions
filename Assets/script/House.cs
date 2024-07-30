@@ -10,6 +10,7 @@ namespace script
         public GameObject prefabsDebrie;
         public ZombieAgent prefabZombit;
         public GridManager GridManager;
+        [SerializeField]private Metrics.UniteType _uniteType = Metrics.UniteType.Heavy; 
         public int HP;
         public GameObject PrefabsDestruciotnParticules;
         public List<Vector2Int> CellsCoordinates = new List<Vector2Int>();
@@ -30,19 +31,13 @@ namespace script
             StaticData.AddBuilding(this);
         }
         
-        private void Start()
-        {
-            
-        }
 
         public void ClearCellCoordinateData() => CellsCoordinates.Clear();
         
-        public void TakeDamage(int damage)
-        {
+        public void TakeDamage(int damage) {
             if (HP <= 0) return;
             HP -= damage;
-            if (HP <= 0)
-            {
+            if (HP <= 0) {
                 Destroy();
             }
         }
