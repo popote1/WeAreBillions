@@ -9,6 +9,7 @@ using Random = UnityEngine.Random;
 
 namespace script
 {
+    
     public class GridManager : MonoBehaviour
     {
         public Vector2Int Size;
@@ -116,6 +117,10 @@ namespace script
             }
 
             return neighbors;
+        }
+
+        public List<Cell> GetCellNeighborRange(Vector2Int origin, int range) {
+            return GetCellNeighborRange(GetCellFromPos(origin), range);
         }
 
         public List<Cell> GetCellNeighborRange(Cell origin, int range) {

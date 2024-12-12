@@ -99,8 +99,8 @@ namespace script
                 Rigidbody.isKinematic = false;
                 ChangeStat(GridActorStat.Idle);
             }
-            _grabbedTarget.transform.forward = transform.position - _grabbedTarget.transform.position;
-            transform.forward =  _grabbedTarget.transform.position -transform.position ;
+            _grabbedTarget.transform.forward = transform.position - _grabbedTarget.transform.position+new Vector3(0,0.5f,0);
+            transform.forward =  (_grabbedTarget.transform.position-new Vector3(0,0.5f,0)) -transform.position ;
             _grabbedTarget.transform.position = transform.position + transform.forward * 0.4f;
             
             

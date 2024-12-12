@@ -108,7 +108,7 @@ MonoBehaviour:
   GridManager: {fileID: 0}
   _animator: {fileID: 7194648810330254502}
   Rigidbody: {fileID: 6032425623059702544}
-  _maxHp: 0
+  _maxHp: 5
   _uniteType: 0
   _canBeTransform: 0
   _transformationTime: 2

@@ -46,7 +46,7 @@ namespace script
             if (DebugCell == null) return;
             DebugCell.Render.color = col;
         }
-
+        
         public void CheckCellColliders() {
             IsBlock = false;
            // Collider[]cols =Physics.OverlapBox(WordPos,Vector3.one/2f);

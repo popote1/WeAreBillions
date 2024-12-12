@@ -3,11 +3,8 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using script;
-using Unity.Hierarchy;
 using Unity.VisualScripting;
 using UnityEditor;
-using UnityEditor.Overlays;
-using UnityEditor.VersionControl;
 using UnityEditorInternal;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -20,10 +17,14 @@ public class EditorWindowGridManager : EditorWindow
     private bool _showDebugOptions;
     private bool _showChunkLinks;
     private TestCell _prefabsTestCell;
+    private int _debugCellTestZoneSize = 20;
+    private Vector2 _debugCellTestZonePos;
     private LayerMask _layerMaskGround = 10;
     private Color _colorFree = new Color(0,1,0,0.5f);
     private Color _colorBlock = new Color(1,0,0,0.5f);
     private Color _colorDesctuctible = new Color(0,0,1,0.5f);
+
+    private List<Cell> _currentTestCells=new List<Cell>();
     
     [MenuItem("PopoteTools/WindowGridManager")]
     public static void ShowWindow() {
@@ -43,17 +44,19 @@ public class EditorWindowGridManager : EditorWindow
         _showDebugOptions =EditorGUILayout.Foldout(_showDebugOptions, "Show Debug Options");
         if (_showDebugOptions) {
             if( GUILayout.Button("CalculateTheGrid"))GenerateCells();
-            if (GUILayout.Button("DisplayCells")) GenerateDebugCells();
+            if (GUILayout.Button("DisplayCells")) GenerateDebugCells2();
             if (GUILayout.Button("CalculateColliders")) CheckColliders();
             if (GUILayout.Button("RecalculateChunks")) RecalculateChunks();
             if (GUILayout.Button("ColorChunks")) ColorChunks();
-            if (GUILayout.Button("ClearDebugsCells")) ClearDebugCells();
+            if (GUILayout.Button("ClearDebugsCells")) ClearDebugCells2();
             
             GUILayout.Space(10);
             if (GUILayout.Button("GetDebugCell")) GetDebugCell();
+            _debugCellTestZonePos = EditorGUILayout.Vector2Field("DebugCellTestZone", _debugCellTestZonePos);
+            _debugCellTestZoneSize = EditorGUILayout.IntField("DebugCellTestZoneSize", _debugCellTestZoneSize); 
             _prefabsTestCell = (TestCell) EditorGUILayout.ObjectField(_prefabsTestCell, typeof(TestCell));
             _layerMaskGround =(EditorGUILayout.MaskField(_layerMaskGround,InternalEditorUtility.layers));
-            _showChunkLinks = GUILayout.Toggle(_showChunkLinks, "Show Chunk links");
+            //_showChunkLinks = GUILayout.Toggle(_showChunkLinks, "Show Chunk links");
             Metrics.UsDebugCellGroundOffsetting = GUILayout.Toggle(Metrics.UsDebugCellGroundOffsetting, "UsDebugCellGroundOffsetting");
             _colorBlock = EditorGUILayout.ColorField("Color Blocked",_colorBlock);
             _colorFree = EditorGUILayout.ColorField("Color Free",_colorFree);
@@ -139,6 +142,7 @@ public class EditorWindowGridManager : EditorWindow
     }
     private void GenerateDebugCells() {
         ClearDebugCells();
+        
         Cell[,] cells = _target.GetAllCells();
         foreach (var cell in cells) {
             cell.DebugCell = Instantiate(_prefabsTestCell, cell.WordPos, Quaternion.identity);
@@ -158,6 +162,42 @@ public class EditorWindowGridManager : EditorWindow
             }
 
         }
+    }
+
+    private void GenerateDebugCells2() {
+        ClearDebugCells2();
+        Vector2Int center = 
+            new Vector2Int(
+                Mathf.RoundToInt((_target.Size.x*Metrics.chunkSize-_debugCellTestZoneSize) * _debugCellTestZonePos.x)+_debugCellTestZoneSize / 2
+                , Mathf.RoundToInt((_target.Size.y*Metrics.chunkSize-_debugCellTestZoneSize) * _debugCellTestZonePos.y)+_debugCellTestZoneSize / 2) ;
+        
+        List<Cell> cells = _target.GetCellNeighborRange(center, _debugCellTestZoneSize/2);
+
+        for (int i =_currentTestCells.Count-1; i >=0; i--){
+            if (cells.Contains(_currentTestCells[i])) return; 
+            Destroy(_currentTestCells[i].DebugCell.gameObject);
+            _currentTestCells.RemoveAt(i);
+        }
+
+        _currentTestCells = cells;
+        foreach (var cell in _currentTestCells) {
+            cell.DebugCell = Instantiate(_prefabsTestCell, cell.WordPos, Quaternion.identity);
+            cell.DebugCell.transform.SetParent(_target.transform);
+            
+            if( cell.IsBlock) cell.ColorDebugCell(_colorBlock);
+            else if (cell.MoveCost == Metrics.DestructibleMoveCost)cell.ColorDebugCell(_colorDesctuctible);
+            else cell.ColorDebugCell(_colorFree);
+
+            if (Metrics.UsDebugCellGroundOffsetting) {
+                RaycastHit hit;
+                if (Physics.Raycast(cell.DebugCell.transform.position + new Vector3(0, 50, 0), Vector3.down,
+                    out hit, _layerMaskGround)) {
+                    cell.DebugCell.transform.position = hit.point+new Vector3(0,0.5f,0);
+                }
+            }
+        }
+        Debug.Log(" Current cells get ="+ _currentTestCells.Count);
+
     }
     private void CheckColliders() {
         
@@ -393,6 +433,16 @@ public class EditorWindowGridManager : EditorWindow
             DestroyImmediate(_target.transform.GetChild(i).gameObject);
         }
     }
+    private void ClearDebugCells2() {
+        foreach (var cell in _currentTestCells) {
+            if (cell ==null) continue;
+            if( cell.DebugCell!=null) DestroyImmediate(cell.DebugCell.gameObject);
+        }
+        _currentTestCells.Clear();
+        for (int i = _target.transform.childCount - 1; i > 0; i--) {
+            DestroyImmediate(_target.transform.GetChild(i).gameObject);
+        }
+    }
 
     private void BakeTerrainLocomotionData() {
         GenerateCells();
@@ -410,6 +460,8 @@ public class EditorWindowGridManager : EditorWindow
 
         return ids;
     }
+
+    
      #region SaveLoadSystem
 
      
@@ -421,8 +473,8 @@ public class EditorWindowGridManager : EditorWindow
             {
                 _target.TerrainLocomotionData = ScriptableObject.CreateInstance<TerrainLocomotionData>();
                 _target.TerrainLocomotionData.MapName = SceneManager.GetActiveScene().name;
-                if (!Directory.Exists("Assets/LocomotionData"))
-                {
+                                 if (!Directory.Exists("Assets/LocomotionData"))
+                                 {
                     Directory.CreateDirectory("Assets/LocomotionData");
                 }
 

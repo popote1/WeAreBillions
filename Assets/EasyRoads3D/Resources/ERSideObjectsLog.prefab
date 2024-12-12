@@ -49,15 +49,15 @@ MonoBehaviour:
   roadPresets:
   - roadTypeName: Default Road
     id: 0
-    timestamp: 1722002154.201503
-    roadWidth: 4
+    timestamp: 1722846978.2100067
+    roadWidth: 2.5
     totalLanes: 0
     laneWidth: 0
     medianWidth: 0
     shoulderWidthLeft: 0
     shoulderWidthRight: 0
     advancedWidthSettings: 0
-    faceDistance: 4
+    faceDistance: 1
     angleTreshold: 45
     uvTiling: 1
     uv4Type: 0
@@ -68,8 +68,8 @@ MonoBehaviour:
     roadShapeDataActive: 0
     roadShapeData:
       nodes:
-      - {x: -2, y: 0}
-      - {x: 2, y: 0}
+      - {x: -1.25, y: 0}
+      - {x: 1.25, y: 0}
       hardEdge: 0000
       priorityNodeIndexLeft: -1
       priorityNodeIndexRight: -1
@@ -95,12 +95,12 @@ MonoBehaviour:
     speedLimit: 0
     speedLimitConnections: 0
     roadShape:
-    - {x: -2, y: 0}
-    - {x: 2, y: 0}
+    - {x: -1.25, y: 0}
+    - {x: 1.25, y: 0}
     roadShapeExt: []
     roadShapeExt2:
-    - {x: -2, y: 0}
-    - {x: 2, y: 0}
+    - {x: -1.25, y: 0}
+    - {x: 1.25, y: 0}
     doConnectionTri: 0101
     doConnectionTriExt: 
     roadShapeUVs:
@@ -147,8 +147,8 @@ MonoBehaviour:
     followTerrainContours: 0
     terrainContoursOffset: 5
     terrainDeformation: 1
-    defaultIndent: 3
-    defaultSurrounding: 3
+    defaultIndent: 1
+    defaultSurrounding: 1
     maxRoadheight: 0
     maxTerrainHeightOffset: 0
     minTerrainHeightDistance: 0
@@ -346,7 +346,7 @@ MonoBehaviour:
     showTrafficPosts: 0
   - roadTypeName: DefaultDirtRoad
     id: 1722331370.369004
-    timestamp: 1722332286.503978
+    timestamp: 1722521852.847951
     roadWidth: 2
     totalLanes: 2
     laneWidth: 3.5
@@ -445,7 +445,7 @@ MonoBehaviour:
     followTerrainContours: 0
     terrainContoursOffset: 5
     terrainDeformation: 1
-    defaultIndent: 2
+    defaultIndent: 1
     defaultSurrounding: 1
     maxRoadheight: 0
     maxTerrainHeightOffset: 0

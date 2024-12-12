@@ -41,6 +41,7 @@ namespace script
             AddAgentToSelection += AddGridAGentToSelection;
             if (zombies == null || zombies.Length == 0) return;
             foreach (var z in zombies) {
+                if (z == null) continue;
                 ZombieAgent zombie = Instantiate(PrefabsZombieAgent,  z.position+ new Vector3(0, 0.5f, 0),
                     Quaternion.identity);
                 zombie.Generate(GridManager);

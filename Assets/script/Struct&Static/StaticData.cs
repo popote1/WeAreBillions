@@ -27,7 +27,11 @@ namespace script {
         public static float AudioVolumeAmbiances = 0.5f;
 
         public static List<ZombieAgent> AllZombies=> _allZombieAgents;
-        public static int GridAgentsCounts => _allGridAgents.Count;
+        public static int GridAgentsCounts { get {
+                if (_allGridAgents == null) return 0;
+                return _allGridAgents.Count;
+            }
+        }
         public static int zombieCount => _zombieCount;
         public static int CiviliansCounts => _civiliansCounts;
         public static int DefendersCount => _defendersCount;

@@ -30,6 +30,7 @@ namespace script.UIs
         }
 
         public void DisplayInformation(GridAgent zombieAgent) {
+            
             _txtInspectorHeader.text = zombieAgent.name;
             _txtInspectorHP.text = zombieAgent.HP.ToString();
             _txtInspectorSpeed.text = zombieAgent.MaxMoveSpeed.ToString();
@@ -44,6 +45,7 @@ namespace script.UIs
                 _panelInfo.SetActive(false);
                 return;
             }
+            if( selection[0]==null) return;
             _uiZombieSelections[0].DisplaySelectionInformation(selection);
             DisplayInformation(selection[0]);
         }
