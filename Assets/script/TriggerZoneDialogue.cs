@@ -14,4 +14,5 @@ public class TriggerZoneDialogue : MonoBehaviour
             gameObject.SetActive(false);
         }
     }
+    
 }

@@ -1,4 +1,5 @@
-﻿using TMPro;
+﻿using System;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -20,6 +21,10 @@ namespace script.UIs
         private void Start() {
             StaticData.OnPlayDialogue+= StaticDataOnOnPlayDialogue;
             _hudDialoguePanel.SetActive(false);
+        }
+
+        private void OnDestroy() {
+            StaticData.OnPlayDialogue-= StaticDataOnOnPlayDialogue;
         }
 
         private void StaticDataOnOnPlayDialogue(object sender, DialogueStep[] e) {

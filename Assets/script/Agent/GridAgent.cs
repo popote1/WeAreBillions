@@ -89,7 +89,7 @@ public class GridAgent : MonoBehaviour
         ManageOrientation();
         ManageStat();
 
-        _animator.SetFloat("Velocity", Rigidbody.velocity.magnitude/_maxMoveSpeed);
+        _animator.SetFloat("Velocity", Rigidbody.linearVelocity.magnitude/_maxMoveSpeed);
     }
 
     protected virtual void ManageStat() {
@@ -115,8 +115,8 @@ public class GridAgent : MonoBehaviour
 
     protected virtual void ManageOrientation()
     {
-        if (Rigidbody.velocity.magnitude > 0.5f) {
-            Vector3 f = Rigidbody.velocity;
+        if (Rigidbody.linearVelocity.magnitude > 0.5f) {
+            Vector3 f = Rigidbody.linearVelocity;
             f.y = 0;
             transform.forward = f;
         }
@@ -142,7 +142,7 @@ public class GridAgent : MonoBehaviour
             }
             if( PSEmoteRedSquare)PSEmoteRedSquare.SetActive(false);
             Rigidbody.AddForce(new Vector3(cell.DirectionTarget.x, 0, cell.DirectionTarget.y) * GetMoveSpeed());
-            Rigidbody.velocity -= Rigidbody.velocity * _speedModulator;
+            Rigidbody.linearVelocity -= Rigidbody.linearVelocity * _speedModulator;
         }
     }
 
@@ -193,8 +193,8 @@ public class GridAgent : MonoBehaviour
         } 
         Stat = stat;
 
-        if (Stat == GridActorStat.Move) Rigidbody.drag = _moveDrag;
-        else Rigidbody.drag = _stopDrag;
+        if (Stat == GridActorStat.Move) Rigidbody.linearDamping = _moveDrag;
+        else Rigidbody.linearDamping = _stopDrag;
     }
 
     public virtual void SetAsGrabbed()

@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 
@@ -22,6 +23,11 @@ namespace script.UIs
             CleanAllSelection();
             _panelInfo.SetActive(false);
             _gameController.OnSelectionChange+= GameControllerOnOnSelectionChange;
+        }
+
+        private void OnDestroy()
+        {
+            _gameController.OnSelectionChange-= GameControllerOnOnSelectionChange;
         }
 
         private void GameControllerOnOnSelectionChange(object sender, List<GridAgent> e)

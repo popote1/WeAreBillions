@@ -4,6 +4,7 @@ using System.Linq;
 using System.Runtime.CompilerServices;
 using Unity.Mathematics;
 using UnityEngine;
+using UnityEngine.Android;
 using UnityEngine.Audio;
 using Random = UnityEngine.Random;
 
@@ -121,7 +122,11 @@ namespace script
             z.Generate(GridManager);
             z.SetNewSubGrid(Subgrid);
             Instantiate(_prefabDeathPS, transform.position, Quaternion.identity);
+            
+            //TODO - [Refacto]Mettre le control de destruiction dans l'agent
             Destroy(_grabbedTarget.gameObject);
+            StaticData.AddDefenderKill();
+            
             _animator.SetBool("IsGrabbing", false);
             ChangeStat(GridActorStat.Idle);
             if (IsSelected) GameController.AddAgentToSelection.Invoke(z);
@@ -143,7 +148,7 @@ namespace script
 
         protected override void Update() {
             base.Update();
-            _animator.SetFloat("Velocity", Rigidbody.velocity.magnitude/_maxMoveSpeed);
+            _animator.SetFloat("Velocity", Rigidbody.linearVelocity.magnitude/_maxMoveSpeed);
         }
 
         private void OnCollisionEnter(Collision other) {
@@ -151,7 +156,7 @@ namespace script
                 if (other.gameObject.GetComponent<IDestructible>()!=null) {
                     _desctructibleTarget = other.gameObject.GetComponent<IDestructible>();
                     ChangeStat(GridActorStat.Attack);
-                    Rigidbody.velocity = Vector3.zero;
+                    Rigidbody.linearVelocity = Vector3.zero;
                     transform.forward = other.transform.position -transform.position;
                     Rigidbody.isKinematic = true;
                     return;
