@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using Unity.Cinemachine;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
@@ -14,6 +15,7 @@ namespace script
         public int HP;
         public GameObject PrefabsDestruciotnParticules;
         public List<Vector2Int> CellsCoordinates = new List<Vector2Int>();
+        [SerializeField] private CinemachineImpulseSource _impulseSource;
         [Header("Spawn Parameters")]
         public int zombitToSpawn = 4;
         public Vector3 SpawnOffset = new Vector3(0, 0.5f, 0);
@@ -47,8 +49,11 @@ namespace script
             if (prefabsDebrie) Instantiate(prefabsDebrie, transform.position, transform.rotation);
             if( PrefabsDestruciotnParticules)Instantiate(PrefabsDestruciotnParticules, transform.position, transform.rotation);
             ManageZombiSpawn();
-            StaticData.HouseDestroy();
-            Destroy(gameObject);
+            StaticData.BuildingDestroy();
+            if (_impulseSource) _impulseSource.GenerateImpulse();
+            GetComponentInChildren<Renderer>().enabled=false;
+            GetComponentInChildren<Collider>().enabled=false;
+            Destroy(gameObject,0.5f);
         }
         [ExecuteInEditMode]
         private void OnDestroy()

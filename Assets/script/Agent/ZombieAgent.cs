@@ -56,14 +56,14 @@ namespace script
         protected override void Start() {
             StaticData.ZombieCount++;
             StaticData.AddZombie(this);
-            StaticData.OnZombieGain?.Invoke();
+            StaticEvents.OnZombieGain?.Invoke();
             _audioSource.clip = _spawnSound[Random.Range(0, _spawnSound.Length)];
             _audioSource.Play();
             base.Start();
         }
 
         protected override void OnDestroy() {
-            StaticData.ZombieLose();
+            StaticEvents.ZombieLose();
             StaticData.RemoveZombie(this);
             base.OnDestroy();
         } 
@@ -124,8 +124,11 @@ namespace script
             Instantiate(_prefabDeathPS, transform.position, Quaternion.identity);
             
             //TODO - [Refacto]Mettre le control de destruiction dans l'agent
+            if (_grabbedTarget is CivillianAgent) StaticData.AddCivilianKill();
+            else StaticData.AddDefenderKill();
+            
             Destroy(_grabbedTarget.gameObject);
-            StaticData.AddDefenderKill();
+            
             
             _animator.SetBool("IsGrabbing", false);
             ChangeStat(GridActorStat.Idle);

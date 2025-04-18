@@ -8,8 +8,8 @@ public class DebugEndGameTrigger : MonoBehaviour
     private void OnTriggerEnter(Collider other) {
         if (other.gameObject.CompareTag("Zombi")) {
             
-            if( _doWin) StaticData.OnGameWin?.Invoke();
-            else StaticData.OnGameLose?.Invoke();
+            if( _doWin) StaticEvents.OnGameWin?.Invoke();
+            else StaticEvents.OnGameLose?.Invoke();
         }
     }
 }

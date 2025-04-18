@@ -15,7 +15,7 @@ namespace script
         }
 
         public void Destroy() {
-            StaticData.OnGameWin?.Invoke();
+            StaticEvents.OnGameWin?.Invoke();
         }
 
         public bool IsAlive() {

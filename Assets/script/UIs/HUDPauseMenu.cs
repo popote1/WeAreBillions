@@ -41,12 +41,12 @@ public class HUDPauseMenu : MonoBehaviour
         _sliderAudioAmbiance.onValueChanged.AddListener(UISliderAudioAmbianceChange);
         _bpOptionReturn.onClick.AddListener(UIBpOptionReturn);
         
-        StaticData.OnSetGameOnPause+= StaticDataOnOnSetGameOnPause;
+        StaticEvents.OnSetGameOnPause+= StaticDataOnOnSetGameOnPause;
         ClosePauseMenu();
     }
 
     private void OnDestroy() {
-        StaticData.OnSetGameOnPause-= StaticDataOnOnSetGameOnPause;
+        StaticEvents.OnSetGameOnPause-= StaticDataOnOnSetGameOnPause;
     }
 
     private void StaticDataOnOnSetGameOnPause(object sender, bool e) {
@@ -81,12 +81,12 @@ public class HUDPauseMenu : MonoBehaviour
     }
 
     private void UIBpMainMenu() {
-        StaticData.SetPause(false);
+        StaticEvents.SetPause(false);
         SceneManager.LoadScene(0);
     }
 
     private void UIBpRestart() {
-        StaticData.SetPause(false);
+        StaticEvents.SetPause(false);
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
 
@@ -104,7 +104,7 @@ public class HUDPauseMenu : MonoBehaviour
     }
 
     private void UIBpResume() {
-        StaticData.SetGameOnPause(false);
+        StaticEvents.SetGameOnPause(false);
     }
 
     public void OpenPauseMenu() {

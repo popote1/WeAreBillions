@@ -47,12 +47,12 @@ namespace script
                 zombie.Generate(GridManager);
             }
             
-            StaticData.OnSetGameOnPause += DebugOpenMenuPause;
+            StaticEvents.OnSetGameOnPause += DebugOpenMenuPause;
         }
 
         private void OnDestroy()
         {
-            StaticData.OnSetGameOnPause -= DebugOpenMenuPause;
+            StaticEvents.OnSetGameOnPause -= DebugOpenMenuPause;
         }
 
         public void Update()
@@ -443,7 +443,7 @@ namespace script
             }
             else {
                 Debug.Log("Open Menu Pause 0");
-                StaticData.SetGameOnPause();
+                StaticEvents.SetGameOnPause();
             }
         }
 

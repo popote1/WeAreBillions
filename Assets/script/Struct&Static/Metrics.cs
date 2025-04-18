@@ -20,6 +20,18 @@ namespace script
 
         public const float ZombieSpawnOffset =  0.5f;
         
+        // Scoring Parameters
+        public const int SVCiviliansKill = 10;
+        public const int SVDefenderKill = 15;
+        public const int SVBuildingKill = 25;
+
+        public const int SMAlertLvl0 = 1;
+        public const float SMAlertLvl1 = 1.25f;
+        public const float SMAlertLvl2 = 1.5f;
+        public const int SMAlertLvl3 = 2;
+        public const float SMAlertLvl4 = 2.5f;
+        public const int SMAlertLvl5 = 3;
+        
         public  enum UniteType {
             Medium, Light, Heavy
         }

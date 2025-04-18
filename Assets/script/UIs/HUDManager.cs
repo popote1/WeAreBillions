@@ -17,8 +17,8 @@ namespace script.UIs
         private void Start() {
             //StaticData.OnZombieGain += SetZombieValue;
             //StaticData.OnZombieLose += SetZombieValue;
-            StaticData.OnGameWin += PlayWin;
-            StaticData.OnGameLose += PlayLose;
+            StaticEvents.OnGameWin += PlayWin;
+            StaticEvents.OnGameLose += PlayLose;
             _bpMenuPause.onClick.AddListener(ClickOnPauseButton);
         }
 
@@ -26,8 +26,8 @@ namespace script.UIs
         {
             //StaticData.OnZombieGain -= SetZombieValue;
             //StaticData.OnZombieLose -= SetZombieValue;
-            StaticData.OnGameWin -= PlayWin;
-            StaticData.OnGameLose -= PlayLose;
+            StaticEvents.OnGameWin -= PlayWin;
+            StaticEvents.OnGameLose -= PlayLose;
         }
 
         //public void SetZombieValue() {
@@ -48,7 +48,7 @@ namespace script.UIs
         }
         
         private void ClickOnPauseButton() {
-            StaticData.SetGameOnPause(true);
+            StaticEvents.SetGameOnPause(true);
         }
         
     }

@@ -19,12 +19,12 @@ namespace script.UIs
         private Vector3 _camStarPos;
         private Vector3 _camBeginingPos;
         private void Start() {
-            StaticData.OnPlayDialogue+= StaticDataOnOnPlayDialogue;
+            StaticEvents.OnPlayDialogue+= StaticDataOnOnPlayDialogue;
             _hudDialoguePanel.SetActive(false);
         }
 
         private void OnDestroy() {
-            StaticData.OnPlayDialogue-= StaticDataOnOnPlayDialogue;
+            StaticEvents.OnPlayDialogue-= StaticDataOnOnPlayDialogue;
         }
 
         private void StaticDataOnOnPlayDialogue(object sender, DialogueStep[] e) {
@@ -35,7 +35,7 @@ namespace script.UIs
             _currentDialogue = dialogue;
             _currentStep = 0;
             _camBeginingPos = _cameratargetController.transform.position;
-            StaticData.SetPause(true);
+            StaticEvents.SetPause(true);
             StaticData.BlockControls = true;
             StartPlayingStep(_currentDialogue[_currentStep]);
         }
@@ -89,7 +89,7 @@ namespace script.UIs
             _currentDialogue = null;
             _hudDialoguePanel.SetActive(false);
             StaticData.BlockCameraMovement = false;
-            StaticData.SetPause(false);
+            StaticEvents.SetPause(false);
             StaticData.BlockControls = false;
         }
     }

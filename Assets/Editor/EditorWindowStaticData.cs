@@ -20,6 +20,7 @@ public class EditorWindowStaticData : EditorWindow
         DisplayInfo("Zombie Count", StaticData.zombieCount.ToString());
         DisplayInfo("ZombieMaxCount", StaticData.zombieMaxCount.ToString());
         DisplayInfo("Civilians", StaticData.CiviliansCounts.ToString());
+        DisplayInfo("CiviliansKills", StaticData.CiviliansKills.ToString());
         DisplayInfo("Defenders", StaticData.DefendersCount.ToString());
         DisplayInfo("DefendersKills", StaticData.DefendersKill.ToString());
         DisplayInfo("BuildingDestroy", StaticData.DestroyBuilding.ToString());

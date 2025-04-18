@@ -7,12 +7,7 @@ using UnityEngine;
 
 namespace script {
     public static class StaticData {
-        public static Action OnGameWin;
-        public static Action OnGameLose;
-
-        public static Action OnZombieGain;
-        public static Action OnZombieLose;
-
+  
         public static int ZombieCount;
         
         public static Vector3 CameraMoveVector = Vector3.zero;
@@ -35,6 +30,7 @@ namespace script {
         public static int zombieCount => _zombieCount;
         public static int zombieMaxCount => _zombieMaxCount;
         public static int CiviliansCounts => _civiliansCounts;
+        public static int CiviliansKills => _civiliansKills;
         public static int DefendersCount => _defendersCount;
         public static int DefendersKill => _defendersKill;
         public static int BuildingsCount => _buildingsCounts;
@@ -58,6 +54,7 @@ namespace script {
         private static int _zombieCount = 0;
         private static int _zombieMaxCount = 0;
         private static int _civiliansCounts = 0;
+        private static int _civiliansKills = 0;
         private static int _defendersKill = 0; 
         private static int _defendersCount = 0;
         private static int _buildingsCounts = 0;
@@ -71,46 +68,27 @@ namespace script {
         private static float _timeInAlertLVL3 = 0;
         private static float _timeInAlertLVL4 = 0;
         private static float _timeInAlertLVL5 = 0;
-
-        public static event EventHandler<bool> OnSetGameOnPause;
-        public static event EventHandler<DialogueStep[]> OnPlayDialogue;
-
+        
         public static string GetGameTime() {
             int sec = Mathf.FloorToInt(_gameTimer % 60);
             int minute = Mathf.FloorToInt((_gameTimer/60) % 60);
             return minute + " Min  " + sec + " Sec";
         }
-        
-        public static void HouseDestroy() =>_destroyBuildingsCounts++;
-        public static void DestroyElement() => _destroyElements++; 
-        
-        public static void SetGameOnPause() {
-            GamePause = !GamePause;
-            SetPause(GamePause);
-            
-            OnSetGameOnPause?.Invoke(new object(), GamePause);
-        }
-        public static void SetGameOnPause(bool value) {
-            GamePause = value;
-            SetPause(GamePause);
-            OnSetGameOnPause?.Invoke(new object(), GamePause);
+
+        public static void BuildingDestroy()
+        {
+            _destroyBuildingsCounts++;
+            StaticScoringSystem.AddBuildingDestroy();
         }
 
+        public static void DestroyElement() => _destroyElements++; 
+        
         public static void SetCurrentAlertLevel(int lvl)
         {
             _currentAlertLVL = lvl;
             if (_alertMaxLVL < _currentAlertLVL) _alertMaxLVL = _currentAlertLVL;
         }
 
-        public static void StartPlayingDialogue(DialogueStep[] dialogueSteps) {
-            OnPlayDialogue?.Invoke(null,dialogueSteps);
-        }
-
-        public static void ZombieLose() {
-            ZombieCount--;
-            OnZombieLose?.Invoke();
-            if( ZombieCount<=0) OnGameLose?.Invoke();
-        }
 
         public static void AddZombie(ZombieAgent zombie) {
             if (_allZombieAgents == null) _allZombieAgents = new List<ZombieAgent>();
@@ -137,12 +115,7 @@ namespace script {
             _allHouses.Add(house);
             _buildingsCounts++;
         }
-
-        public static void SetPause(bool value) {
-            if (value) Time.timeScale = 0;
-            else Time.timeScale = 1;
-        }
-
+        
         public static void ManageGameTimer(float deltaTime) {
             _gameTimer += deltaTime;
             switch (_currentAlertLVL) {
@@ -154,9 +127,15 @@ namespace script {
             }
         }
 
-        public static void AddDefenderKill()
-        {
+        public static void AddDefenderKill() {
             _defendersKill++;
+            StaticScoringSystem.AddDefenderKill();
+        }
+
+        public static void AddCivilianKill()
+        {
+            _civiliansKills++;
+            StaticScoringSystem.AddCiviliansKill();
         }
 
 
@@ -170,5 +149,33 @@ namespace script {
 
             if (_zombieCount > _zombieMaxCount) _zombieMaxCount = _zombieCount;
         }
+        
+        //public static void SetPause(bool value) {
+        //    if (value) Time.timeScale = 0;
+        //    else Time.timeScale = 1;
+        //}
+        
+        
+        //public static void StartPlayingDialogue(DialogueStep[] dialogueSteps) {
+        //    OnPlayDialogue?.Invoke(null,dialogueSteps);
+        //}
+
+        //public static void ZombieLose() {
+        //    ZombieCount--;
+        //    OnZombieLose?.Invoke();
+        //    if( ZombieCount<=0) OnGameLose?.Invoke();
+        //}
+        
+        //public static void SetGameOnPause() {
+        //    GamePause = !GamePause;
+        //    SetPause(GamePause);
+        //    
+        //    OnSetGameOnPause?.Invoke(new object(), GamePause);
+        //}
+        //public static void SetGameOnPause(bool value) {
+        //    GamePause = value;
+        //    SetPause(GamePause);
+        //    OnSetGameOnPause?.Invoke(new object(), GamePause);
+        //}
     }
 }
