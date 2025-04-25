@@ -21,6 +21,7 @@ namespace script {
         public static float AudioVolumeSFX = 1;
         public static float AudioVolumeAmbiances = 0.5f;
 
+        // Accesors
         public static List<ZombieAgent> AllZombies=> _allZombieAgents;
         public static int GridAgentsCounts { get {
                 if (_allGridAgents == null) return 0;
@@ -44,10 +45,22 @@ namespace script {
         public static float TimeInAlertLevel3 => _timeInAlertLVL3;
         public static float TimeInAlertLevel4 => _timeInAlertLVL4;
         public static float TimeInAlertLevel5 => _timeInAlertLVL5;
+        public static ZombieAgent PrefabZombieStandardAgent=> _prefabZombieStandardAgent;
+        public static ZombieAgent PrefabZombieBruteAgent => _prefabZombieBruteAgent;
+        public static ZombieAgent PrefabZombieEngineerAgent=> _prefabZombieEngineerAgent;
+        public static float ZombieSpawnChangeStandrard => _zombieSpawnChangeStandrard;
+        public static float ZombieSpawnChangeBrute => _zombieSpawnChangeBrute;
+        public static float ZombieSpawnChangeEngineer => _zombieSpawnChangeEngineer;
         
-
-
-
+        
+        // Private Data
+        private static float _zombieSpawnChangeStandrard = 1;
+        private static float _zombieSpawnChangeBrute = 1;
+        private static float _zombieSpawnChangeEngineer = 1;
+        private static ZombieAgent _prefabZombieStandardAgent;
+        private static ZombieAgent _prefabZombieBruteAgent;
+        private static ZombieAgent _prefabZombieEngineerAgent;
+        // Counters
         private static List<ZombieAgent> _allZombieAgents;
         private static List<GridAgent> _allGridAgents;
         private static List<House> _allHouses;
@@ -87,6 +100,18 @@ namespace script {
         {
             _currentAlertLVL = lvl;
             if (_alertMaxLVL < _currentAlertLVL) _alertMaxLVL = _currentAlertLVL;
+        }
+
+        public static void SetZombiePrefabs(ZombieAgent standard, ZombieAgent brute, ZombieAgent engineer) {
+            _prefabZombieStandardAgent = standard;
+            _prefabZombieBruteAgent = brute;
+            _prefabZombieEngineerAgent = engineer;
+        }
+
+        public static void SetZombieSpawnChange(float standardZombie, float bruteZombie,float engineerZombie) {
+            _zombieSpawnChangeStandrard = standardZombie;
+            _zombieSpawnChangeBrute = bruteZombie;
+            _zombieSpawnChangeEngineer = engineerZombie;
         }
 
 
@@ -136,6 +161,10 @@ namespace script {
         {
             _civiliansKills++;
             StaticScoringSystem.AddCiviliansKill();
+        }
+
+        public static void AddInHouseCivilians(int count) {
+            _civiliansCounts += count;
         }
 
 

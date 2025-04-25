@@ -68,6 +68,7 @@ MeshRenderer:
   m_RayTraceProcedural: 0
   m_RayTracingAccelStructBuildFlagsOverride: 0
   m_RayTracingAccelStructBuildFlags: 1
+  m_SmallMeshCulling: 1
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -108,6 +109,7 @@ MonoBehaviour:
   GridManager: {fileID: 0}
   _animator: {fileID: 7194648810330254502}
   Rigidbody: {fileID: 6032425623059702544}
+  AgentName: Zombie
   _maxHp: 5
   _uniteType: 0
   _canBeTransform: 0
@@ -148,9 +150,11 @@ MonoBehaviour:
   - {fileID: 8300000, guid: aa985475b2f21fe4880dccc2f26b1aa2, type: 3}
   - {fileID: 8300000, guid: bd34efc49cdbd8847bcaff2f74af6bbf, type: 3}
   _dieSound: []
-  _totalTransformationTime: 0
-  _transformationMod: 1
-  _prefabZombieAgent: {fileID: 2444219041533692552}
+  _transformData:
+    TransformationMod: 1
+    SpecialTransformations:
+    - UniteType: 1
+      TransformationMod: 0.5
 --- !u!136 &1891030187320269572
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -622,6 +626,7 @@ SpriteRenderer:
   m_RayTraceProcedural: 0
   m_RayTracingAccelStructBuildFlagsOverride: 0
   m_RayTracingAccelStructBuildFlags: 1
+  m_SmallMeshCulling: 1
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:

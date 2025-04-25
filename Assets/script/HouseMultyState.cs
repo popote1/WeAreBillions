@@ -17,6 +17,8 @@ namespace script
         public int zombitToSpawn = 4;
         public Vector3 SpawnOffset = new Vector3(0, 0.5f, 0);
         public float RandomRange = 1;
+        
+        
         [Header(("Sounds"))] public AudioSource AudioSource;
         public AudioClip[] HitSounds;
 
@@ -36,24 +38,24 @@ namespace script
 
         public void ClearCellCoordinateData() => CellsCoordinates.Clear();
         
-        public void TakeDamage(int damage)
+        public void TakeDamage(int damage, GridAgent source)
         {
             if (HP <= 0) return;
             HP -= damage;
             if (HP <= 0)
             {
-                Destroy();
+                DestroyDestructible();
             }
             CheckHomeVisualStats();
         }
 
-        public void Destroy()
+        public void DestroyDestructible(GridAgent source = null)
         {
             //if (prefabsDebrie) Instantiate(prefabsDebrie, transform.position, transform.rotation);
             if( PrefabsDestruciotnParticules)Instantiate(PrefabsDestruciotnParticules, transform.position, transform.rotation);
             Collider.enabled = false;
             ManageZombiSpawn();
-            //Destroy(gameObject);
+            //DestroyBuilding(gameObject);
             
         }
         [ExecuteInEditMode]

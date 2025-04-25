@@ -112,7 +112,7 @@ namespace script
         //        z.Generate(GridManager);
         //        Instantiate(PrefabsDeathPS, transform.position, Quaternion.identity);
         //        AudioSource.PlayClipAtPoint(GetKill[Random.Range(0,GetKill.Length)], transform.position);
-        //        Destroy(gameObject);
+        //        DestroyBuilding(gameObject);
         //    }
         //}
 

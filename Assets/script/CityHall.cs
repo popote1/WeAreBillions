@@ -5,16 +5,16 @@ namespace script
     public class CityHall :MonoBehaviour , IDestructible
     {
         public int HP;
-        public void TakeDamage(int damage)
+        public void TakeDamage(int damage, GridAgent source = null)
         {
             if (HP <= 0) return;
             HP -= damage;
             if (HP <= 0) {
-                Destroy();
+                DestroyDestructible();
             }
         }
 
-        public void Destroy() {
+        public void DestroyDestructible(GridAgent source = null) {
             StaticEvents.OnGameWin?.Invoke();
         }
 

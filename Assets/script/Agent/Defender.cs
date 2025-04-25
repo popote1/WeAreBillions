@@ -53,8 +53,8 @@ public class Defender: GridAgent
         _alertCallingTimer = 0;
     } 
 
-    public override void SetAsGrabbed() {
+    public override void SetAsGrabbed(bool grabed = true) {
         EndAlertCalling();
-        base.SetAsGrabbed();
+        base.SetAsGrabbed(grabed);
     }
 }

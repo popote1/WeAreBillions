@@ -34,7 +34,7 @@ namespace script
         private bool _isInSelectionBox;
         private Vector2 _startSelectionBox;
 
-        public event EventHandler<List<GridAgent>> OnSelectionChange; 
+        //public event EventHandler<List<GridAgent>> OnSelectionChange; 
         public static Action<GridAgent> AddAgentToSelection; 
         
         private void Start() {
@@ -48,7 +48,10 @@ namespace script
             }
             
             StaticEvents.OnSetGameOnPause += DebugOpenMenuPause;
+            StaticEvents.OnSubmitSelectionChange+= StaticEventsOnOnSubmitSelectionChange; 
         }
+
+        
 
         private void OnDestroy()
         {
@@ -57,8 +60,6 @@ namespace script
 
         public void Update()
         {
-            
-            
             
             if (StaticData.BlockControls) return;
             ManageBorderCameraMovement();
@@ -191,13 +192,13 @@ namespace script
         }
 
         private void ManageRayCastSelection() {
+            if (EventSystem.current.IsPointerOverGameObject()) return;
             RaycastHit hit;
             if(Physics.Raycast(Camera.ScreenPointToRay(Input.mousePosition), out hit)) {
                 ClearSelection();
                 if (hit.collider.GetComponent<ZombieAgent>()) {
                     Selected = new List<GridAgent>() {hit.collider.GetComponent<ZombieAgent>()};
-                    Selected[0].IsSelected = true;
-                    OnSelectionChange?.Invoke(this, Selected);
+                    SetSelection(Selected);
                 }
             }
         }
@@ -275,7 +276,7 @@ namespace script
                 Selected.Add(other.GetComponent<ZombieAgent>());
                 other.GetComponent<ZombieAgent>().IsSelected = true;
             }
-            OnSelectionChange?.Invoke(this, Selected);
+            StaticEvents.ChangeSelection(Selected);
             
         }
         private void ManagerGiveMoveOrder(Cell targetCell) {
@@ -416,14 +417,25 @@ namespace script
                 if (zombie != null) zombie.IsSelected = false;
             }
             Selected.Clear();
-            OnSelectionChange?.Invoke(this, Selected);
+            StaticEvents.ChangeSelection(Selected);
         }
 
         public void AddGridAGentToSelection(GridAgent gridAgent) {
             if (gridAgent == null) return;
             Selected.Add(gridAgent);
             gridAgent.IsSelected = true;
-            OnSelectionChange?.Invoke(this, Selected);
+            StaticEvents.ChangeSelection(Selected);
+        }
+
+        public void SetSelection(List<GridAgent> selection)
+        {
+            ClearSelection();
+            foreach (var gridAgent in selection) {
+                gridAgent.IsSelected = true;
+            }
+
+            Selected = selection;
+            StaticEvents.ChangeSelection(selection);
         }
 
         private void ManageBorderCameraMovement()
@@ -456,6 +468,10 @@ namespace script
             foreach (var zombie in StaticData.AllZombies) {
                 AddGridAGentToSelection(zombie);
             }
+        }
+        
+        private void StaticEventsOnOnSubmitSelectionChange(object sender, List<GridAgent> e) {
+            SetSelection(e);
         }
 
         private bool CanBeSelectBox(Vector2 a, Vector2 b) {

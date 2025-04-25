@@ -117,7 +117,7 @@ namespace script
         //        ZombieAgent z =Instantiate(PrefabsZombieAgent, transform.position, quaternion.identity);
         //        z.Generate(GridManager);
         //        Instantiate(PrefabsDeathPS, transform.position, Quaternion.identity);
-        //        Destroy(gameObject);
+        //        DestroyBuilding(gameObject);
         //    }
         //}
         private void ManageStamina() {

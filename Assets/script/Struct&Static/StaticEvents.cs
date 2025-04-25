@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace script
@@ -13,6 +14,9 @@ namespace script
     
         public static event EventHandler<bool> OnSetGameOnPause;
         public static event EventHandler<DialogueStep[]> OnPlayDialogue;
+        public static event EventHandler<List<GridAgent>> OnSelectionChange;
+        public static event EventHandler<List<GridAgent>> OnSubmitSelectionChange;
+        
     
         public static void ZombieLose() {
             StaticData.ZombieCount--;
@@ -38,6 +42,16 @@ namespace script
         
         public static void StartPlayingDialogue(DialogueStep[] dialogueSteps) {
             OnPlayDialogue?.Invoke(null,dialogueSteps);
+        }
+
+        public static void SubmitSelection(List<GridAgent> newSelection)
+        {
+            OnSubmitSelectionChange?.Invoke(null, newSelection);
+        }
+
+        public static void ChangeSelection(List<GridAgent> selection)
+        {
+            OnSelectionChange?.Invoke(null, selection);
         }
     }
 }

@@ -12,7 +12,8 @@ public class GridAgent : MonoBehaviour
     [SerializeField] protected Animator _animator;
     [SerializeField] protected Rigidbody Rigidbody;
 
-    [Header("Caracteristics")] 
+    [Header("Caracteristics")]
+    public string AgentName;
     [SerializeField] protected int _maxHp;
     [SerializeField] protected Metrics.UniteType _uniteType;
     [SerializeField] private bool _canBeTransform=true;
@@ -58,7 +59,6 @@ public class GridAgent : MonoBehaviour
     public enum GridActorStat {
         Idle, Move, Attack , Grabed, Transforming, CallingAlert
     }
-    
     public bool IsSelected {
         get => _isSelected;
         set {
@@ -66,7 +66,11 @@ public class GridAgent : MonoBehaviour
             _isSelected = value;
         }
     }
+    public void Generate(GridManager gridManager) => GridManager = gridManager;
 
+    public virtual void KillAgent() {
+        Destroy(gameObject);
+    }
     protected virtual void Start() {
         _collider = GetComponent<Collider>();
         if (GridManager == null) GridManager = GridManager.Instance;
@@ -76,14 +80,9 @@ public class GridAgent : MonoBehaviour
         if( _usWondering)_wonderingDelay = Random.Range(_wonderringDelayMin, _wonderringDelayMax);
         StaticData.AddGridAgent(this);
     }
-
     protected virtual void OnDestroy() {
         StaticData.RemoveGridAgent(this);
     }
-
-
-    public void Generate(GridManager gridManager) => GridManager = gridManager;
-    
     protected virtual void Update() {
         ManageSelfElevation();
         ManageOrientation();
@@ -91,7 +90,6 @@ public class GridAgent : MonoBehaviour
 
         _animator.SetFloat("Velocity", Rigidbody.linearVelocity.magnitude/_maxMoveSpeed);
     }
-
     protected virtual void ManageStat() {
         switch (Stat) {
             case GridActorStat.Idle: ManageIdle(); break;
@@ -103,16 +101,12 @@ public class GridAgent : MonoBehaviour
             default: throw new ArgumentOutOfRangeException();
         }
     }
-
-    
-
     protected virtual void ManageSelfElevation() {
         RaycastHit hit;
         if (Physics.Raycast(new Ray(transform.position+Vector3.up*3, Vector3.down), out hit, 6, GroundLayer)) {
             transform.position = new Vector3(transform.position.x, hit.point.y + HeightOffSetting, transform.position.z);
         }
     }
-
     protected virtual void ManageOrientation()
     {
         if (Rigidbody.linearVelocity.magnitude > 0.5f) {
@@ -145,18 +139,15 @@ public class GridAgent : MonoBehaviour
             Rigidbody.linearVelocity -= Rigidbody.linearVelocity * _speedModulator;
         }
     }
-
     protected virtual float GetMoveSpeed() {
         return _moveSpeed;
     }
-
     protected virtual void GetToMoveTarget() {
         Subgrid = Subgrid.NextSubGrid;
         if (Subgrid == null) ChangeStat( GridActorStat.Idle);
         
         if (_usWondering) RestWonderingTimers();
     }
-    
     protected virtual void ManagerRecalculationOrExtraPathToSubGrid(Cell currentPos) {
         List<Chunk> path =GridManager.GetAStartPath(currentPos.Chunk,
             GridManager.GetCellFromPos(Subgrid.TargetPos).Chunk);
@@ -166,7 +157,6 @@ public class GridAgent : MonoBehaviour
         }
         Subgrid.AddChunksToSubGrid(path.ToArray());
     }
-
     public virtual void SetNewSubGrid(Subgrid subgrid) {
         if (subgrid != null) {
             Subgrid = subgrid;
@@ -176,16 +166,11 @@ public class GridAgent : MonoBehaviour
     protected virtual void ManageIdle() {
         if (_usWondering)ManageWondering();
     }
-    
     protected virtual void ManageMove(){}
-
     protected virtual void ManageAttack(){}
-
     protected virtual void ManageGrabbed(){}
-    
     protected virtual void ManageTransformation() { }
     protected virtual void ManageAlertCalling(){}
-    
     protected virtual void ChangeStat(GridActorStat stat) {
         if ((Stat == GridActorStat.Attack||Stat == GridActorStat.CallingAlert) && Subgrid != null && stat == GridActorStat.Idle) {
             ChangeStat(GridActorStat.Move);
@@ -196,14 +181,12 @@ public class GridAgent : MonoBehaviour
         if (Stat == GridActorStat.Move) Rigidbody.linearDamping = _moveDrag;
         else Rigidbody.linearDamping = _stopDrag;
     }
-
-    public virtual void SetAsGrabbed()
-    {
-        _animator.SetBool("IsGrabbed", true);
-        ChangeStat(GridActorStat.Grabed);
-        _collider.enabled = false;
+    public virtual void SetAsGrabbed(bool grabed = true) {
+        if (grabed) ChangeStat(GridActorStat.Grabed);
+        else ChangeStat(GridActorStat.Idle);
+        _animator.SetBool("IsGrabbed", grabed);
+        _collider.enabled = !grabed;
     }
-
 
     #region Wondering Parameters
 
