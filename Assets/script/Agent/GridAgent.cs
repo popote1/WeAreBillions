@@ -46,8 +46,7 @@ public class GridAgent : MonoBehaviour
     public float TransformTime { get => _transformationTime; }
     public float MaxMoveSpeed => _maxMoveSpeed;
     public float HP => _maxHp;
-    public Metrics.UniteType UniteTyp=> _uniteType;
-    
+
     protected bool _isSelected;
     protected float _wonderingTimer;
     protected float _wonderingDelay;
@@ -87,8 +86,20 @@ public class GridAgent : MonoBehaviour
         ManageSelfElevation();
         ManageOrientation();
         ManageStat();
+        ManageVelocityToAnimator();
+        
+    }
 
+    protected virtual void ManageVelocityToAnimator() {
         _animator.SetFloat("Velocity", Rigidbody.linearVelocity.magnitude/_maxMoveSpeed);
+    }
+    
+    public virtual void TakeDamage(int damage) {
+        _hp -= damage;
+        if (_hp <= 0) {
+            KillAgent();
+        }
+        _animator.SetBool("TakeDamage", true);
     }
     protected virtual void ManageStat() {
         switch (Stat) {

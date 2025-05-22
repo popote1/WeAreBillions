@@ -72,7 +72,7 @@ public class UnitStartOrder : MonoBehaviour
 
                 if (i == targetCells.Length - 1 && IsLoop) currentSubgrid.NextSubGrid = subgrids[0];
                 //previousOrder = currentSubgrid;
-                Debug.Log("Target index ="+i+ "  is at corrodonate"+ targetCells[i].WordPos);
+                Debug.Log("_target index ="+i+ "  is at corrodonate"+ targetCells[i].WordPos);
             }
             
             

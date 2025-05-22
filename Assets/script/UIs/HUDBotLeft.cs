@@ -43,7 +43,7 @@ namespace script.UIs
             _txtInspectorHP.text = zombieAgent.HP.ToString();
             _txtInspectorSpeed.text = zombieAgent.MaxMoveSpeed.ToString();
             _txtInspectorAttack.text = ((ZombieAgent)zombieAgent).Attack.Damage.ToString();
-            _txtInspectorKeyWord.text = zombieAgent.UniteTyp.ToString();
+            _txtInspectorKeyWord.text = zombieAgent.UniteType.ToString();
             _panelInfo.SetActive(true);
         }
 

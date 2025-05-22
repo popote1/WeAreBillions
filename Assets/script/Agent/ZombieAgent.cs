@@ -56,13 +56,7 @@ namespace script
         public float GetNormalizeTransformation() =>  _transformationTimer / _totalTransformationTime;
         public bool IsTransforming() => _isTransformting;
 
-        public void TakeDamage(int damage) {
-            _hp -= damage;
-            if (_hp <= 0) {
-                KillAgent();
-            }
-            _animator.SetBool("TakeDamage", true);
-        }
+        
 
         public override void KillAgent() {
             if( _grabbedTarget!=null)_grabbedTarget.SetAsGrabbed(false);

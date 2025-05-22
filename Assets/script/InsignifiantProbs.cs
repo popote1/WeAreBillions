@@ -15,6 +15,9 @@ public class InsignifiantProbs : MonoBehaviour
         if (other.gameObject.CompareTag("Zombi")) {
             Destroy();
         }
+        if (other.gameObject.CompareTag("Defender")) {
+            Destroy();
+        }
     }
     
     public void Destroy() {

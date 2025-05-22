@@ -429,6 +429,7 @@ MeshRenderer:
   m_RayTraceProcedural: 0
   m_RayTracingAccelStructBuildFlagsOverride: 0
   m_RayTracingAccelStructBuildFlags: 1
+  m_SmallMeshCulling: 1
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -732,6 +733,7 @@ MeshRenderer:
   m_RayTraceProcedural: 0
   m_RayTracingAccelStructBuildFlagsOverride: 0
   m_RayTracingAccelStructBuildFlags: 1
+  m_SmallMeshCulling: 1
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -825,6 +827,7 @@ MeshRenderer:
   m_RayTraceProcedural: 0
   m_RayTracingAccelStructBuildFlagsOverride: 0
   m_RayTracingAccelStructBuildFlags: 1
+  m_SmallMeshCulling: 1
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -888,6 +891,7 @@ MonoBehaviour:
   GridManager: {fileID: 0}
   _animator: {fileID: 6326999831858152543}
   Rigidbody: {fileID: 3691186380955031167}
+  AgentName: 
   _maxHp: 0
   _uniteType: 0
   _canBeTransform: 1
@@ -912,18 +916,14 @@ MonoBehaviour:
   _durationOfCall: 4
   _alertIncrease: 30
   _alertCheckRadius: 7
+  _attackRange: 0
+  _pSAttack: {fileID: 0}
+  _target: {fileID: 0}
+  _triggerZoneDetector: {fileID: 7844174340184348046}
   _attack:
     AttackSpeed: 1
     Damage: 2
     SpecialAttacks: []
-  TriggerZoneDetector: {fileID: 7844174340184348046}
-  AttackRange: 8
-  PSAttack: {fileID: 8454415356243146928}
-  Target: {fileID: 0}
-  PrefabsZombieAgent: {fileID: 2444219041533692552, guid: adf5d6fdbd056e04790ca9363b48d07c,
-    type: 3}
-  PrefabsDeathPS: {fileID: 540054392838581951, guid: 0af1e0599763dda47be91aad1e77c51d,
-    type: 3}
   AudioSource: {fileID: 6611084924604183865}
   ShotingSound:
   - {fileID: 8300000, guid: 58c6f97dea5e92d4fb4558b0857f714f, type: 3}
@@ -1269,12 +1269,6 @@ PrefabInstance:
 --- !u!4 &1256882126122508873 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 9055978687551862809, guid: d159a3b0ca34adf4f9784a77b188f36c,
-    type: 3}
-  m_PrefabInstance: {fileID: 7844174341294561872}
-  m_PrefabAsset: {fileID: 0}
---- !u!198 &8454415356243146928 stripped
-ParticleSystem:
-  m_CorrespondingSourceObject: {fileID: 1839728117743248096, guid: d159a3b0ca34adf4f9784a77b188f36c,
     type: 3}
   m_PrefabInstance: {fileID: 7844174341294561872}
   m_PrefabAsset: {fileID: 0}

@@ -1,6 +1,6 @@
 ﻿using System;
+using script;
 using UnityEngine;
-using UnityEngine.EventSystems;
 using Random = UnityEngine.Random;
 
 public class Defender: GridAgent
@@ -10,16 +10,22 @@ public class Defender: GridAgent
     [SerializeField] protected float _durationOfCall = 4;
     [SerializeField] protected float _alertIncrease = 30;
     [SerializeField] protected float _alertCheckRadius = 3;
-    
+    [Header("AttackParameters")] 
+    [SerializeField] protected float _attackRange;
+    [SerializeField] protected ParticleSystem _pSAttack;
+    [SerializeField] protected ZombieAgent _target;
+    [SerializeField] protected TriggerZoneDetector _triggerZoneDetector;
     [SerializeField] protected AttackStruct _attack;
     
 
     public bool IsCallingAlert => Stat == GridActorStat.CallingAlert;
     public float AlertCallProgress => _alertCallingTimer / _durationOfCall;
     public float AlertCheckRadius => _alertCheckRadius;
+    public float AttackRange => _attackRange;
 
     protected bool _hadAlertCalling;
     protected float _alertCallingTimer;
+    protected float _attackTimer;
 
     public event EventHandler<bool> OnChangeAlertCallingStat;
 
