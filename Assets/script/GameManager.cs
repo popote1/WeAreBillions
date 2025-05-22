@@ -19,4 +19,9 @@ public class GameManager : MonoBehaviour
     void Update() {
         StaticData.ManageGameTimer(Time.deltaTime);
     }
+    
+    [ContextMenu("TestSave")]
+    public void TestSave() {
+        StaticSaveSystem.SaveGame();
+    }
 }

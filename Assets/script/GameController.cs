@@ -99,7 +99,7 @@ namespace script
             
             
             
-            if (Input.GetKeyDown(KeyCode.A)) {
+            if (Input.GetKeyDown(KeyCode.A)&& StaticData.CheatEnableZombieSpawning) {
                 RaycastHit hit;
                 if (Physics.Raycast(Camera.ScreenPointToRay(Input.mousePosition), out hit)) {
                     Cell cell = GridManager.GetCellFromWorldPos(hit.point);

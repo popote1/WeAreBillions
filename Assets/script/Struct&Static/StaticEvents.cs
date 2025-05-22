@@ -53,5 +53,10 @@ namespace script
         {
             OnSelectionChange?.Invoke(null, selection);
         }
+
+        public static void EndGame(bool isWin) {
+            if (isWin) OnGameWin?.Invoke();
+            else OnGameLose?.Invoke();
+        }
     }
 }

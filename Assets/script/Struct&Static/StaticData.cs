@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Runtime.CompilerServices;
 using JetBrains.Annotations;
+using UnityEditor;
 using UnityEngine;
 
 
@@ -15,12 +17,22 @@ namespace script {
         public static bool AllowCameraHeight = true;
         public static bool BlockControls = false;
         public static bool GamePause = false;
+        public static bool CheatEnableZombieSpawning = false;
 
+        // --------Options--------//
+        //Audio
         public static float AudioVolumeMaster = 1;
         public static float AudioVolumeMusic = 1;
         public static float AudioVolumeSFX = 1;
         public static float AudioVolumeAmbiances = 0.5f;
-
+        //Control
+        public static float ControlCameraPanningSpeed =1;
+        public static float ControlCameraKeyboardSpeed =1;
+        //GamePlay
+        public static bool GamePlayAllowCheatMenu =true;
+        //------------------------//
+        
+        
         // Accesors
         public static List<ZombieAgent> AllZombies=> _allZombieAgents;
         public static int GridAgentsCounts { get {
@@ -81,7 +93,11 @@ namespace script {
         private static float _timeInAlertLVL3 = 0;
         private static float _timeInAlertLVL4 = 0;
         private static float _timeInAlertLVL5 = 0;
+
+
         
+        public static event EventHandler OptionsUpdate;
+        public static void OnOptionUpdateInvoke() => OptionsUpdate?.Invoke(null, EventArgs.Empty);
         public static string GetGameTime() {
             int sec = Mathf.FloorToInt(_gameTimer % 60);
             int minute = Mathf.FloorToInt((_gameTimer/60) % 60);
