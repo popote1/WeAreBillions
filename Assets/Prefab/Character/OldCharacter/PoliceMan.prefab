@@ -672,7 +672,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Zombis: []
-  MaxDistance: 0
+  MaxDistance: 7
 --- !u!1 &7844174341424121630
 GameObject:
   m_ObjectHideFlags: 0
@@ -916,8 +916,8 @@ MonoBehaviour:
   _durationOfCall: 4
   _alertIncrease: 30
   _alertCheckRadius: 7
-  _attackRange: 0
-  _pSAttack: {fileID: 0}
+  _attackRange: 7
+  _pSAttack: {fileID: 8454415356243146928}
   _target: {fileID: 0}
   _triggerZoneDetector: {fileID: 7844174340184348046}
   _attack:
@@ -1269,6 +1269,12 @@ PrefabInstance:
 --- !u!4 &1256882126122508873 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 9055978687551862809, guid: d159a3b0ca34adf4f9784a77b188f36c,
+    type: 3}
+  m_PrefabInstance: {fileID: 7844174341294561872}
+  m_PrefabAsset: {fileID: 0}
+--- !u!198 &8454415356243146928 stripped
+ParticleSystem:
+  m_CorrespondingSourceObject: {fileID: 1839728117743248096, guid: d159a3b0ca34adf4f9784a77b188f36c,
     type: 3}
   m_PrefabInstance: {fileID: 7844174341294561872}
   m_PrefabAsset: {fileID: 0}

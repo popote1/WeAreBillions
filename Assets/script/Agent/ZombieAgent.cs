@@ -14,6 +14,7 @@ namespace script
     public class ZombieAgent : GridAgent {
         [Header("Zombie Parameters")] 
         [SerializeField]private GameObject _prefabDeathPS;
+        [SerializeField] private VFXBloodSpalterController _prefabBloodSplater; 
         [Header("Attack Parameters")] 
         [SerializeField] private AttackStruct _attack;
         [SerializeField] private GameObject _prefabsAttackEffect;
@@ -61,7 +62,11 @@ namespace script
         public override void KillAgent() {
             if( _grabbedTarget!=null)_grabbedTarget.SetAsGrabbed(false);
             Instantiate(_prefabDeathPS, transform.position, Quaternion.identity);
+            VFXBloodSpalterController blood =Instantiate(_prefabBloodSplater, transform.position+new Vector3(0,0.5f,0), Quaternion.identity);
+            blood.transform.forward = Vector3.down;
+            blood.transform.Rotate(Vector3.forward, Random.Range(0,360));
             base.KillAgent();
+            
         }
 
         protected override void ManageAttack() {

@@ -132,6 +132,8 @@ MonoBehaviour:
   SelectionSprite: {fileID: 3759194787182890189}
   _prefabDeathPS: {fileID: 540054392838581951, guid: 0af1e0599763dda47be91aad1e77c51d,
     type: 3}
+  _prefabBloodSplater: {fileID: 4224899161540997600, guid: 5d300fc16e457f24ea514e4a0112684b,
+    type: 3}
   _attack:
     AttackSpeed: 1
     Damage: 3

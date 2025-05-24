@@ -38,6 +38,7 @@ public class GridAgent : MonoBehaviour
     [Header("Selection")] 
     public bool IsSelectable;
     public GameObject SelectionSprite;
+    
 
     public GridActorStat Stat { get; private set; } = GridActorStat.Idle;
     public Metrics.UniteType UniteType { get => _uniteType; }
