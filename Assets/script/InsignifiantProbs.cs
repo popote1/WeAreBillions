@@ -20,6 +20,7 @@ public class InsignifiantProbs : MonoBehaviour
         }
     }
     
+    [ContextMenu("DestroyTest")]
     public void Destroy() {
         if (prefabsDebrie) Instantiate(prefabsDebrie, transform.position, transform.rotation);
         if (prefabsFX) Instantiate(prefabsFX, transform.position, transform.rotation);

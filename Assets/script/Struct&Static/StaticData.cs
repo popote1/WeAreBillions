@@ -18,6 +18,7 @@ namespace script {
         public static bool BlockControls = false;
         public static bool GamePause = false;
         public static bool CheatEnableZombieSpawning = false;
+        public static bool IsDraging;
 
         // --------Options--------//
         //Audio

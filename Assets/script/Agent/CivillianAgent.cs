@@ -13,26 +13,20 @@ namespace script
     [SelectionBase]
     public class CivillianAgent : GridAgent
     {
-        //[SerializeField] private Rigidbody Rigidbody;
-        //[SerializeField] private float _maxMoveSpeed;
-        //[SerializeField] private float _speedModulator;
-        //[SerializeField] private GridManager GridManager;
         
         [Header("Agent Parameters")] 
-        //[SerializeField] private int _hp = 3;
         [SerializeField]private GameObject _prefabDeathPS;
-        //[SerializeField] private Animator _animator;
+
         [Space(5)] 
-        //[SerializeField] private float WonderringDelayMin=1;
-        //[SerializeField] private float WonderringDelayMax=10;
-        //[SerializeField] private int Wonderringdistance=3;
+        
+        [SerializeField] private GameObject _prfEmoteExost;
+        [SerializeField] private GameObject _prfEmoteSuprice;
         [Space(5)] 
         [SerializeField] public float DetectionDistance =10;
         [SerializeField] private TriggerZoneDetector TriggerZoneDetector;
         [SerializeField] private int RunAwayDistance = 10;
         [Space(5)] 
         [SerializeField] private float MaxStamina = 10;
-        //[SerializeField] private float _moveSpeed=15;
         [SerializeField] private float RunAwayMoveSpeed =30;
         [SerializeField] private float StaminaRegenRate = 0.5f;
 
@@ -44,18 +38,11 @@ namespace script
         [SerializeField] private AudioClip[] _attackSound;
         [SerializeField] private AudioClip[] _spawnSound;
         [SerializeField] private AudioClip[] _dieSound;
-
-        //private float _wonderingTimer;
-        //private float _wonderingDelay;
+        
         private float _currentMoveSpeed;
         private float _currentStamina;
-        //private Cell _wonderingTarget;
-        //private Subgrid _subgrid;
-
-        //public bool IsWondering;
+        
         public bool IsRunAway;
-
-        // Start is called before the first frame update
         protected override void Start() {
             _currentMoveSpeed = _moveSpeed;
             TriggerZoneDetector.MaxDistance = DetectionDistance;
@@ -67,7 +54,6 @@ namespace script
         public float GetDebugMoveSpeed() => GetMoveSpeed();
         
         protected override void Update() {
-            //ManageWondering();
             ManageRunAway();
             ManageStamina();
             base.Update();
@@ -93,6 +79,7 @@ namespace script
                     Cell[] cells = GridManager.GetBreathFirstCells(GridManager.GetCellFromWorldPos(transform.position),
                         RunAwayDistance);
                     _currentMoveSpeed = RunAwayMoveSpeed;
+                    SpawnEmote(_prfEmoteSuprice);
                     IsRunAway = true;
                     SetNewMoveDestination(GetFarCellFrom(cells, zombi.transform));
                 }
@@ -112,17 +99,13 @@ namespace script
 
             return bestcell;
         }
-        //private void OnCollisionEnter(Collision other) {
-        //    if (other.gameObject.CompareTag("Zombi")) {
-        //        ZombieAgent z =Instantiate(PrefabsZombieAgent, transform.position, quaternion.identity);
-        //        z.Generate(GridManager);
-        //        Instantiate(PrefabsDeathPS, transform.position, Quaternion.identity);
-        //        DestroyBuilding(gameObject);
-        //    }
-        //}
+        
         private void ManageStamina() {
             if (IsRunAway && _currentStamina>0) {
                 _currentStamina = Mathf.Clamp(_currentStamina -Time.deltaTime,0,MaxStamina);
+                if (_currentStamina == 0) {
+                   SpawnEmote(_prfEmoteExost);
+                }
             }
             if (!IsRunAway && _currentStamina < MaxStamina) {
                 _currentStamina = Mathf.Clamp(_currentStamina + Time.deltaTime * StaminaRegenRate,0,MaxStamina);
@@ -140,6 +123,13 @@ namespace script
                 Gizmos.color = new Color(0, 0.5f, 1, 0.25f);
                 Gizmos.DrawSphere(transform.position , DetectionDistance);
             }
+        }
+
+        private void SpawnEmote(GameObject emote)
+        {
+            if (emote == null) return;
+            GameObject go =Instantiate(emote, _transformEmote);
+            go.transform.localPosition = Vector3.zero;
         }
     }
 }

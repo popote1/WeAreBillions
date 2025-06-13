@@ -29,6 +29,8 @@ public class GridAgent : MonoBehaviour
     [SerializeField] protected float _wonderringDelayMin=1;
     [SerializeField] protected float _wonderringDelayMax=10;
     [SerializeField] protected int _wonderringdistance=3;
+    [Header("VFX Part")]
+    [SerializeField] protected Transform _transformEmote;
     [Space(0.5f)]
     public Subgrid Subgrid;
     public GameObject PSEmoteRedSquare;

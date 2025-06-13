@@ -15,6 +15,7 @@ namespace script
         public GridManager GridManager;
         public ZombieAgent PrefabsZombieAgent;
         [SerializeField] private HUDSelectionBoxDisplayer _hudSelectionBoxDisplayer;
+        [SerializeField] private GameObject _prefabsVFXMoveOrder;
 
         [Header("Strat Zombie")] 
         public Transform[] zombies;
@@ -74,6 +75,7 @@ namespace script
                 
 
                 _isInSelectionBox = false;
+                StaticData.IsDraging = false;
                 if (_hudSelectionBoxDisplayer) _hudSelectionBoxDisplayer.CloseSelectionBox();
             }
             
@@ -91,9 +93,15 @@ namespace script
                     if (Input.GetKey(KeyCode.LeftShift)) {
                         Debug.Log("FollowOrder");
                         ManagerGiveExtraOrder(targetCell);
+                        if (_prefabsVFXMoveOrder != null) {
+                            Instantiate(_prefabsVFXMoveOrder, hit.point, quaternion.identity);
+                        }
                         return;
                     }
                     ManagerGiveMoveOrder(targetCell);
+                    if (_prefabsVFXMoveOrder != null) {
+                        Instantiate(_prefabsVFXMoveOrder, hit.point, quaternion.identity);
+                    }
                 }
             }
             
@@ -206,6 +214,7 @@ namespace script
             if (!_isInSelectionBox) {
                 _startSelectionBox = Input.mousePosition;
                 _isInSelectionBox = true;
+                StaticData.IsDraging = true;
             }
 
             Vector2 center = (_startSelectionBox + (Vector2) Input.mousePosition) / 2;

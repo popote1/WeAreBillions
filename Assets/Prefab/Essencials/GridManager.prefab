@@ -156,6 +156,8 @@ MonoBehaviour:
   PrefabsZombieAgent: {fileID: 2444219041533692552, guid: adf5d6fdbd056e04790ca9363b48d07c,
     type: 3}
   _hudSelectionBoxDisplayer: {fileID: 0}
+  _prefabsVFXMoveOrder: {fileID: 6092588951434967032, guid: e737e2d69d5a38543a6bbdc7a15ec16b,
+    type: 3}
   zombies:
   - {fileID: 0}
   SelectionBoxMin: -10
