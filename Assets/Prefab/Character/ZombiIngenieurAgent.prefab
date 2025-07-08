@@ -259,6 +259,7 @@ MonoBehaviour:
   _wonderringDelayMin: 1
   _wonderringDelayMax: 10
   _wonderringdistance: 3
+  _transformEmote: {fileID: 0}
   PSEmoteRedSquare: {fileID: 8856361631903552116}
   HeightOffSetting: 0
   GroundLayer:
@@ -267,6 +268,8 @@ MonoBehaviour:
   IsSelectable: 0
   SelectionSprite: {fileID: 5642993560328176340}
   _prefabDeathPS: {fileID: 540054392838581951, guid: 0af1e0599763dda47be91aad1e77c51d,
+    type: 3}
+  _prefabBloodSplater: {fileID: 4224899161540997600, guid: 5d300fc16e457f24ea514e4a0112684b,
     type: 3}
   _attack:
     AttackSpeed: 0.5
