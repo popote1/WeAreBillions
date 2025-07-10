@@ -200,15 +200,22 @@ namespace script
         }
 
         private void ManageRayCastSelection() {
+            Debug.Log("Do raycats selection");
             if (EventSystem.current.IsPointerOverGameObject()) return;
+            Debug.Log("Do a ray");
             RaycastHit hit;
             if(Physics.Raycast(Camera.ScreenPointToRay(Input.mousePosition), out hit)) {
+                Debug.Log("ray hit");
                 ClearSelection();
-                if (hit.collider.GetComponent<ZombieAgent>()) {
+                if (hit.collider.GetComponent<ZombieAgent>())
+                {
+                    Debug.Log("Ray hit a zombie");
                     Selected = new List<GridAgent>() {hit.collider.GetComponent<ZombieAgent>()};
-                    SetSelection(Selected);
+                    Selected[0].IsSelected = true;
+                    StaticEvents.ChangeSelection(Selected);
                 }
             }
+            
         }
         public void ManageBoxSelectionDisplay() {
             if (!_isInSelectionBox) {
@@ -217,6 +224,8 @@ namespace script
                 StaticData.IsDraging = true;
             }
 
+            if (!CanBeSelectBox(_startSelectionBox, Input.mousePosition)) return;
+            
             Vector2 center = (_startSelectionBox + (Vector2) Input.mousePosition) / 2;
             Vector2 size = new Vector2(
                 Mathf.Abs(_startSelectionBox.x - Input.mousePosition.x),
@@ -224,6 +233,7 @@ namespace script
             
             if( _hudSelectionBoxDisplayer )_hudSelectionBoxDisplayer.SetSelectionBox(center, size);
         }
+        
         
         public void ManageBoxSelection() {
             Vector2[] points2D = new Vector2[4];
@@ -438,6 +448,7 @@ namespace script
 
         public void SetSelection(List<GridAgent> selection)
         {
+            Debug.Log("Selection submited = " + selection.Count);
             ClearSelection();
             foreach (var gridAgent in selection) {
                 gridAgent.IsSelected = true;

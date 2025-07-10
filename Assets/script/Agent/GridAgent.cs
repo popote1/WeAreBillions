@@ -17,6 +17,7 @@ public class GridAgent : MonoBehaviour
     [SerializeField] protected int _maxHp;
     [SerializeField] protected Metrics.UniteType _uniteType;
     [SerializeField] private bool _canBeTransform=true;
+    [SerializeField] private bool _canBeDestroy = false;  
     [SerializeField] private float _transformationTime = 3;
     [Header("Move Parameters")]
     [SerializeField] protected float _maxMoveSpeed=3;
@@ -46,6 +47,7 @@ public class GridAgent : MonoBehaviour
     public Metrics.UniteType UniteType { get => _uniteType; }
     
     public bool CanBetransform { get => _canBeTransform; }
+    public bool CanBeDestroy { get => _canBeDestroy; }
     public float TransformTime { get => _transformationTime; }
     public float MaxMoveSpeed => _maxMoveSpeed;
     public float HP => _maxHp;
@@ -59,7 +61,7 @@ public class GridAgent : MonoBehaviour
     
 
     public enum GridActorStat {
-        Idle, Move, Attack , Grabed, Transforming, CallingAlert
+        Idle, Move, Attack , Grabed, Transforming, CallingAlert, MovingAttack
     }
     public bool IsSelected {
         get => _isSelected;
@@ -80,6 +82,7 @@ public class GridAgent : MonoBehaviour
             Debug.LogWarning("GridManagerNot Found ", this);
         }
         if( _usWondering)_wonderingDelay = Random.Range(_wonderringDelayMin, _wonderringDelayMax);
+        _hp = _maxHp;
         StaticData.AddGridAgent(this);
     }
     protected virtual void OnDestroy() {
@@ -112,6 +115,7 @@ public class GridAgent : MonoBehaviour
             case GridActorStat.Grabed: ManageGrabbed(); break;
             case GridActorStat.Transforming: ManageTransformation(); break;
             case GridActorStat.CallingAlert: ManageAlertCalling(); break;
+            case GridActorStat.MovingAttack: ManageMovingAttack(); break;
             default: throw new ArgumentOutOfRangeException();
         }
     }
@@ -172,10 +176,14 @@ public class GridAgent : MonoBehaviour
         Subgrid.AddChunksToSubGrid(path.ToArray());
     }
     public virtual void SetNewSubGrid(Subgrid subgrid) {
-        if (subgrid != null) {
+         if (subgrid != null) {
             Subgrid = subgrid;
             ChangeStat(GridActorStat.Move);
         }
+         else
+         {
+             Debug.Log("SubGridSubmited is null");
+         }
     }
     protected virtual void ManageIdle() {
         if (_usWondering)ManageWondering();
@@ -185,6 +193,7 @@ public class GridAgent : MonoBehaviour
     protected virtual void ManageGrabbed(){}
     protected virtual void ManageTransformation() { }
     protected virtual void ManageAlertCalling(){}
+    protected virtual void ManageMovingAttack(){}
     protected virtual void ChangeStat(GridActorStat stat) {
         if ((Stat == GridActorStat.Attack||Stat == GridActorStat.CallingAlert) && Subgrid != null && stat == GridActorStat.Idle) {
             ChangeStat(GridActorStat.Move);

@@ -152,6 +152,9 @@ public class Tank : Defender
         ManageLookingForTarget();
     }
 
+    public override void SetAsGrabbed(bool grabed = true) {
+    }
+
     protected override void ManageAttack() {
         if (!IsCurrentTargetValid()) ManageLookingForTarget();
         if (_target == null) {

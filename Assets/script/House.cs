@@ -37,7 +37,6 @@ namespace script
             GridManager = GridManager.Instance;
             GridManager.OnClearPathFindingData += ClearCellCoordinateData;
             if(!GridManager) Debug.LogWarning(" GridManager non Assigner sur Maison "+name);
-            Debug.Log("Added");
             StaticData.AddBuilding(this);
         }
 
@@ -71,7 +70,6 @@ namespace script
         private void OnDestroy()
         {
             GridManager.OnClearPathFindingData -= ClearCellCoordinateData;
-            Debug.Log("remove");
         }
 
         public bool IsAlive()

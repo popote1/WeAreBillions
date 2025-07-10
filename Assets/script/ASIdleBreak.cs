@@ -48,6 +48,5 @@ public class ASIdleBreak : StateMachineBehaviour
         _delayToIdleBreak = Random.Range(_minDelay, _maxDelay);
         animator.SetFloat(_idleBreakTag, 0);
         _isIdleBreak = false;
-        Debug.Log("Initialize Idle Break");
     }
 }

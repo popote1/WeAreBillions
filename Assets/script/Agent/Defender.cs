@@ -55,7 +55,7 @@ public class Defender: GridAgent
     }
 
     protected void EndAlertCalling() {
-        OnChangeAlertCallingStat.Invoke(this, false);
+        OnChangeAlertCallingStat?.Invoke(this, false);
         _alertCallingTimer = 0;
     } 
 

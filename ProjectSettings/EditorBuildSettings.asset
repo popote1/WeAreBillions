@@ -18,7 +18,7 @@ EditorBuildSettings:
     path: Assets/Scenes/OldScene/LDTest.unity
     guid: 0574be6182604554784de2f2d45ee566
   - enabled: 0
-    path: Assets/Scenes/LVL1_TestScene.unity
+    path: Assets/Scenes/LVL1-TestScene.unity
     guid: 175d24e79f68a1545ac48f3ecef80f3b
   m_configObjects: {}
   m_UseUCBPForAssetBundles: 0
