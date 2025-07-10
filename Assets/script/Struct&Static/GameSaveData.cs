@@ -17,4 +17,15 @@ public struct GameSaveData
 
     public LevelSaveData[] LevelsSaveData;
 
+    public LevelSaveData GetLevelSAveDataBySceneName(string name) {
+
+        if (LevelsSaveData != null) { 
+            foreach (var save in LevelsSaveData) {
+                if (save.SceneName != name) continue;
+                return save;
+            }
+        }
+        return new LevelSaveData();
+    }
+
 }

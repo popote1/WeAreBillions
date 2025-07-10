@@ -12,8 +12,7 @@ public class UIAsyncSceneLoader : MonoBehaviour
 {
 
 
-    public int TargetSceneIndex;
-    [SerializeField] private Button _bpLoad;
+    //public int TargetSceneIndex;
     [SerializeField] private CanvasGroup _canvasGroupPanal;
     [SerializeField] private float _fadeTime =0.5f;
     [SerializeField] private Image _imgLoading;
@@ -28,17 +27,21 @@ public class UIAsyncSceneLoader : MonoBehaviour
     private LoadingStat _loadingStat;
 
     private float _progressAmount;
-    
+    private string _sceneNameToLoad; 
 
     private enum LoadingStat {
         none,PreLoading,LoadNextScene, UnloadingPrevius,PostLoadingWait, PostLoading
     }
-    void Start()
-    {
-        _bpLoad.onClick.AddListener(StartLoadingScene);
+    void Start() {
         DontDestroyOnLoad(gameObject);
     }
 
+    public void StartLoadingScene(string sceneName)
+    {
+        _sceneNameToLoad = sceneName;
+        StartLoadingScene();
+
+    }
     private void StartLoadingScene()
     {
         _canvasGroupPanal.DOFade(1, _fadeTime);
@@ -100,7 +103,7 @@ public class UIAsyncSceneLoader : MonoBehaviour
         if (_canvasGroupPanal.alpha == 1) {
             _loadingStat = LoadingStat.LoadNextScene;
             _startSceneIndex = SceneManager.GetActiveScene().buildIndex;
-            loading= SceneManager.LoadSceneAsync(TargetSceneIndex, LoadSceneMode.Additive);
+            loading= SceneManager.LoadSceneAsync(_sceneNameToLoad, LoadSceneMode.Additive);
         }
     }
 

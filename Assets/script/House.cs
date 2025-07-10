@@ -123,7 +123,6 @@ namespace script
             {
                 float value = Random.Range(0, 1f);
                 
-                Debug.Log(" Zombie random value = " + value);
                 if (value < _zombieSpawnChanceBrute) _zombieToSpawnStandard++;
                 
                 if (value >= _zombieSpawnChanceStandrard &&

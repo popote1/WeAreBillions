@@ -2,11 +2,12 @@
 using script;
 using UnityEngine;
 using UnityEngine.Audio;
-using UnityEngine.Serialization;
 using UnityEngine.UI;
 
 public class UIOptionMenu : MonoBehaviour
 {
+    public event EventHandler OnPanelClose;
+    
     [SerializeField] private AudioMixer _audioMixer;
     [Space(10)]
     [SerializeField] private Button _bpGame;
@@ -23,9 +24,7 @@ public class UIOptionMenu : MonoBehaviour
     [SerializeField] private Slider _sliderAudioAmbiance;
     [SerializeField] private Slider _sliderAudioMusic;
     [SerializeField] private Slider _sliderAudioSFX;
-
-    public event EventHandler OnPanelClose;
-
+    
     private OptionPanelType _activePanel;
     private enum OptionPanelType {
         Game, Audio
@@ -101,7 +100,4 @@ public class UIOptionMenu : MonoBehaviour
         StaticData.AudioVolumeMaster = value;
         _audioMixer.SetFloat("MasterVolume", Mathf.Log10(value) * 20);
     }
-
-
-
 }
