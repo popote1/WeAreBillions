@@ -13,9 +13,11 @@ public class UIMainMenuManager : MonoBehaviour {
     [SerializeField] private UILevelSelectionMenu _levelSelection;
     [SerializeField] private UIScoringPanel _scoringPanel;
     [SerializeField] private UIOptionMenu _optionPanel;
+    [SerializeField] private UIQuitPanel _quitPanel;
     
     
     private  void Start() {
+        StaticSaveSystem.SetupCurrentSave();
         _bpLevel.onClick.AddListener(UIButtonLevel);
         _bpScoring.onClick.AddListener(UIButtonScoring);
         _bpOption.onClick.AddListener(UIButtonOption);
@@ -25,9 +27,11 @@ public class UIMainMenuManager : MonoBehaviour {
         _scoringPanel.OnPanelClose+= ScoringPanelOnOnPanelClose; 
         _optionPanel.OnPanelClose+= OptionPanelOnOnPanelClose;
         _levelSelection.OnPanelClose += LevelSelectionPanelClose;
+        _quitPanel.OnPanelClose+= QuitPanelOnOnPanelClose;
     }
 
     
+
 
     private void LevelSelectionPanelClose(object sender, EventArgs e) {
         gameObject.SetActive(true);
@@ -42,6 +46,11 @@ public class UIMainMenuManager : MonoBehaviour {
     {
         gameObject.SetActive(true);
         _bpOption.Select();
+    }
+    private void QuitPanelOnOnPanelClose(object sender, EventArgs e)
+    {
+        gameObject.SetActive(true);
+        _bpQuite.Select();
     }
 
     
@@ -65,7 +74,7 @@ public class UIMainMenuManager : MonoBehaviour {
         
     }
     private void UIButtonQuite() {
-        Application.Quit();
+        _quitPanel.Open();
     }
     
 }

@@ -28,7 +28,7 @@ public class UIScoringPanel : MonoBehaviour
     [SerializeField] private UIRunSelectionButton _prfRunSelectionButton;
     [SerializeField] private UIScoringDisplayPanel _scoringDisplayPanel;
 
-    private LevelSaveData _currentSave;
+    private LevelSaveData _currentLevelSaveData;
     private SOLevelInfoData _currentLevel;
     private UILevelSelectionButton[] _levelSelectionButtons;
     private UIRunSelectionButton[] _runSelectionButtons;
@@ -39,11 +39,13 @@ public class UIScoringPanel : MonoBehaviour
     
     public void Open() {
         gameObject.SetActive(true);
+        ChangeLevelInfoData(_levelInfoDataArray.Levels[0]);
     }
 
     private void Start() {
         SetUpScoringPanel();
         _bpReturn.onClick.AddListener(ClosePanel);
+        
     }
 
     private void SetUpScoringPanel() {
@@ -64,7 +66,7 @@ public class UIScoringPanel : MonoBehaviour
     
     private void ChangeLevelInfoData(SOLevelInfoData level) {
         _currentLevel = level;
-        _currentSave = StaticSaveSystem._currentSave.GetLevelSAveDataBySceneName(level.SceneName);
+        _currentLevelSaveData = StaticSaveSystem._currentSave.GetLevelSAveDataBySceneName(level.SceneName);
         DisplayBestScore();
         SetUpBestSavesButtons();
     }
@@ -75,10 +77,11 @@ public class UIScoringPanel : MonoBehaviour
                 Destroy(button.gameObject);
             }
         }
-        _runSelectionButtons = new UIRunSelectionButton[_currentSave.BestRun.Length];
-        for (int i = 0; i < _currentSave.BestRun.Length; i++) {
+        if( _currentLevelSaveData.BestRun ==null) Debug.Log("bestRun is null");
+        _runSelectionButtons = new UIRunSelectionButton[_currentLevelSaveData.BestRun.Length];
+        for (int i = 0; i < _currentLevelSaveData.BestRun.Length; i++) {
             _runSelectionButtons[i] = Instantiate(_prfRunSelectionButton, _transformButtonRunHolder);
-            _runSelectionButtons[i].SetUpButton(_currentSave.BestRun[i]);
+            _runSelectionButtons[i].SetUpButton(_currentLevelSaveData.BestRun[i]);
             _runSelectionButtons[i].OnSelect+= ButtonOnSelectRun;
         }
     }
@@ -86,12 +89,12 @@ public class UIScoringPanel : MonoBehaviour
     private void DisplayBestScore() {
         _txtTitle.text = _currentLevel.MenuName;
         _txtSubTitile.text = _currentLevel.Subtile;
-        _txtScore.text = _currentSave.BestStats.Score.ToString();
-        _txtZombie.text = _currentSave.BestStats.zombieCount.ToString();
-        _txtSHordeMaxSize.text = _currentSave.BestStats.HordeMaxSize.ToString();
-        _txtCiviliansAlive.text = _currentSave.BestStats.CivilliansAlive.ToString();
-        _txtDefenderTransform.text = _currentSave.BestStats.DefenderTrensform.ToString();
-        _txtBuildingDestroy.text = _currentSave.BestStats.BuildingDestroy.ToString();
-        _txtRunTime.text = _currentSave.BestStats.Runtime.ToString();
+        _txtScore.text = _currentLevelSaveData.BestStats.Score.ToString();
+        _txtZombie.text = _currentLevelSaveData.BestStats.zombieCount.ToString();
+        _txtSHordeMaxSize.text = _currentLevelSaveData.BestStats.HordeMaxSize.ToString();
+        _txtCiviliansAlive.text = _currentLevelSaveData.BestStats.CivilliansAlive.ToString();
+        _txtDefenderTransform.text = _currentLevelSaveData.BestStats.DefenderTrensform.ToString();
+        _txtBuildingDestroy.text = _currentLevelSaveData.BestStats.BuildingDestroy.ToString();
+        _txtRunTime.text = _currentLevelSaveData.BestStats.Runtime.ToString();
     }
 }

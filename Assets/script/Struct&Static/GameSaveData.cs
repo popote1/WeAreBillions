@@ -1,4 +1,5 @@
 ﻿using System;
+using UnityEngine;
 
 [Serializable]
 public struct GameSaveData
@@ -22,10 +23,12 @@ public struct GameSaveData
         if (LevelsSaveData != null) { 
             foreach (var save in LevelsSaveData) {
                 if (save.SceneName != name) continue;
+                Debug.Log("LevelSaveData found");
                 return save;
             }
         }
-        return new LevelSaveData();
+        Debug.Log("LevelSaveData NOT found");
+        return new LevelSaveData("");
     }
 
 }

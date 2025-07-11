@@ -32,8 +32,22 @@ public class UIOptionMenu : MonoBehaviour
     
     public void OpenOptionPanel() {
         gameObject.SetActive(true);
+        LoadCurrentOptions();
         ChangePanelType(OptionPanelType.Game);
+        
     }
+
+    private void LoadCurrentOptions() { 
+        _sliderAudioAmbiance.SetValueWithoutNotify(StaticSaveSystem._currentSave.AudioAmbianceVolume);
+        _sliderAudioMaster.SetValueWithoutNotify(StaticSaveSystem._currentSave.AudioMasterVolume);
+        _sliderAudioMusic.SetValueWithoutNotify(StaticSaveSystem._currentSave.AudioMusicVolume);
+        _sliderAudioSFX.SetValueWithoutNotify(StaticSaveSystem._currentSave.AudioSFXVolume);
+        
+        _sliderCameraKeybordSpeed.SetValueWithoutNotify(StaticSaveSystem._currentSave.CameraKeybordSpeed);
+        _sliderCameraPanningSpeed.SetValueWithoutNotify(StaticSaveSystem._currentSave.CameraPanningSpeed);
+        _toggleAllowCheatMenu.SetIsOnWithoutNotify(StaticSaveSystem._currentSave.AllowCheatMenu);
+    }
+    
     
     private void ChangePanelType(OptionPanelType type)
     {
@@ -75,7 +89,7 @@ public class UIOptionMenu : MonoBehaviour
 
     private void UICloseOption() {
         OnPanelClose?.Invoke(this, EventArgs.Empty);
-        StaticSaveSystem.ApplyCurrentSaves();
+        StaticSaveSystem.SaveNewOptionsData();
         gameObject.SetActive(false);
     }
     private void UISetCameraKeyboardSpeed(float value) => StaticData.ControlCameraKeyboardSpeed = value;

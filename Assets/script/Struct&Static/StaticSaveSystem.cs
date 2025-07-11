@@ -5,16 +5,23 @@ using UnityEngine;
 public static class StaticSaveSystem {
     public static GameSaveData _currentSave;
 
-
-    public static void LoadGame() {
+    public static void SetupCurrentSave() {
+        if (!LoadGame()) {
+            GenerateBaseSaveFile();
+        }
+    }
+    
+    public static bool LoadGame() {
         
         string path = Application.persistentDataPath + "/Save/Save.txt";
         
         if (!File.Exists(path)) {
             Debug.LogWarning("Fichier de sauvegarde non trouver");
+            return false;
         }
         string data =File.ReadAllText(path);
         _currentSave = JsonUtility.FromJson<GameSaveData>(data);
+        return true;
         Debug.Log("Nouvelle Save Charger");
     }
     public static void SaveGame() {
@@ -79,5 +86,18 @@ public static class StaticSaveSystem {
 
         StaticData.GamePlayAllowCheatMenu = _currentSave.AllowCheatMenu;
         StaticData.OnOptionUpdateInvoke();
+    }
+
+    public static void SaveNewOptionsData() {
+        _currentSave.AudioAmbianceVolume=StaticData.AudioVolumeAmbiances;
+        _currentSave.AudioMasterVolume=StaticData.AudioVolumeMaster;
+        _currentSave.AudioMusicVolume=StaticData.AudioVolumeMusic;
+        _currentSave.AudioSFXVolume=StaticData.AudioVolumeSFX;
+        
+        _currentSave.CameraKeybordSpeed=StaticData.ControlCameraKeyboardSpeed;
+        _currentSave.CameraPanningSpeed=StaticData.ControlCameraPanningSpeed ;
+
+        _currentSave.AllowCheatMenu=StaticData.GamePlayAllowCheatMenu;
+        SaveGame();
     }
 }
