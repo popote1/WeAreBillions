@@ -1,8 +1,13 @@
 using System;
+using script;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class UIMainMenuManager : MonoBehaviour {
+public class UIMainMenuManager : MonoBehaviour
+{
+
+    [SerializeField] private SOLevelInfoDataArray _soLevelInfoDataArray;
+    [Space(10)]
     [SerializeField] private Button _bpLevel;
     [SerializeField] private Button _bpScoring;
     [SerializeField] private Button _bpOption;
@@ -16,7 +21,9 @@ public class UIMainMenuManager : MonoBehaviour {
     [SerializeField] private UIQuitPanel _quitPanel;
     
     
-    private  void Start() {
+    private  void Start()
+    {
+        StaticData.SetSoLevelInfoDataArray(_soLevelInfoDataArray);
         StaticSaveSystem.SetupCurrentSave();
         _bpLevel.onClick.AddListener(UIButtonLevel);
         _bpScoring.onClick.AddListener(UIButtonScoring);

@@ -1,0 +1,32 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 94452b298a9e424ba69a611bb6fac543, type: 3}
+  m_Name: SoEGS_RunTime
+  m_EditorClassIdentifier: 
+  ScoringOptions:
+  - _Conditions:
+    - baseValue: 480
+      Operator: 4
+    ScoreGain: 100
+    Desctription: Finir le niveau en moin de 8 min
+  - _Conditions:
+    - baseValue: 480
+      Operator: 1
+    - baseValue: 720
+      Operator: 4
+    ScoreGain: 75
+    Desctription: Finir le niveau en moin de 12 min
+  - _Conditions:
+    - baseValue: 720
+      Operator: 1
+    ScoreGain: 20
+    Desctription: Finir le niveau en plus de 12min

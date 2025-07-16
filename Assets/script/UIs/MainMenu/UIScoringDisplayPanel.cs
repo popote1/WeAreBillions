@@ -1,4 +1,5 @@
-﻿using TMPro;
+﻿using System;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -25,14 +26,20 @@ public class UIScoringDisplayPanel:MonoBehaviour
         _txtTitle.text = info.MenuName;
         _txtSubTitile.text = info.Subtile;
         _txtScore.text = save.Score.ToString();
-        _txtDate.text = save.Date.ToString();
+        _txtDate.text = DateTime.FromBinary(save.Date).ToString();
         _txtZombie.text = save.zombieCount.ToString();
         _txtSHordeMaxSize.text = save.HordeMaxSize.ToString();
         _txtCiviliansAlive.text = save.CivilliansAlive.ToString();
         _txtDefenderTransform.text = save.DefenderTrensform.ToString();
         _txtBuildingDestroy.text = save.BuildingDestroy.ToString();
-        _txtRunTime.text = save.Runtime.ToString();
+        _txtRunTime.text = GetRunTime(save.Runtime);
 
         gameObject.SetActive(true);
+    }
+
+    private string GetRunTime(float value) {
+        int sec = Mathf.FloorToInt(value % 60);
+        int minute = Mathf.FloorToInt((value/60) % 60);
+        return minute + " Min  " + sec + " Sec";
     }
 }

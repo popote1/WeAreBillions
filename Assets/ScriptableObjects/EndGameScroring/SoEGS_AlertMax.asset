@@ -1,0 +1,32 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0f5115bf23564ded9ba1fe3f3b6fcb62, type: 3}
+  m_Name: SoEGS_AlertMax
+  m_EditorClassIdentifier: 
+  ScoringOptions:
+  - _Conditions:
+    - baseValue: 2
+      Operator: 4
+    ScoreGain: 20
+    Desctription: "Ne pas d\xE9passer le niveaux 1 d'alert."
+  - _Conditions:
+    - baseValue: 2
+      Operator: 1
+    - baseValue: 3
+      Operator: 4
+    ScoreGain: 50
+    Desctription: 'Atteindre un niveux d''alert de 2 ou 3 '
+  - _Conditions:
+    - baseValue: 3
+      Operator: 0
+    ScoreGain: 75
+    Desctription: "Atteindre un niveux d'alert sup\xE9rieur \xE0 3"

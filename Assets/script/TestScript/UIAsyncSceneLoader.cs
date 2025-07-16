@@ -1,6 +1,7 @@
 using System;
 using System.Diagnostics;
 using DG.Tweening;
+using script;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Rendering;
@@ -132,7 +133,7 @@ public class UIAsyncSceneLoader : MonoBehaviour
         if (_canvasGroupPanal.alpha == 0) {
             _loadingStat = LoadingStat.none; 
             gameObject.SetActive(false);
-            
+            StaticEvents.OnLoadingComplet?.Invoke();
         }
     }
 }

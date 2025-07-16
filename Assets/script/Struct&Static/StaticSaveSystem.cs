@@ -34,7 +34,9 @@ public static class StaticSaveSystem {
         
         string path = Application.persistentDataPath + "/Save/Save.txt";
         Debug.Log("Save à l'adresse "+path);
+        Debug.Log("Data avant la Jsonation le score est de "+_currentSave.LevelsSaveData[0].BestStats.Score);
         string data = JsonUtility.ToJson(_currentSave);
+        Debug.Log("Data Jsoned ="+ data);
 
         if (!File.Exists(path)) {
             Debug.Log("écriture d'un nouveau fichier de save");
@@ -63,11 +65,22 @@ public static class StaticSaveSystem {
 
         newSaveData.AllowCheatMenu = StaticData.GamePlayAllowCheatMenu;
 
-        newSaveData.LevelsSaveData = new LevelSaveData[4];
-        for (int i = 0; i <  newSaveData.LevelsSaveData.Length; i++) {
-            newSaveData.LevelsSaveData[i].IsUnlock = false;
-            newSaveData.LevelsSaveData[i].BestRun = new StatRunSave[5];
-            newSaveData.LevelsSaveData[i].BestStats = new StatRunSave();
+        if (StaticData.SoLevelInfoDataArray != null) {
+            newSaveData.LevelsSaveData = new LevelSaveData[StaticData.SoLevelInfoDataArray.Levels.Length];
+            for (int i = 0; i <  newSaveData.LevelsSaveData.Length; i++) {
+                newSaveData.LevelsSaveData[i].SceneName = StaticData.SoLevelInfoDataArray.Levels[i].SceneName;
+                newSaveData.LevelsSaveData[i].IsUnlock = false;
+                newSaveData.LevelsSaveData[i].BestRun = new StatRunSave[5];
+                newSaveData.LevelsSaveData[i].BestStats = new StatRunSave();
+            }
+        }
+        else {
+            newSaveData.LevelsSaveData = new LevelSaveData[4];
+            for (int i = 0; i < newSaveData.LevelsSaveData.Length; i++) {
+                newSaveData.LevelsSaveData[i].IsUnlock = false;
+                newSaveData.LevelsSaveData[i].BestRun = new StatRunSave[5];
+                newSaveData.LevelsSaveData[i].BestStats = new StatRunSave();
+            }
         }
 
         newSaveData.IsSet = true;
@@ -75,7 +88,7 @@ public static class StaticSaveSystem {
 
     }
 
-    public static void ApplyCurrentSaves() {
+    public static void ApplyCurrentOptionSaves() {
         StaticData.AudioVolumeAmbiances = _currentSave.AudioAmbianceVolume;
         StaticData.AudioVolumeMaster = _currentSave.AudioMasterVolume;
         StaticData.AudioVolumeMusic = _currentSave.AudioMusicVolume;
@@ -98,6 +111,18 @@ public static class StaticSaveSystem {
         _currentSave.CameraPanningSpeed=StaticData.ControlCameraPanningSpeed ;
 
         _currentSave.AllowCheatMenu=StaticData.GamePlayAllowCheatMenu;
+        SaveGame();
+    }
+
+    public static void SaveNewRunData(string SceneName, StatRunSave newSave) {
+        LevelSaveData level =_currentSave.GetLevelSAveDataBySceneName(SceneName);
+        if (string.IsNullOrEmpty(level.SceneName)) {
+            Debug.LogWarning("Not LevelSaveData found to SaveRun");
+            return;
+        }
+        level.AddNewRunSave(newSave);
+        _currentSave.SetUpdatedLevelData(level);
+        
         SaveGame();
     }
 }

@@ -584,6 +584,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8ffda671275ab9a458166be74a33d776, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _soLevelInfoDataArray: {fileID: 11400000, guid: bb8fcb52427815c4f9ddb95278e0d261,
+    type: 2}
   _bpLevel: {fileID: 1536862586}
   _bpScoring: {fileID: 1395295176}
   _bpOption: {fileID: 975261564}
@@ -18235,7 +18237,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: RUTURN
+  m_text: RETURN
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}

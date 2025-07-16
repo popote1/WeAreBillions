@@ -1,10 +1,9 @@
 ﻿using System;
-using UnityEngine;
 
 [Serializable]
-public struct StatRunSave 
+public struct StatRunSave : IComparable
 {
-    public DateTime Date;
+    public long Date;
     public int Score;
     public int zombieCount;
     public int HordeMaxSize;
@@ -12,4 +11,10 @@ public struct StatRunSave
     public int DefenderTrensform;
     public int BuildingDestroy;
     public float Runtime;
+    
+    public int CompareTo(object obj) {
+        if (obj == null) return 1;
+        StatRunSave otherSave = (StatRunSave)obj ;
+        return this.Score.CompareTo(otherSave.Score);
+    }
 }

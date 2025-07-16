@@ -11,14 +11,14 @@ namespace script {
     public static class StaticData {
   
         public static int ZombieCount;
-        
         public static Vector3 CameraMoveVector = Vector3.zero;
         public static bool BlockCameraMovement = false;
         public static bool AllowCameraHeight = true;
         public static bool BlockControls = false;
-        public static bool GamePause = false;
+        public static bool IsGamePause = false;
         public static bool CheatEnableZombieSpawning = false;
         public static bool IsDraging;
+        public static bool IsGameEnd = false;
 
         // --------Options--------//
         //Audio
@@ -41,6 +41,8 @@ namespace script {
                 return _allGridAgents.Count;
             }
         }
+
+        public static SOLevelInfoDataArray SoLevelInfoDataArray => _soLevelInfoDataArray;
         public static int zombieCount => _zombieCount;
         public static int zombieMaxCount => _zombieMaxCount;
         public static int CiviliansCounts => _civiliansCounts;
@@ -67,6 +69,7 @@ namespace script {
         
         
         // Private Data
+        private static SOLevelInfoDataArray _soLevelInfoDataArray;
         private static float _zombieSpawnChangeStandrard = 1;
         private static float _zombieSpawnChangeBrute = 1;
         private static float _zombieSpawnChangeEngineer = 1;
@@ -111,7 +114,8 @@ namespace script {
             StaticScoringSystem.AddBuildingDestroy();
         }
 
-        public static void DestroyElement() => _destroyElements++; 
+        public static void DestroyElement() => _destroyElements++;
+        public static void SetSoLevelInfoDataArray(SOLevelInfoDataArray so) => _soLevelInfoDataArray = so;
         
         public static void SetCurrentAlertLevel(int lvl)
         {
@@ -159,6 +163,7 @@ namespace script {
         }
         
         public static void ManageGameTimer(float deltaTime) {
+            if( IsGameEnd || IsGamePause) return;
             _gameTimer += deltaTime;
             switch (_currentAlertLVL) {
                 case 1 : _timeInAlertLVL1 += deltaTime; break;

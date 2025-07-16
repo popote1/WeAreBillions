@@ -6,33 +6,75 @@ using UnityEngine.UI;
 
 public class HUDEndGamePanel : MonoBehaviour
 {
+   [SerializeField] private UIFBScoreEndGame _uifbScoreEndZombieCount;
+   [SerializeField] private UIFBScoreEndGame _uifbScoreHordeMaxSize;
+   [SerializeField] private UIFBScoreEndGame _uifbScoreCiviliansAlive;
+   [SerializeField] private UIFBScoreEndGame _uifbScoreDefenderTransform;
+   [SerializeField] private UIFBScoreEndGame _uifbScoreBuildingDestroy;
+   [SerializeField] private UIFBScoreEndGame _uifbScoreRunTime;
+   [SerializeField] private UIFBScoreEndGame _uifbScoreTotalScore;
+   
+   
    [SerializeField] private TMP_Text _txtEndGameLable;
-   [SerializeField] private TMP_Text _txtZombieCount;
-   [SerializeField] private TMP_Text _txtHordeMaxSize;
-   [SerializeField] private TMP_Text _txtCivilansAlive;
-   [SerializeField] private TMP_Text _txtDefenderTransform;
-   [SerializeField] private TMP_Text _txtBuildingDestroy;
-   [SerializeField] private TMP_Text _txtRunTime;
+   //[SerializeField] private TMP_Text _txtZombieCount;
+   //[SerializeField] private TMP_Text _txtHordeMaxSize;
+   //[SerializeField] private TMP_Text _txtCivilansAlive;
+   //[SerializeField] private TMP_Text _txtDefenderTransform;
+   //[SerializeField] private TMP_Text _txtBuildingDestroy;
+   //[SerializeField] private TMP_Text _txtRunTime;
+   //[SerializeField] private TMP_Text _txtTotalScore;
    [SerializeField] private Button _bpMainMenu;
    [SerializeField] private Button _bpRestart;
+   
+   [Space(10)] 
+   [SerializeField] private SOEndGameScoringArray soEndGameScoringArray;
+   [SerializeField] private UIEndGameScoringElement[] _endGameScoringElements;
 
    public void OpenEndGamePanel(bool isWin = true) {
       if (isWin) _txtEndGameLable.text = "You Win";
       else _txtEndGameLable.text = "You Lose";
       
+      AddEndGameScoring();
       SetupButtons();
       SetUpValues();
       gameObject.SetActive(true);
+      if( isWin) StaticScoringSystem.SaveRunData();
    }
 
    private void SetUpValues() {
-      _txtZombieCount.text = StaticData.zombieCount.ToString();
-      _txtHordeMaxSize.text = StaticData.zombieMaxCount.ToString();
-      _txtCivilansAlive.text = StaticData.CiviliansCounts.ToString();
-      _txtDefenderTransform.text = StaticData.DefendersKill.ToString();
-      _txtBuildingDestroy.text = StaticData.DestroyBuilding.ToString();
-      _txtRunTime.text = StaticData.GetGameTime();
+      _uifbScoreEndZombieCount.StartDisplaying(StaticData.zombieCount);
+      _uifbScoreHordeMaxSize.StartDisplaying(StaticData.zombieMaxCount);
+      _uifbScoreCiviliansAlive.StartDisplaying(StaticData.CiviliansCounts);
+      _uifbScoreBuildingDestroy.StartDisplaying(StaticData.DestroyBuilding);
+      _uifbScoreDefenderTransform.StartDisplaying(StaticData.DefendersKill);
+      _uifbScoreRunTime.StartDisplaying(Mathf.RoundToInt(StaticData.GameTimer));
+      _uifbScoreTotalScore.StartDisplaying(StaticScoringSystem.CurrentScore);
+      
+      //_txtZombieCount.text = StaticData.zombieCount.ToString();
+      //_txtHordeMaxSize.text = StaticData.zombieMaxCount.ToString();
+      //_txtCivilansAlive.text = StaticData.CiviliansCounts.ToString();
+      //_txtDefenderTransform.text = StaticData.DefendersKill.ToString();
+      //_txtBuildingDestroy.text = StaticData.DestroyBuilding.ToString();
+      //_txtRunTime.text = StaticData.GetGameTime();
+      //_txtTotalScore.text = StaticScoringSystem.CurrentScore.ToString();
+
+      for (int i = 0; i < soEndGameScoringArray.EndGameScorings.Length; i++) {
+         if (soEndGameScoringArray.EndGameScorings[i] == null || _endGameScoringElements[i] == null) return;
+         _endGameScoringElements[i].DiplayScoringElement(soEndGameScoringArray.EndGameScorings[i]);
+      }
    }
+
+   private void AddEndGameScoring() {
+      if (StaticData.SoLevelInfoDataArray.GetLevelInfoDataBySceneName(SceneManager.GetActiveScene().name) != null) {
+         soEndGameScoringArray = StaticData.SoLevelInfoDataArray.GetLevelInfoDataBySceneName(
+            SceneManager.GetActiveScene().name).SoEndGameScoring;
+      }
+      for (int i = 0; i < soEndGameScoringArray.EndGameScorings.Length; i++) {
+         if (soEndGameScoringArray.EndGameScorings[i] == null) return;
+         StaticScoringSystem.CurrentScore += soEndGameScoringArray.EndGameScorings[i].GetScore().Item2;
+      }
+   }
+   
    
 
    private void SetupButtons() {

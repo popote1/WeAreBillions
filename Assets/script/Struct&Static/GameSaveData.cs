@@ -31,4 +31,15 @@ public struct GameSaveData
         return new LevelSaveData("");
     }
 
+    public void SetUpdatedLevelData(LevelSaveData save)
+    {
+        for (int i = 0; i < LevelsSaveData.Length; i++) {
+            if (save.SceneName == LevelsSaveData[i].SceneName) {
+                LevelsSaveData[i] = save;
+                return;
+            }
+        }
+        Debug.LogWarning("LevelSaveData non mis a jour pas de nom identique trouver");
+    }
+
 }

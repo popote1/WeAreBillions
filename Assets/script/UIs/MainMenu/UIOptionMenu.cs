@@ -38,14 +38,15 @@ public class UIOptionMenu : MonoBehaviour
     }
 
     private void LoadCurrentOptions() { 
-        _sliderAudioAmbiance.SetValueWithoutNotify(StaticSaveSystem._currentSave.AudioAmbianceVolume);
-        _sliderAudioMaster.SetValueWithoutNotify(StaticSaveSystem._currentSave.AudioMasterVolume);
-        _sliderAudioMusic.SetValueWithoutNotify(StaticSaveSystem._currentSave.AudioMusicVolume);
-        _sliderAudioSFX.SetValueWithoutNotify(StaticSaveSystem._currentSave.AudioSFXVolume);
+        StaticSaveSystem.ApplyCurrentOptionSaves();
+        _sliderAudioAmbiance.SetValueWithoutNotify(StaticData.AudioVolumeAmbiances);
+        _sliderAudioMaster.SetValueWithoutNotify(StaticData.AudioVolumeMaster);
+        _sliderAudioMusic.SetValueWithoutNotify(StaticData.AudioVolumeMusic);
+        _sliderAudioSFX.SetValueWithoutNotify(StaticData.AudioVolumeSFX);
         
-        _sliderCameraKeybordSpeed.SetValueWithoutNotify(StaticSaveSystem._currentSave.CameraKeybordSpeed);
-        _sliderCameraPanningSpeed.SetValueWithoutNotify(StaticSaveSystem._currentSave.CameraPanningSpeed);
-        _toggleAllowCheatMenu.SetIsOnWithoutNotify(StaticSaveSystem._currentSave.AllowCheatMenu);
+        _sliderCameraKeybordSpeed.SetValueWithoutNotify(StaticData.ControlCameraKeyboardSpeed);
+        _sliderCameraPanningSpeed.SetValueWithoutNotify(StaticData.ControlCameraPanningSpeed);
+        _toggleAllowCheatMenu.SetIsOnWithoutNotify(StaticData.GamePlayAllowCheatMenu);
     }
     
     

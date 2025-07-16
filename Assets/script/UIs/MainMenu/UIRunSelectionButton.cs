@@ -18,7 +18,7 @@ public class UIRunSelectionButton : MonoBehaviour
     public void SetUpButton(StatRunSave data) {
         _runSave = data;
         _txtScore.text = _runSave.Score.ToString();
-        _txtDate.text = _runSave.Date.ToString();
+        _txtDate.text = DateTime.FromBinary(_runSave.Date).ToString();
     }
     
     private void Start() {

@@ -11,7 +11,9 @@ namespace script
 
         public static Action OnZombieGain;
         public static Action OnZombieLose;
-    
+
+        public static Action OnLoadingComplet;
+        
         public static event EventHandler<bool> OnSetGameOnPause;
         public static event EventHandler<DialogueStep[]> OnPlayDialogue;
         public static event EventHandler<List<GridAgent>> OnSelectionChange;
@@ -29,15 +31,15 @@ namespace script
             else Time.timeScale = 1;
         }
         public static void SetGameOnPause() {
-            StaticData.GamePause = !StaticData.GamePause;
-            SetPause(StaticData.GamePause);
+            StaticData.IsGamePause = !StaticData.IsGamePause;
+            SetPause(StaticData.IsGamePause);
             
-            OnSetGameOnPause?.Invoke(new object(), StaticData.GamePause);
+            OnSetGameOnPause?.Invoke(new object(), StaticData.IsGamePause);
         }
         public static void SetGameOnPause(bool value) {
-            StaticData.GamePause = value;
-            SetPause(StaticData.GamePause);
-            OnSetGameOnPause?.Invoke(new object(), StaticData.GamePause);
+            StaticData.IsGamePause = value;
+            SetPause(StaticData.IsGamePause);
+            OnSetGameOnPause?.Invoke(new object(), StaticData.IsGamePause);
         }
         
         public static void StartPlayingDialogue(DialogueStep[] dialogueSteps) {

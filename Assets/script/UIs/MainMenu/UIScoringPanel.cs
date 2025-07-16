@@ -74,12 +74,15 @@ public class UIScoringPanel : MonoBehaviour
     private void SetUpBestSavesButtons() {
         if (_runSelectionButtons != null) {
             foreach (var button in _runSelectionButtons) {
+                if( button==null)continue;
                 Destroy(button.gameObject);
             }
+            
         }
         if( _currentLevelSaveData.BestRun ==null) Debug.Log("bestRun is null");
         _runSelectionButtons = new UIRunSelectionButton[_currentLevelSaveData.BestRun.Length];
         for (int i = 0; i < _currentLevelSaveData.BestRun.Length; i++) {
+            if(_currentLevelSaveData.BestRun[i].Score ==0)continue;
             _runSelectionButtons[i] = Instantiate(_prfRunSelectionButton, _transformButtonRunHolder);
             _runSelectionButtons[i].SetUpButton(_currentLevelSaveData.BestRun[i]);
             _runSelectionButtons[i].OnSelect+= ButtonOnSelectRun;
@@ -95,6 +98,13 @@ public class UIScoringPanel : MonoBehaviour
         _txtCiviliansAlive.text = _currentLevelSaveData.BestStats.CivilliansAlive.ToString();
         _txtDefenderTransform.text = _currentLevelSaveData.BestStats.DefenderTrensform.ToString();
         _txtBuildingDestroy.text = _currentLevelSaveData.BestStats.BuildingDestroy.ToString();
-        _txtRunTime.text = _currentLevelSaveData.BestStats.Runtime.ToString();
+        _txtRunTime.text = GetRunTime(_currentLevelSaveData.BestStats.Runtime);
+    }
+    private string GetRunTime(float value)
+    {
+        if (value == 0) return "-";
+        int sec = Mathf.FloorToInt(value % 60);
+        int minute = Mathf.FloorToInt((value/60) % 60);
+        return minute + " Min  " + sec + " Sec";
     }
 }

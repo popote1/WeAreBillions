@@ -1,6 +1,7 @@
 using System;
 using script;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class StaticScoringSystem {
    public static event EventHandler<int> OnScoreChange;
@@ -28,7 +29,24 @@ public class StaticScoringSystem {
    }
    
    public static void AddCiviliansKill()=> CurrentScore += Mathf.FloorToInt(Metrics.SVCiviliansKill *AlertMod);
-   public static void AddDefenderKill()=> CurrentScore += Mathf.FloorToInt(Metrics.SVCiviliansKill *AlertMod);
-   public static void AddBuildingDestroy()=> CurrentScore += Mathf.FloorToInt(Metrics.SVCiviliansKill *AlertMod);
+   public static void AddDefenderKill()=> CurrentScore += Mathf.FloorToInt(Metrics.SVDefenderKill *AlertMod);
+   public static void AddBuildingDestroy()=> CurrentScore += Mathf.FloorToInt(Metrics.SVBuildingKill *AlertMod);
+
+   public static void SaveRunData() {
+      StatRunSave save = new StatRunSave();
+      save.Score = CurrentScore;
+      save.zombieCount = StaticData.ZombieCount;
+      save.HordeMaxSize = StaticData.zombieMaxCount;
+      save.CivilliansAlive = StaticData.CiviliansCounts;
+      save.DefenderTrensform = StaticData.DefendersKill;
+      save.BuildingDestroy = StaticData.BuildingsCount;
+      save.Runtime = StaticData.GameTimer;
+      save.Date = DateTime.Now.ToBinary();
+      
+      Debug.Log(" nouvelle run save a la date = "+ DateTime.Now +"\n ou dans la save ="+save.Date);
+      
+      StaticSaveSystem.SaveNewRunData(SceneManager.GetActiveScene().name, save);
+      
+   }
    
 }

@@ -32,8 +32,14 @@ namespace script
         public const float SMAlertLvl4 = 2.5f;
         public const int SMAlertLvl5 = 3;
         
+        //SaveSystem const
+        public const int MaxSaveRunPerLevel =5;
+        
         public  enum UniteType {
             Medium, Light, Heavy
+        }
+        public enum ConditionOperator {
+            Greater, GreaterOrEqual, Equal, SmallerOrEqual, Smaller 
         }
         
     }
