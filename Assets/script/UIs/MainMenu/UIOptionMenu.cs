@@ -36,6 +36,10 @@ public class UIOptionMenu : MonoBehaviour
         ChangePanelType(OptionPanelType.Game);
         
     }
+    public void ForceClose(){
+        StaticSaveSystem.SaveNewOptionsData();
+        gameObject.SetActive(false);
+    }
 
     private void LoadCurrentOptions() { 
         StaticSaveSystem.ApplyCurrentOptionSaves();
