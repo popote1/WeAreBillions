@@ -50,8 +50,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   prefabsDebrie: {fileID: 2516644654597322802, guid: 9ff0b1565792b1e45bffe1b02ac2eb80,
     type: 3}
-  prefabZombit: {fileID: 2444219041533692552, guid: adf5d6fdbd056e04790ca9363b48d07c,
-    type: 3}
   GridManager: {fileID: 0}
   _uniteType: 2
   HP: 10
@@ -62,6 +60,9 @@ MonoBehaviour:
   zombitToSpawn: 4
   SpawnOffset: {x: 0, y: 0.5, z: 0}
   RandomRange: 1
+  _zombieSpawnChanceStandrard: 0.7
+  _zombieSpawnChanceBrute: 0.2
+  _zombieSpawnChanceEngineer: 0.1
   AudioSource: {fileID: 0}
   HitSounds: []
 --- !u!65 &2170560437340114618

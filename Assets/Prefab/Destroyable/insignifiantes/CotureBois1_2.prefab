@@ -88,6 +88,12 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 483808410814502488, guid: 61027d3f0fb960949b6ef2e141ca414f,
         type: 3}
+    - target: {fileID: 1701990771810777280, guid: dfd2df4b62c1b7a49b4bd2a90c1733b2,
+        type: 3}
+      propertyPath: '_prfDebris.Array.data[0]'
+      value: 
+      objectReference: {fileID: 483808410814502488, guid: 61027d3f0fb960949b6ef2e141ca414f,
+        type: 3}
     - target: {fileID: 3685561496329083044, guid: dfd2df4b62c1b7a49b4bd2a90c1733b2,
         type: 3}
       propertyPath: m_LocalPosition.x

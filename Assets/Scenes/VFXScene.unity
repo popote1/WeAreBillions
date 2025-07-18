@@ -10450,6 +10450,10 @@ PrefabInstance:
         type: 3}
       insertIndex: -1
       addedObject: {fileID: 1305548029}
+    - targetCorrespondingSourceObject: {fileID: 4188592294558128819, guid: ddacf8075972bf0489d4a9da6e94f4fe,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1305548030}
   m_SourcePrefab: {fileID: 100100000, guid: ddacf8075972bf0489d4a9da6e94f4fe, type: 3}
 --- !u!1001 &1305266392
 PrefabInstance:
@@ -10544,7 +10548,7 @@ Animator:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1305548025}
-  m_Enabled: 1
+  m_Enabled: 0
   m_Avatar: {fileID: 0}
   m_Controller: {fileID: 9100000, guid: 394d017a3c218024e9427a119bacbfa3, type: 2}
   m_CullingMode: 0
@@ -10558,6 +10562,23 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &1305548030
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1305548025}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 22e89b6262633974a87b763caa40609a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _duration: 3
+  _strength: 3
+  _vibrato: 20
+  _buildingheight: 3
+  _prfVfxDestruction: {fileID: 1980652009}
 --- !u!1 &1859117809
 GameObject:
   m_ObjectHideFlags: 0
@@ -10747,6 +10768,12 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: acd5c7559116fe241ab3a6827ef71ec4, type: 3}
+--- !u!1 &1980652009 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6177001271971117344, guid: aca7581edb1241f48a470066018ad5ad,
+    type: 3}
+  m_PrefabInstance: {fileID: 8447078054979566913}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1998744513
 GameObject:
   m_ObjectHideFlags: 0

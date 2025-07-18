@@ -221,10 +221,6 @@ public class Tank : Defender
                 }
                 agent.TakeDamage(Mathf.RoundToInt(_attack.GetDamage(agent.UniteType)*_attackSplashDamage));
             }
-
-            if (col.GetComponent<InsignifiantProbs>()) {
-                col.GetComponent<InsignifiantProbs>().Destroy();
-            }
         }
         
         //_target.KillAgent();

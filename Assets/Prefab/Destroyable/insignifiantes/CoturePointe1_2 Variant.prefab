@@ -69,6 +69,12 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 230881919647062015, guid: dd5842d60831bc04ab98879b7e2f2e25,
         type: 3}
+    - target: {fileID: 3431625463166570680, guid: 538a8c74770790b46b1d4d1db344d68e,
+        type: 3}
+      propertyPath: '_prfDebris.Array.data[0]'
+      value: 
+      objectReference: {fileID: 230881919647062015, guid: dd5842d60831bc04ab98879b7e2f2e25,
+        type: 3}
     m_RemovedComponents: []
     m_RemovedGameObjects:
     - {fileID: 3116980976584851664, guid: 538a8c74770790b46b1d4d1db344d68e, type: 3}
