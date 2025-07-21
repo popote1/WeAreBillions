@@ -9,33 +9,39 @@ namespace script
     [SelectionBase]
     public class House: MonoBehaviour, IDestructible
     {
-        [SerializeField]private GameObject prefabsDebrie;
-        [SerializeField]private GridManager GridManager;
+        [SerializeField]private GameObject _prefabsDebrie;
+        [SerializeField]private GridManager _gridManager;
         [SerializeField]private Metrics.UniteType _uniteType = Metrics.UniteType.Heavy; 
-        [SerializeField]private int HP;
-        [SerializeField]private GameObject PrefabsDestruciotnParticules;
-        [SerializeField]private List<Vector2Int> CellsCoordinates = new List<Vector2Int>();
-        [SerializeField] private CinemachineImpulseSource _impulseSource;
+        [SerializeField]private int _hp;
+        [SerializeField]private GameObject _prefabsDestruciotnParticules;
+        [SerializeField]private List<Vector2Int> _cellsCoordinates = new List<Vector2Int>();
+        [SerializeField]private CinemachineImpulseSource _impulseSource;
         [Header("Spawn Parameters")]
-        [SerializeField]private int zombitToSpawn = 4;
-        [SerializeField]private Vector3 SpawnOffset = new Vector3(0, 0.5f, 0);
-        [SerializeField]private float RandomRange = 1;
+        [SerializeField]private int _zombitToSpawn = 4;
+        [SerializeField]private Vector3 _spawnOffset = new Vector3(0, 0.5f, 0);
+        [SerializeField]private float _randomRange = 1;
+        [SerializeField] private Bounds _spawningBounds;
         [Space(5)]
         [SerializeField]private float _zombieSpawnChanceStandrard =0.7f;
         [SerializeField]private float _zombieSpawnChanceBrute =0.2f;
         [SerializeField]private float _zombieSpawnChanceEngineer =0.1f;
         [Header(("Sounds"))] public AudioSource AudioSource;
-        [SerializeField]private AudioClip[] HitSounds;
-
+        [SerializeField]private AudioClip[] _hitSounds;
+        
         private int _zombieToSpawnStandard = 0;
         private int _zombieToSpawnBrute = 0;
         private int _zombieToSpawnEngineer = 0;
-        
+
+        public Bounds SpawningBound {
+            get => _spawningBounds;
+            set { _spawningBounds = value; }
+        }
+
         [ExecuteInEditMode]
         public void Awake() {
-            GridManager = GridManager.Instance;
+            _gridManager = GridManager.Instance;
             GridManager.OnClearPathFindingData += ClearCellCoordinateData;
-            if(!GridManager) Debug.LogWarning(" GridManager non Assigner sur Maison "+name);
+            if(!_gridManager) Debug.LogWarning(" GridManager non Assigner sur Maison "+name);
             StaticData.AddBuilding(this);
         }
 
@@ -44,20 +50,20 @@ namespace script
         }
 
 
-        public void ClearCellCoordinateData() => CellsCoordinates.Clear();
+        public void ClearCellCoordinateData() => _cellsCoordinates.Clear();
         
         public void TakeDamage(int damage, GridAgent source = null) {
-            if (HP <= 0) return;
-            HP -= damage;
-            if (HP <= 0) {
+            if (_hp <= 0) return;
+            _hp -= damage;
+            if (_hp <= 0) {
                 DestroyDestructible(source);
             }
         }
 
         public void DestroyDestructible(GridAgent source = null)
         {
-            if (prefabsDebrie) Instantiate(prefabsDebrie, transform.position, transform.rotation);
-            if( PrefabsDestruciotnParticules)Instantiate(PrefabsDestruciotnParticules, transform.position, transform.rotation);
+            if (_prefabsDebrie) Instantiate(_prefabsDebrie, transform.position, transform.rotation);
+            if( _prefabsDestruciotnParticules)Instantiate(_prefabsDestruciotnParticules, transform.position, transform.rotation);
             ManageZombieSpawn(source);
             StaticData.BuildingDestroy();
             if (_impulseSource) _impulseSource.GenerateImpulse();
@@ -73,7 +79,7 @@ namespace script
 
         public bool IsAlive()
         {
-            return (HP > 0);
+            return (_hp > 0);
         }
 
         private void ManageZombieSpawn(GridAgent source = null) {
@@ -84,24 +90,24 @@ namespace script
             }
             
             for (int i = 0; i < _zombieToSpawnStandard; i++) {
-                Vector3 pos = transform.position + SpawnOffset + new Vector3(Random.Range(-RandomRange, RandomRange), 0,
-                    Random.Range(-RandomRange, RandomRange));
+                Vector3 pos = transform.position + _spawnOffset + new Vector3(Random.Range(-_randomRange, _randomRange), 0,
+                    Random.Range(-_randomRange, _randomRange));
                 ZombieAgent  zombie =Instantiate(StaticData.PrefabZombieStandardAgent, pos, Quaternion.identity);
-                zombie.Generate(GridManager);
+                zombie.Generate(_gridManager);
                 if( zSource!=null &&zSource.IsSelected)GameController.AddAgentToSelection.Invoke(zombie);
             }
             for (int i = 0; i < _zombieToSpawnBrute; i++) {
-                Vector3 pos = transform.position + SpawnOffset + new Vector3(Random.Range(-RandomRange, RandomRange), 0,
-                    Random.Range(-RandomRange, RandomRange));
+                Vector3 pos = transform.position + _spawnOffset + new Vector3(Random.Range(-_randomRange, _randomRange), 0,
+                    Random.Range(-_randomRange, _randomRange));
                 ZombieAgent  zombie =Instantiate(StaticData.PrefabZombieBruteAgent, pos, Quaternion.identity);
-                zombie.Generate(GridManager);
+                zombie.Generate(_gridManager);
                 if( zSource!=null &&zSource.IsSelected)GameController.AddAgentToSelection.Invoke(zombie);
             }
             for (int i = 0; i < _zombieToSpawnEngineer; i++) {
-                Vector3 pos = transform.position + SpawnOffset + new Vector3(Random.Range(-RandomRange, RandomRange), 0,
-                    Random.Range(-RandomRange, RandomRange));
+                Vector3 pos = transform.position + _spawnOffset + new Vector3(Random.Range(-_randomRange, _randomRange), 0,
+                    Random.Range(-_randomRange, _randomRange));
                 ZombieAgent  zombie =Instantiate(StaticData.PrefabZombieEngineerAgent, pos, Quaternion.identity);
-                zombie.Generate(GridManager);
+                zombie.Generate(_gridManager);
                 if( zSource!=null &&zSource.IsSelected)GameController.AddAgentToSelection.Invoke(zombie);
             }
         }
@@ -118,7 +124,7 @@ namespace script
             _zombieSpawnChanceBrute = _zombieSpawnChanceBrute *  StaticData.ZombieSpawnChangeBrute;
             _zombieSpawnChanceEngineer = _zombieSpawnChanceEngineer *  StaticData.ZombieSpawnChangeEngineer;
             NormalizeSpawnValues();
-            for (int i = 0; i < zombitToSpawn; i++)
+            for (int i = 0; i < _zombitToSpawn; i++)
             {
                 float value = Random.Range(0, 1f);
                 
@@ -133,9 +139,12 @@ namespace script
                     _zombieToSpawnEngineer++;
                 
             }
-            StaticData.AddInHouseCivilians(zombitToSpawn);
+            StaticData.AddInHouseCivilians(_zombitToSpawn);
             
             
         }
+
+        
     }
+    
 }
