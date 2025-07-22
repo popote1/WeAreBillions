@@ -242,13 +242,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4e33000583835c349b2e7a159fa99a01, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  AgentName: Engineer
+  Radius: 0.5
   GridManager: {fileID: 0}
   _animator: {fileID: 5057886022319722721}
   Rigidbody: {fileID: 3393408768841454305}
-  AgentName: Engineer
   _maxHp: 5
   _uniteType: 1
   _canBeTransform: 0
+  _canBeDestroy: 0
   _transformationTime: 2
   _maxMoveSpeed: 3
   _moveSpeed: 12
@@ -260,13 +262,13 @@ MonoBehaviour:
   _wonderringDelayMax: 10
   _wonderringdistance: 3
   _transformEmote: {fileID: 0}
-  PSEmoteRedSquare: {fileID: 8856361631903552116}
-  HeightOffSetting: 0
-  GroundLayer:
+  _psEmoteRedSquare: {fileID: 8856361631903552116}
+  _heightOffSetting: 0
+  _groundLayer:
     serializedVersion: 2
     m_Bits: 128
   IsSelectable: 0
-  SelectionSprite: {fileID: 5642993560328176340}
+  _selectionSprite: {fileID: 5642993560328176340}
   _prefabDeathPS: {fileID: 540054392838581951, guid: 0af1e0599763dda47be91aad1e77c51d,
     type: 3}
   _prefabBloodSplater: {fileID: 4224899161540997600, guid: 5d300fc16e457f24ea514e4a0112684b,

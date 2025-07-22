@@ -9,16 +9,24 @@ public class VFXBuildingDestruction : MonoBehaviour
     [SerializeField] private int _vibrato = 20;
     [SerializeField] private float _buildingheight =3;
     [SerializeField] private GameObject _prfVfxDestruction;
-    void Start()
-    {
-        
-    }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+    [SerializeField] private AnimationCurve _CurveBuildingdestruiction = new AnimationCurve(new Keyframe(0, 0), new Keyframe(1, 1));
+    [Header("Ruins Parameters")]
+    [SerializeField] private GameObject _prfRuines;
+    [SerializeField] private float _ruineBaseSpawnYOffSet =-3 ;
+    [SerializeField] private float _ruinBaseSpawnSpeed = 2;
+    [SerializeField] private float _ruinBaseDelay = 2;
+
+    [Header("SmokeStrips")] 
+    [SerializeField] private VFXControllerSmokeStripe _prfVfxController;
+    [SerializeField] private float _vfxStripSpawnRange=1;
+    [SerializeField] private float _vfxStripSpawnCountMin=1;
+    [SerializeField] private float _vfxStripSpawnCountMax=4;
+    
+    
+    private Vector3 _originalPos;
+    private Quaternion _originalRot;
+    
     [ContextMenu("Rest")]
     public void Rest()
     {
@@ -26,9 +34,31 @@ public class VFXBuildingDestruction : MonoBehaviour
     }
 
     [ContextMenu("StartDestruction")]
-    public void StartDestruction() {
+    public void StartDestruction()
+    {
+        _originalPos = transform.position;
+        _originalRot = transform.rotation;
         Instantiate(_prfVfxDestruction, transform.position, transform.rotation);
         transform.DOShakeRotation(_duration, _strength, _vibrato);
-        transform.DOMoveY(transform.position.y - _buildingheight, _duration);
+        transform.DOMoveY(transform.position.y - _buildingheight, _duration).SetEase(_CurveBuildingdestruiction);
+        SpawnVfXStrips();
+        Invoke("SpawnRuin", _ruinBaseDelay);
+    }
+
+    private void SpawnRuin() {
+        if (_prfRuines!=null) {
+            GameObject go = Instantiate(_prfRuines, _originalPos + new Vector3(0, _ruineBaseSpawnYOffSet, 0),
+                _originalRot);
+            go.transform.DOMove(_originalPos, _ruinBaseSpawnSpeed);
+        }
+    }
+
+    private void SpawnVfXStrips() {
+        for (int i = 0; i < Random.Range(_vfxStripSpawnCountMin, _vfxStripSpawnCountMax); i++) {
+            VFXControllerSmokeStripe strip = Instantiate(_prfVfxController,
+                new Vector3(Random.Range(-_vfxStripSpawnRange, _vfxStripSpawnRange), 0, Random.Range(-_vfxStripSpawnRange, _vfxStripSpawnRange))+_originalPos
+                , Quaternion.identity);
+            strip.DoFadeIn();
+        }
     }
 }

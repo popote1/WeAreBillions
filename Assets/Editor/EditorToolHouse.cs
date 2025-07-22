@@ -23,8 +23,6 @@ public class EditorToolHouse : Editor
     {
         Handles.color = Color.blue;
         
-        //Vector3 handlePosition = _house.gameObject.transform.position+_lastPos;
-        
         Vector3 pos1 = Handles.FreeMoveHandle(RotateVector3OnY(_handlePos1, _house.transform.eulerAngles.y)+_house.transform.position, 0.1f, Vector3.one, Handles.RectangleHandleCap);
         Vector3 pos2 = Handles.FreeMoveHandle(RotateVector3OnY(_handlePos2, _house.transform.eulerAngles.y)+_house.transform.position, 0.1f, Vector3.one, Handles.RectangleHandleCap);
         pos1 = RotateVector3OnY(pos1 - _house.transform.position, -_house.transform.eulerAngles.y)+_house.transform.position;
@@ -69,17 +67,11 @@ public class EditorToolHouse : Editor
         Bounds bound =  _house.SpawningBound;
         bound.center = Vector3.Lerp(pos1, pos2, 0.5f);
         bound.SetMinMax(new Vector3(xMin, 0, zMin), new Vector3(xMax, 0, zMax));
-        //_boundProperty.boundsValue = bound;
-        //_house.SpawningBound=bound ;
         _boundProperty.boundsValue = bound;
 
         _houseObject.ApplyModifiedProperties();
         PrefabUtility.RecordPrefabInstancePropertyModifications(_house);
         
-    }
-
-    private Vector3 CenterBoundZone() {
-        return _house.transform.position + _house.SpawningBound.center;
     }
 
     private void DrawBound() {

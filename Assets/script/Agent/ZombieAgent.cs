@@ -26,8 +26,6 @@ namespace script
 
         [Header("TransformationParameters")] 
         [SerializeField] private TransformStruct _transformData;
-
-        [Header("HeightOffSetting")] 
         private IDestructible _desctructibleTarget;
 
         private GridAgent _agentTarget; 
@@ -52,6 +50,7 @@ namespace script
             StaticEvents.ZombieLose();
             StaticData.RemoveZombie(this);
             base.OnDestroy();
+            
         } 
         public float GetNormalizeHp() => (float) _hp / _maxHp;
         public float GetNormalizeTransformation() =>  _transformationTimer / _totalTransformationTime;

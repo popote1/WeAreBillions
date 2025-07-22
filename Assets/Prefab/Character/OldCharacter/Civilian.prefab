@@ -1092,13 +1092,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 60fd6e173c4e2f44dbc71e661e1c6341, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  AgentName: 
+  Radius: 0.5
   GridManager: {fileID: 0}
   _animator: {fileID: 2865205535390336310}
   Rigidbody: {fileID: 8776133592687920192}
-  AgentName: 
   _maxHp: 0
   _uniteType: 0
   _canBeTransform: 1
+  _canBeDestroy: 0
   _transformationTime: 3
   _maxMoveSpeed: 3
   _moveSpeed: 2
@@ -1110,13 +1112,13 @@ MonoBehaviour:
   _wonderringDelayMax: 10
   _wonderringdistance: 3
   _transformEmote: {fileID: 730441496173857573}
-  PSEmoteRedSquare: {fileID: 0}
-  HeightOffSetting: 0.5
-  GroundLayer:
+  _psEmoteRedSquare: {fileID: 0}
+  _heightOffSetting: 0.5
+  _groundLayer:
     serializedVersion: 2
     m_Bits: 128
   IsSelectable: 0
-  SelectionSprite: {fileID: 0}
+  _selectionSprite: {fileID: 0}
   _prefabDeathPS: {fileID: 540054392838581951, guid: 0af1e0599763dda47be91aad1e77c51d,
     type: 3}
   _prfEmoteExost: {fileID: 5604642705188548174, guid: 7e6bf1a319061414f8c25e412478d0bd,

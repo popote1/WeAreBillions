@@ -43,10 +43,12 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
-    - _FlipBookIndex: 3
+    - _Fade: 1
+    - _FlipBookIndex: 2
     - _QueueControl: 0
     - _QueueOffset: 0
     - _ScrolingSpeed: -0.3
+    - _ScrollingOffSet: 0
     - _ScrollingSpeed: -0.2
     m_Colors:
     - _MainColor: {r: 0.69, g: 0.574287, b: 0.51198, a: 0}

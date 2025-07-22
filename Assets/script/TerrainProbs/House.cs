@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using Unity.Cinemachine;
+using Unity.VisualScripting;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
@@ -9,24 +10,22 @@ namespace script
     [SelectionBase]
     public class House: MonoBehaviour, IDestructible
     {
-        [SerializeField]private GameObject _prefabsDebrie;
         [SerializeField]private GridManager _gridManager;
         [SerializeField]private Metrics.UniteType _uniteType = Metrics.UniteType.Heavy; 
         [SerializeField]private int _hp;
-        [SerializeField]private GameObject _prefabsDestruciotnParticules;
         [SerializeField]private List<Vector2Int> _cellsCoordinates = new List<Vector2Int>();
         [SerializeField]private CinemachineImpulseSource _impulseSource;
+        [SerializeField] private VFXBuildingDestruction _vfxBuildingDestruction;
         [Header("Spawn Parameters")]
         [SerializeField]private int _zombitToSpawn = 4;
-        [SerializeField]private Vector3 _spawnOffset = new Vector3(0, 0.5f, 0);
-        [SerializeField]private float _randomRange = 1;
+        [SerializeField]private Vector3 _spawnOffset = new Vector3(0, 0.7f, 0);
+        [SerializeField] private LayerMask _spawningExclutionLayerMask;
+        [SerializeField] private LayerMask _groundLayerMask;
         [SerializeField] private Bounds _spawningBounds;
         [Space(5)]
         [SerializeField]private float _zombieSpawnChanceStandrard =0.7f;
         [SerializeField]private float _zombieSpawnChanceBrute =0.2f;
         [SerializeField]private float _zombieSpawnChanceEngineer =0.1f;
-        [Header(("Sounds"))] public AudioSource AudioSource;
-        [SerializeField]private AudioClip[] _hitSounds;
         
         private int _zombieToSpawnStandard = 0;
         private int _zombieToSpawnBrute = 0;
@@ -60,16 +59,21 @@ namespace script
             }
         }
 
-        public void DestroyDestructible(GridAgent source = null)
+        [ContextMenu("Test Building Destruction")]
+        public void TestDestruiction()
         {
-            if (_prefabsDebrie) Instantiate(_prefabsDebrie, transform.position, transform.rotation);
-            if( _prefabsDestruciotnParticules)Instantiate(_prefabsDestruciotnParticules, transform.position, transform.rotation);
-            ManageZombieSpawn(source);
+            DestroyDestructible();
+        }
+        public void DestroyDestructible(GridAgent source = null) {
             StaticData.BuildingDestroy();
             if (_impulseSource) _impulseSource.GenerateImpulse();
-            GetComponentInChildren<Renderer>().enabled=false;
-            GetComponentInChildren<Collider>().enabled=false;
-            Destroy(gameObject,0.5f);
+            foreach (var coll in  GetComponentsInChildren<Collider>())
+            {
+                coll.enabled = false;
+            }
+            ManageZombieSpawn(source);
+            _vfxBuildingDestruction.StartDestruction();
+            OnDestroy();
         }
         [ExecuteInEditMode]
         private void OnDestroy()
@@ -89,24 +93,23 @@ namespace script
                 
             }
             
-            for (int i = 0; i < _zombieToSpawnStandard; i++) {
-                Vector3 pos = transform.position + _spawnOffset + new Vector3(Random.Range(-_randomRange, _randomRange), 0,
-                    Random.Range(-_randomRange, _randomRange));
-                ZombieAgent  zombie =Instantiate(StaticData.PrefabZombieStandardAgent, pos, Quaternion.identity);
+            for (int i = 0; i < _zombieToSpawnStandard; i++)
+            {
+                Debug.Log("Try To SpawnZombie");
+                ZombieAgent zombie = SpawnElement(StaticData.PrefabZombieStandardAgent);
+                if (zombie == null) break;
                 zombie.Generate(_gridManager);
                 if( zSource!=null &&zSource.IsSelected)GameController.AddAgentToSelection.Invoke(zombie);
             }
             for (int i = 0; i < _zombieToSpawnBrute; i++) {
-                Vector3 pos = transform.position + _spawnOffset + new Vector3(Random.Range(-_randomRange, _randomRange), 0,
-                    Random.Range(-_randomRange, _randomRange));
-                ZombieAgent  zombie =Instantiate(StaticData.PrefabZombieBruteAgent, pos, Quaternion.identity);
+                ZombieAgent zombie = SpawnElement(StaticData.PrefabZombieBruteAgent);
+                if (zombie == null) break;
                 zombie.Generate(_gridManager);
                 if( zSource!=null &&zSource.IsSelected)GameController.AddAgentToSelection.Invoke(zombie);
             }
             for (int i = 0; i < _zombieToSpawnEngineer; i++) {
-                Vector3 pos = transform.position + _spawnOffset + new Vector3(Random.Range(-_randomRange, _randomRange), 0,
-                    Random.Range(-_randomRange, _randomRange));
-                ZombieAgent  zombie =Instantiate(StaticData.PrefabZombieEngineerAgent, pos, Quaternion.identity);
+                ZombieAgent zombie = SpawnElement(StaticData.PrefabZombieEngineerAgent);
+                if (zombie == null) break;
                 zombie.Generate(_gridManager);
                 if( zSource!=null &&zSource.IsSelected)GameController.AddAgentToSelection.Invoke(zombie);
             }
@@ -118,30 +121,70 @@ namespace script
             _zombieSpawnChanceBrute = _zombieSpawnChanceBrute * (1/e);
             _zombieSpawnChanceEngineer = _zombieSpawnChanceEngineer * (1/e);
         }
-
+        [ContextMenu("Set Zombie Count")]
         private void SetZombieCountToSpawn() {
             _zombieSpawnChanceStandrard = _zombieSpawnChanceStandrard * StaticData.ZombieSpawnChangeStandrard;
             _zombieSpawnChanceBrute = _zombieSpawnChanceBrute *  StaticData.ZombieSpawnChangeBrute;
             _zombieSpawnChanceEngineer = _zombieSpawnChanceEngineer *  StaticData.ZombieSpawnChangeEngineer;
             NormalizeSpawnValues();
+            _zombieToSpawnStandard = 0;
+            _zombieToSpawnBrute = 0;
+            _zombieToSpawnEngineer = 0;
             for (int i = 0; i < _zombitToSpawn; i++)
             {
                 float value = Random.Range(0, 1f);
                 
-                if (value < _zombieSpawnChanceBrute) _zombieToSpawnStandard++;
-                
-                if (value >= _zombieSpawnChanceStandrard &&
+                if (value < _zombieSpawnChanceStandrard) _zombieToSpawnStandard++;
+                else if (value >= _zombieSpawnChanceStandrard &&
                     value < _zombieSpawnChanceBrute + _zombieSpawnChanceStandrard) 
                     _zombieToSpawnBrute++;
-                
-                if (value >= _zombieSpawnChanceBrute + _zombieSpawnChanceStandrard &&
+                else if (value >= _zombieSpawnChanceBrute + _zombieSpawnChanceStandrard &&
                     value < _zombieSpawnChanceBrute + _zombieSpawnChanceStandrard+_zombieSpawnChanceEngineer) 
                     _zombieToSpawnEngineer++;
                 
             }
             StaticData.AddInHouseCivilians(_zombitToSpawn);
-            
-            
+        }
+
+        
+        private ZombieAgent SpawnElement(ZombieAgent prfZombie)
+        {
+            Vector3 pos;
+            RaycastHit hit;
+            for (int i = 0; i < 50; i++) {
+                pos = GetRandomPosInSpawnBounds();
+                if(Physics.Raycast(new Ray(pos+new Vector3(0,10,0),Vector3.down), out hit, 20, _groundLayerMask)){
+                    pos = hit.point +_spawnOffset;
+                    if (CanSpawnTestElement(pos, prfZombie.Radius)) {
+                        Debug.Log("SpawnZombie");
+                        return Instantiate(prfZombie, pos, Quaternion.identity);
+                    }
+                }
+            }
+
+            return null;
+        }
+
+        private bool CanSpawnTestElement(Vector3 pos, float radius) {
+            Collider[] cols =Physics.OverlapSphere(pos, radius, _spawningExclutionLayerMask);
+            if (cols.Length > 0) {
+                return false;
+            }
+            return true;
+        }
+
+        private Vector3 GetRandomPosInSpawnBounds() {
+            Vector3 pos = new Vector3(Random.Range(_spawningBounds.min.x, _spawningBounds.max.x)
+                , 0, Random.Range(_spawningBounds.min.z, _spawningBounds.max.z)) ;
+            return RotateVector3OnY(pos, transform.eulerAngles.y) + transform.position;
+        }
+        
+        public Vector3 RotateVector3OnY(Vector3 v, float delta) {
+            delta = Mathf.Deg2Rad * -delta;
+            return new Vector3(
+                v.x * Mathf.Cos(delta) - v.z * Mathf.Sin(delta),0,
+                v.x * Mathf.Sin(delta) + v.z * Mathf.Cos(delta)
+            );
         }
 
         

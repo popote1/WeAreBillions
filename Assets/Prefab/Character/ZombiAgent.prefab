@@ -106,13 +106,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f927529c847142bdace53ca4b7080ead, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  AgentName: Zombie
+  Radius: 0.5
   GridManager: {fileID: 0}
   _animator: {fileID: 7194648810330254502}
   Rigidbody: {fileID: 6032425623059702544}
-  AgentName: Zombie
   _maxHp: 5
   _uniteType: 0
   _canBeTransform: 0
+  _canBeDestroy: 0
   _transformationTime: 2
   _maxMoveSpeed: 3
   _moveSpeed: 10
@@ -123,13 +125,14 @@ MonoBehaviour:
   _wonderringDelayMin: 1
   _wonderringDelayMax: 10
   _wonderringdistance: 3
-  PSEmoteRedSquare: {fileID: 5012726649260427936}
-  HeightOffSetting: 0
-  GroundLayer:
+  _transformEmote: {fileID: 0}
+  _psEmoteRedSquare: {fileID: 5012726649260427936}
+  _heightOffSetting: 0.5
+  _groundLayer:
     serializedVersion: 2
     m_Bits: 128
   IsSelectable: 0
-  SelectionSprite: {fileID: 3759194787182890189}
+  _selectionSprite: {fileID: 3759194787182890189}
   _prefabDeathPS: {fileID: 540054392838581951, guid: 0af1e0599763dda47be91aad1e77c51d,
     type: 3}
   _prefabBloodSplater: {fileID: 4224899161540997600, guid: 5d300fc16e457f24ea514e4a0112684b,

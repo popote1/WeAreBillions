@@ -51,7 +51,7 @@ MonoBehaviour:
     type: 3}
   _impulse: {fileID: 6172812638019554252}
   _prfDebris:
-  - {fileID: 1975449446729211127, guid: 748ad104300e86946a05755ca9a21a06, type: 3}
+  - {fileID: 8779110063686997644, guid: e28707770b2674a4b8cd364622851f3d, type: 3}
   _colliders:
   - {fileID: 8793404140656025060}
 --- !u!65 &8793404140656025060

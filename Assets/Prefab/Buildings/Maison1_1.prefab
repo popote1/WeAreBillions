@@ -48,23 +48,26 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: be3a667b62d64ffcaf4f479ac5e78e9c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  prefabsDebrie: {fileID: 2516644654597322802, guid: 9ff0b1565792b1e45bffe1b02ac2eb80,
-    type: 3}
-  GridManager: {fileID: 0}
+  _gridManager: {fileID: 0}
   _uniteType: 2
-  HP: 10
-  PrefabsDestruciotnParticules: {fileID: 8935802738614449913, guid: 23258952a84d5cf468595607629a4bd8,
-    type: 3}
-  CellsCoordinates: []
+  _hp: 25
+  _cellsCoordinates: []
   _impulseSource: {fileID: 4486636304712134953}
-  zombitToSpawn: 4
-  SpawnOffset: {x: 0, y: 0.5, z: 0}
-  RandomRange: 1
+  _vfxBuildingDestruction: {fileID: 121850971452410811}
+  _zombitToSpawn: 4
+  _spawnOffset: {x: 0, y: 0.7, z: 0}
+  _spawningExclutionLayerMask:
+    serializedVersion: 2
+    m_Bits: 129
+  _groundLayerMask:
+    serializedVersion: 2
+    m_Bits: 128
+  _spawningBounds:
+    m_Center: {x: 0.18761444, y: 0, z: 0.021865845}
+    m_Extent: {x: 1.4354324, y: 0, z: 0.91645813}
   _zombieSpawnChanceStandrard: 0.7
   _zombieSpawnChanceBrute: 0.2
   _zombieSpawnChanceEngineer: 0.1
-  AudioSource: {fileID: 0}
-  HitSounds: []
 --- !u!65 &2170560437340114618
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -121,17 +124,35 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ImpulseDefinition:
     ImpulseChannel: 1
-    ImpulseShape: 4
+    ImpulseShape: 0
     CustomImpulseShape:
       serializedVersion: 2
-      m_Curve: []
+      m_Curve:
+      - serializedVersion: 3
+        time: 0
+        value: 0
+        inSlope: 1
+        outSlope: 1
+        tangentMode: 34
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      - serializedVersion: 3
+        time: 1
+        value: 1
+        inSlope: 1
+        outSlope: 1
+        tangentMode: 34
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
     ImpulseDuration: 0.2
-    ImpulseType: 1
-    DissipationRate: 0.557
-    RawSignal: {fileID: 0}
+    ImpulseType: 3
+    DissipationRate: 0.612
+    RawSignal: {fileID: 11400000, guid: e120f1000d237a0439051eade2580cec, type: 2}
     AmplitudeGain: 1
     FrequencyGain: 1
     RepeatMode: 0
@@ -150,7 +171,7 @@ MonoBehaviour:
         m_PostInfinity: 2
         m_RotationOrder: 4
       AttackTime: 0
-      SustainTime: 0.2
+      SustainTime: 4
       DecayTime: 0.7
       ScaleWithImpact: 1
       HoldForever: 0
@@ -236,7 +257,11 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 78b266e61ba50f542b1043cf50c9af50,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 121850971452410811}
   m_SourcePrefab: {fileID: 100100000, guid: 78b266e61ba50f542b1043cf50c9af50, type: 3}
 --- !u!4 &3560956231522910217 stripped
 Transform:
@@ -244,3 +269,61 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 3954643906131290082}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &4188592294558128819 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 78b266e61ba50f542b1043cf50c9af50,
+    type: 3}
+  m_PrefabInstance: {fileID: 3954643906131290082}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &121850971452410811
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4188592294558128819}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 22e89b6262633974a87b763caa40609a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _duration: 3
+  _strength: 3
+  _vibrato: 20
+  _buildingheight: 3
+  _prfVfxDestruction: {fileID: 6177001271971117344, guid: aca7581edb1241f48a470066018ad5ad,
+    type: 3}
+  _CurveBuildingdestruiction:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 1
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  _prfRuines: {fileID: 8522946641476728923, guid: 88c7f802afe1f6d459db45198f382afd,
+    type: 3}
+  _ruineBaseSpawnYOffSet: -3
+  _ruinBaseSpawnSpeed: 2
+  _ruinBaseDelay: 2
+  _prfVfxController: {fileID: 2152695037291736157, guid: fc4fb90a474075f4a97883242ad2fa88,
+    type: 3}
+  _vfxStripSpawnRange: 1.5
+  _vfxStripSpawnCountMin: 1
+  _vfxStripSpawnCountMax: 2

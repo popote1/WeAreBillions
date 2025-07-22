@@ -32,7 +32,7 @@ public class Tank : Defender
             if (cell == null) {
                 Cell currentPos = GridManager.GetCellFromWorldPos(transform.position);
                 if (currentPos == null) {
-                    PSEmoteRedSquare.SetActive(true);
+                    _psEmoteRedSquare.SetActive(true);
                     Debug.LogWarning("GridAgent out of the Game Zone", this);
                     return;
                 }
@@ -80,7 +80,7 @@ public class Tank : Defender
                 Cell currentPos = GridManager.GetCellFromWorldPos(transform.position);
                 if (currentPos == null)
                 {
-                    PSEmoteRedSquare.SetActive(true);
+                    _psEmoteRedSquare.SetActive(true);
                     Debug.LogWarning("GridAgent out of the Game Zone", this);
                     return;
                 }
@@ -95,7 +95,7 @@ public class Tank : Defender
                 return;
             }
 
-            if (PSEmoteRedSquare) PSEmoteRedSquare.SetActive(false);
+            if (_psEmoteRedSquare) _psEmoteRedSquare.SetActive(false);
             Vector3 targetDir = new Vector3(cell.DirectionTarget.x, 0, cell.DirectionTarget.y);
             float dot = Vector3.Dot(targetDir, transform.forward);
 
@@ -114,10 +114,10 @@ public class Tank : Defender
         Vector3 a, b, c, d, ab, bc, cd, da, center, forward, right, top ;
         a= b= c= d=Vector3.zero;
         RaycastHit hit;
-        if (Physics.Raycast(_raycaterA.position, Vector3.down, out hit, Mathf.Infinity,GroundLayer))  a = hit.point;
-        if (Physics.Raycast(_raycaterB.position, Vector3.down, out hit, Mathf.Infinity, GroundLayer)) b = hit.point;
-        if (Physics.Raycast(_raycaterC.position, Vector3.down, out hit, Mathf.Infinity, GroundLayer)) c = hit.point;
-        if (Physics.Raycast(_raycaterD.position, Vector3.down, out hit, Mathf.Infinity, GroundLayer)) d = hit.point;
+        if (Physics.Raycast(_raycaterA.position, Vector3.down, out hit, Mathf.Infinity,_groundLayer))  a = hit.point;
+        if (Physics.Raycast(_raycaterB.position, Vector3.down, out hit, Mathf.Infinity, _groundLayer)) b = hit.point;
+        if (Physics.Raycast(_raycaterC.position, Vector3.down, out hit, Mathf.Infinity, _groundLayer)) c = hit.point;
+        if (Physics.Raycast(_raycaterD.position, Vector3.down, out hit, Mathf.Infinity, _groundLayer)) d = hit.point;
         
         ab = Vector3.Lerp(a, b, 0.5f);
         bc = Vector3.Lerp(b, c, 0.5f);

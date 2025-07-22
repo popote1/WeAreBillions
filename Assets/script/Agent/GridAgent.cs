@@ -7,13 +7,17 @@ using Random = UnityEngine.Random;
 
 public class GridAgent : MonoBehaviour
 {
+    
+    public Subgrid Subgrid;
+    public string AgentName;
+    public float Radius = 0.5f;
     [Header("References")]
     [SerializeField] protected GridManager GridManager;
     [SerializeField] protected Animator _animator;
     [SerializeField] protected Rigidbody Rigidbody;
 
     [Header("Caracteristics")]
-    public string AgentName;
+    
     [SerializeField] protected int _maxHp;
     [SerializeField] protected Metrics.UniteType _uniteType;
     [SerializeField] private bool _canBeTransform=true;
@@ -25,22 +29,27 @@ public class GridAgent : MonoBehaviour
     [SerializeField] protected float _speedModulator=0.05f;
     [SerializeField] protected float _stopDrag = 4f;
     [SerializeField] protected float _moveDrag = 0f;
+
     [Header("Wondering Parameters")] 
     [SerializeField] protected bool _usWondering;
     [SerializeField] protected float _wonderringDelayMin=1;
     [SerializeField] protected float _wonderringDelayMax=10;
+
+    [Space(0.5f)]
+    
+
     [SerializeField] protected int _wonderringdistance=3;
+
     [Header("VFX Part")]
     [SerializeField] protected Transform _transformEmote;
-    [Space(0.5f)]
-    public Subgrid Subgrid;
-    public GameObject PSEmoteRedSquare;
+
+    [SerializeField] protected GameObject _psEmoteRedSquare;
     [Header("HeightOffSetting")] 
-    public float HeightOffSetting;
-    public LayerMask GroundLayer;
+    [SerializeField] protected float _heightOffSetting;
+    [SerializeField] protected LayerMask _groundLayer;
     [Header("Selection")] 
     public bool IsSelectable;
-    public GameObject SelectionSprite;
+    [SerializeField] protected GameObject _selectionSprite;
     
 
     public GridActorStat Stat { get; private set; } = GridActorStat.Idle;
@@ -59,6 +68,7 @@ public class GridAgent : MonoBehaviour
     protected Collider _collider;
     protected int _hp;
     
+    
 
     public enum GridActorStat {
         Idle, Move, Attack , Grabed, Transforming, CallingAlert, MovingAttack
@@ -66,7 +76,7 @@ public class GridAgent : MonoBehaviour
     public bool IsSelected {
         get => _isSelected;
         set {
-            if (SelectionSprite) SelectionSprite.SetActive(value);
+            if (_selectionSprite) _selectionSprite.SetActive(value);
             _isSelected = value;
         }
     }
@@ -121,8 +131,8 @@ public class GridAgent : MonoBehaviour
     }
     protected virtual void ManageSelfElevation() {
         RaycastHit hit;
-        if (Physics.Raycast(new Ray(transform.position+Vector3.up*3, Vector3.down), out hit, 6, GroundLayer)) {
-            transform.position = new Vector3(transform.position.x, hit.point.y + HeightOffSetting, transform.position.z);
+        if (Physics.Raycast(new Ray(transform.position+Vector3.up*3, Vector3.down), out hit, 6, _groundLayer)) {
+            transform.position = new Vector3(transform.position.x, hit.point.y + _heightOffSetting, transform.position.z);
         }
     }
     protected virtual void ManageOrientation()
@@ -139,7 +149,7 @@ public class GridAgent : MonoBehaviour
             if (cell == null) {
                 Cell currentPos = GridManager.GetCellFromWorldPos(transform.position);
                 if (currentPos == null) {
-                    PSEmoteRedSquare.SetActive(true);
+                    _psEmoteRedSquare.SetActive(true);
                     Debug.LogWarning("GridAgent out of the Game Zone", this);
                     return;
                 }
@@ -152,7 +162,7 @@ public class GridAgent : MonoBehaviour
                
                 return;
             }
-            if( PSEmoteRedSquare)PSEmoteRedSquare.SetActive(false);
+            if( _psEmoteRedSquare)_psEmoteRedSquare.SetActive(false);
             Rigidbody.AddForce(new Vector3(cell.DirectionTarget.x, 0, cell.DirectionTarget.y) * GetMoveSpeed());
             Rigidbody.linearVelocity -= Rigidbody.linearVelocity * _speedModulator;
         }
