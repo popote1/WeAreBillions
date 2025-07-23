@@ -22,6 +22,7 @@ namespace script.UIs {
             if (agents == null || agents[0] == null) return;
             _txtHeader.text = agents[0].AgentName;
             _txtCount.text = agents.Count.ToString();
+            _imgportrait.texture = agents[0].Portrait.texture;
             gameObject.SetActive(true);
             _agents = agents;
         }

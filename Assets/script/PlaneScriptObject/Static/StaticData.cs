@@ -200,6 +200,15 @@ namespace script {
 
             if (_zombieCount > _zombieMaxCount) _zombieMaxCount = _zombieCount;
         }
+
+        public static List<GridAgent> GetAllZombies()
+        {
+            List<GridAgent> returnList = new List<GridAgent>();
+            foreach (var zombie in _allZombieAgents) {
+                returnList.Add(zombie);
+            }
+            return returnList;
+        }
         
         //public static void SetPause(bool value) {
         //    if (value) Time.timeScale = 0;

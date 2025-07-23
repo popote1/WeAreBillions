@@ -252,6 +252,7 @@ MonoBehaviour:
   _canBeTransform: 0
   _canBeDestroy: 0
   _transformationTime: 2
+  _imgPortrait: {fileID: 21300000, guid: a15851438bfbda545becde6c15989183, type: 3}
   _maxMoveSpeed: 3
   _moveSpeed: 12
   _speedModulator: 0.05

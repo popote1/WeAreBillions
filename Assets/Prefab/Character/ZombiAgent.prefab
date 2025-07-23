@@ -116,6 +116,7 @@ MonoBehaviour:
   _canBeTransform: 0
   _canBeDestroy: 0
   _transformationTime: 2
+  _imgPortrait: {fileID: 21300000, guid: 455ad9931e47a2f4abaa68b6e0676691, type: 3}
   _maxMoveSpeed: 3
   _moveSpeed: 10
   _speedModulator: 0.05
@@ -127,7 +128,7 @@ MonoBehaviour:
   _wonderringdistance: 3
   _transformEmote: {fileID: 0}
   _psEmoteRedSquare: {fileID: 5012726649260427936}
-  _heightOffSetting: 0.5
+  _heightOffSetting: 0
   _groundLayer:
     serializedVersion: 2
     m_Bits: 128

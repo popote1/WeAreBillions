@@ -23,6 +23,7 @@ public class GridAgent : MonoBehaviour
     [SerializeField] private bool _canBeTransform=true;
     [SerializeField] private bool _canBeDestroy = false;  
     [SerializeField] private float _transformationTime = 3;
+    [SerializeField] private Sprite _imgPortrait;
     [Header("Move Parameters")]
     [SerializeField] protected float _maxMoveSpeed=3;
     [SerializeField] protected float _moveSpeed=10;
@@ -55,6 +56,7 @@ public class GridAgent : MonoBehaviour
     public GridActorStat Stat { get; private set; } = GridActorStat.Idle;
     public Metrics.UniteType UniteType { get => _uniteType; }
     
+    public Sprite Portrait { get => _imgPortrait; }
     public bool CanBetransform { get => _canBeTransform; }
     public bool CanBeDestroy { get => _canBeDestroy; }
     public float TransformTime { get => _transformationTime; }
