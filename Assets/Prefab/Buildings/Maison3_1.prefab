@@ -160,7 +160,7 @@ MonoBehaviour:
     ImpactRadius: 100
     DirectionMode: 0
     DissipationMode: 2
-    DissipationDistance: 100
+    DissipationDistance: 50
     PropagationSpeed: 343
   DefaultVelocity: {x: 0, y: 0.5, z: 0}
 --- !u!1001 &3352134309591653583

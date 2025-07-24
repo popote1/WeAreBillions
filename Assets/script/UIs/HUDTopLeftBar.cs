@@ -38,7 +38,7 @@ namespace script.UIs
         }
 
         private void UISelectAllZombies() {
-            StaticEvents.ChangeSelection(StaticData.GetAllZombies());
+            StaticEvents.SubmitSelection(StaticData.GetAllZombies());
         }
         
     }
