@@ -8,6 +8,8 @@ public class HUDRestartPauseMenu : MonoBehaviour
 {
     public event Action OnPanelClose;
 
+    [SerializeField]
+    private UIAsyncSceneLoader _uiAsyncSceneLoader;
     [SerializeField] private Button _bpConfirm;
     [SerializeField] private Button _bpReturn;
     
@@ -22,7 +24,8 @@ public class HUDRestartPauseMenu : MonoBehaviour
 
     private void UiRestartLevel() {
         StaticEvents.SetPause(false);
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+        if (_uiAsyncSceneLoader != null) _uiAsyncSceneLoader.StartLoadingScene(SceneManager.GetActiveScene().name);
+        else SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
 
     private void ClosePanel()

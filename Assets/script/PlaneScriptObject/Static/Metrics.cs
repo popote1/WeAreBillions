@@ -19,6 +19,9 @@ namespace script
         public const int DestructibleMoveCost = 20;
 
         public const float ZombieSpawnOffset =  0.5f;
+        public const float SelectionBoxMaxY = 50;
+        public const float SelectionBoxMinY = -10;
+        public const float SelectionBoxMinSize = 0.1f;
         
         // Scoring Parameters
         public const int SVCiviliansKill = 10;

@@ -90,30 +90,25 @@ namespace script
             ZombieAgent zSource=null;
             if (source != null && source is ZombieAgent) {
                 zSource = source as ZombieAgent;
-                
             }
-            
-            for (int i = 0; i < _zombieToSpawnStandard; i++)
-            {
-                Debug.Log("Try To SpawnZombie");
-                ZombieAgent zombie = SpawnElement(StaticData.PrefabZombieStandardAgent);
-                if (zombie == null) break;
-                zombie.Generate(_gridManager);
-                if( zSource!=null &&zSource.IsSelected)GameController.AddAgentToSelection.Invoke(zombie);
+            for (int i = 0; i < _zombieToSpawnStandard; i++) {
+                Spawnzombie(SpawnElement(StaticData.PrefabZombieStandardAgent), zSource);
             }
             for (int i = 0; i < _zombieToSpawnBrute; i++) {
-                ZombieAgent zombie = SpawnElement(StaticData.PrefabZombieBruteAgent);
-                if (zombie == null) break;
-                zombie.Generate(_gridManager);
-                if( zSource!=null &&zSource.IsSelected)GameController.AddAgentToSelection.Invoke(zombie);
+                Spawnzombie(SpawnElement(StaticData.PrefabZombieBruteAgent), zSource);
             }
             for (int i = 0; i < _zombieToSpawnEngineer; i++) {
-                ZombieAgent zombie = SpawnElement(StaticData.PrefabZombieEngineerAgent);
-                if (zombie == null) break;
-                zombie.Generate(_gridManager);
-                if( zSource!=null &&zSource.IsSelected)GameController.AddAgentToSelection.Invoke(zombie);
+                Spawnzombie(SpawnElement(StaticData.PrefabZombieEngineerAgent), zSource);
             }
         }
+
+        private void Spawnzombie(ZombieAgent zombie, ZombieAgent zSource ) {
+            if (zombie == null) return;
+            zombie.Generate(_gridManager);
+            if( zSource!=null &&zSource.IsSelected)StaticEvents.AddAgentToSelection(zombie);
+            if( zSource!=null)zombie.SetNewSubGrid(zSource.Subgrid);
+        }
+        
         [ContextMenu("NormalizeSpawnValues")]
         private void NormalizeSpawnValues() {
             float e = _zombieSpawnChanceBrute + _zombieSpawnChanceEngineer + _zombieSpawnChanceStandrard;

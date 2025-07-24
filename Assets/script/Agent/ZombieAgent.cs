@@ -115,7 +115,8 @@ namespace script
             
             _animator.SetBool("IsGrabbing", false);
             ChangeStat(GridActorStat.Idle);
-            if (IsSelected) GameController.AddAgentToSelection.Invoke(z);
+            if (IsSelected) StaticEvents.AddAgentToSelection(z);
+            z.SetNewSubGrid(Subgrid);
             _isTransformting = false;
             
         }

@@ -18,7 +18,7 @@ namespace script
         public static event EventHandler<DialogueStep[]> OnPlayDialogue;
         public static event EventHandler<List<GridAgent>> OnSelectionChange;
         public static event EventHandler<List<GridAgent>> OnSubmitSelectionChange;
-        
+        public static event EventHandler<GridAgent> OnAddAgentToSelection;
     
         public static void ZombieLose() {
             StaticData.ZombieCount--;
@@ -42,19 +42,11 @@ namespace script
             OnSetGameOnPause?.Invoke(new object(), StaticData.IsGamePause);
         }
         
-        public static void StartPlayingDialogue(DialogueStep[] dialogueSteps) {
-            OnPlayDialogue?.Invoke(null,dialogueSteps);
-        }
+        public static void StartPlayingDialogue(DialogueStep[] dialogueSteps) => OnPlayDialogue?.Invoke(null,dialogueSteps);
+        public static void SubmitSelection(List<GridAgent> newSelection) => OnSubmitSelectionChange?.Invoke(null, newSelection);
+        public static void ChangeSelection(List<GridAgent> selection)=> OnSelectionChange?.Invoke(null, selection);
 
-        public static void SubmitSelection(List<GridAgent> newSelection)
-        {
-            OnSubmitSelectionChange?.Invoke(null, newSelection);
-        }
-
-        public static void ChangeSelection(List<GridAgent> selection)
-        {
-            OnSelectionChange?.Invoke(null, selection);
-        }
+        public static void AddAgentToSelection(GridAgent agent) => OnAddAgentToSelection?.Invoke(null, agent);
 
         public static void EndGame(bool isWin) {
             if (isWin) OnGameWin?.Invoke();

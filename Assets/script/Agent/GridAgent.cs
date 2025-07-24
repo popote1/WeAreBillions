@@ -35,15 +35,11 @@ public class GridAgent : MonoBehaviour
     [SerializeField] protected bool _usWondering;
     [SerializeField] protected float _wonderringDelayMin=1;
     [SerializeField] protected float _wonderringDelayMax=10;
-
     [Space(0.5f)]
-    
-
     [SerializeField] protected int _wonderringdistance=3;
 
     [Header("VFX Part")]
     [SerializeField] protected Transform _transformEmote;
-
     [SerializeField] protected GameObject _psEmoteRedSquare;
     [Header("HeightOffSetting")] 
     [SerializeField] protected float _heightOffSetting;

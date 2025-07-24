@@ -7,7 +7,7 @@ using UnityEngine.UI;
 public class HUDReturnToMainMenu : MonoBehaviour
 {
     public event Action OnPanelClose;
-
+    [SerializeField] private UIAsyncSceneLoader _uiAsyncSceneLoader;
     [SerializeField] private Button _bpConfirm;
     [SerializeField] private Button _bpReturn;
 
@@ -19,7 +19,8 @@ public class HUDReturnToMainMenu : MonoBehaviour
 
     private void UIReturnToMainMenu() {
         StaticEvents.SetPause(false);
-        SceneManager.LoadScene("0");
+        if (_uiAsyncSceneLoader != null) _uiAsyncSceneLoader.StartLoadingScene("MainMenu");
+        else SceneManager.LoadScene("0");
     }
 
     public void OpenPanel() {

@@ -11,213 +11,72 @@ namespace script
 {
     public class GameController:MonoBehaviour
     {
-        public Camera Camera;
-        public GridManager GridManager;
-        public ZombieAgent PrefabsZombieAgent;
+        [SerializeField]private Camera _camera;
+        [SerializeField]private GridManager _gridManager;
         [SerializeField] private HUDSelectionBoxDisplayer _hudSelectionBoxDisplayer;
         [SerializeField] private GameObject _prefabsVFXMoveOrder;
 
-        [Header("Strat Zombie")] 
-        public Transform[] zombies;
-
-        [Header("SelectedZombie")] public float SelectionBoxMin = -10;
-        public float SelectionBoxMax = 10;
-        public LayerMask GroundLayer;
-        public LayerMask SelectingLayer;
-        public List<GridAgent> Selected = new List<GridAgent>();
-        public float MinimumSelectBoxSize = 0.1f; 
-        public GameObject DebugCube;
+        [Header("SelectedZombie")] 
+        [SerializeField]private List<GridAgent> _selected = new List<GridAgent>(); 
         [Header("CameraScroll")] 
-        public int PixelBorder = 50;
+        [SerializeField]private int _pixelBorder = 50;
+        [Header("Cheat&Debug")]
+        [SerializeField]private ZombieAgent _prfZombieAgent;
         
 
         private Vector2Int originChunkTarget = new Vector2Int(0, 0);
         private bool _isInSelectionBox;
         private Vector2 _startSelectionBox;
-
-        //public event EventHandler<List<GridAgent>> OnSelectionChange; 
-        public static Action<GridAgent> AddAgentToSelection; 
         
         private void Start() {
-            AddAgentToSelection += AddGridAGentToSelection;
-            if (zombies == null || zombies.Length == 0) return;
-            foreach (var z in zombies) {
-                if (z == null) continue;
-                ZombieAgent zombie = Instantiate(PrefabsZombieAgent,  z.position+ new Vector3(0, 0.5f, 0),
-                    Quaternion.identity);
-                zombie.Generate(GridManager);
-            }
-            
-            StaticEvents.OnSetGameOnPause += DebugOpenMenuPause;
+            StaticEvents.OnAddAgentToSelection += AddGridAGentToSelection;
             StaticEvents.OnSubmitSelectionChange+= StaticEventsOnOnSubmitSelectionChange; 
         }
 
-        
-
-        private void OnDestroy()
-        {
-            StaticEvents.OnSetGameOnPause -= DebugOpenMenuPause;
+        private void OnDestroy() {
+            StaticEvents.OnAddAgentToSelection -= AddGridAGentToSelection;
+            StaticEvents.OnSubmitSelectionChange-= StaticEventsOnOnSubmitSelectionChange; 
         }
 
-        public void Update()
-        {
-            
+        public void Update() {
             if (StaticData.BlockControls) return;
             ManageBorderCameraMovement();
             if (Input.GetKeyDown(KeyCode.Escape))ManagePressEscape();
             if (Input.GetKeyDown(KeyCode.F2))ManagerSelectAllZombies();
             if (Input.GetButton("Fire1")) ManageBoxSelectionDisplay();
-           
-            if (Input.GetButtonUp("Fire1")) 
-            {
-                if (!CanBeSelectBox(_startSelectionBox , (Vector2)Input.mousePosition)) ManageRayCastSelection();
-                else ManageBoxSelection();
+            if (Input.GetButtonUp("Fire1")) ManageSelection();
+            if (Input.GetButtonDown("Fire2")) ManageGiveOrder();
+            if (Input.GetKeyDown(KeyCode.A)&& StaticData.CheatEnableZombieSpawning) CheatSpawnZombie();
+        }
+        #region Selection 
+        private void ManageSelection() {
+            if (!CanBeSelectBox(_startSelectionBox , (Vector2)Input.mousePosition)) ManageRayCastSelection();
+            else ManageBoxSelection();
                 
 
-                _isInSelectionBox = false;
-                StaticData.IsDraging = false;
-                if (_hudSelectionBoxDisplayer) _hudSelectionBoxDisplayer.CloseSelectionBox();
-            }
-            
-            if (Input.GetButtonDown("Fire2")) {
-                RaycastHit hit;
-                if (Physics.Raycast(Camera.ScreenPointToRay(Input.mousePosition), out hit)) {
-                    if (hit.collider.transform.GetComponent<House>())
-                    {
-                        ManageAttackBuilding(hit.collider.transform.GetComponent<House>());
-                        Debug.Log("Click On A House");
-                        return;
-                    }
-                    
-                    Cell targetCell = GridManager.GetCellFromWorldPos(hit.point);
-                    if (Input.GetKey(KeyCode.LeftShift)) {
-                        Debug.Log("FollowOrder");
-                        ManagerGiveExtraOrder(targetCell);
-                        if (_prefabsVFXMoveOrder != null) {
-                            Instantiate(_prefabsVFXMoveOrder, hit.point, quaternion.identity);
-                        }
-                        return;
-                    }
-                    ManagerGiveMoveOrder(targetCell);
-                    if (_prefabsVFXMoveOrder != null) {
-                        Instantiate(_prefabsVFXMoveOrder, hit.point, quaternion.identity);
-                    }
-                }
-            }
-            
-            
-            
-            if (Input.GetKeyDown(KeyCode.A)&& StaticData.CheatEnableZombieSpawning) {
-                RaycastHit hit;
-                if (Physics.Raycast(Camera.ScreenPointToRay(Input.mousePosition), out hit)) {
-                    Cell cell = GridManager.GetCellFromWorldPos(hit.point);
-                    ZombieAgent zombie = Instantiate(PrefabsZombieAgent, hit.point + new Vector3(0, 0.5f, 0),
-                        Quaternion.identity);
-                    zombie.Generate(GridManager);
-                }
-            }
-
-            if (Input.GetKeyDown(KeyCode.T))
-            {
-                RaycastHit hit;
-                if (Physics.Raycast(Camera.ScreenPointToRay(Input.mousePosition), out hit)) {
-                    Cell cell = GridManager.GetCellFromWorldPos(hit.point);
-
-                    GridManager.ColorAllDebugGridToColor(Color.white);
-                    foreach (var neibourgh in GridManager.GetCellNeighborRange(cell, 3)) {
-                        neibourgh.ColorDebugCell(Color.green);
-                    }
-                }
-            }
+            _isInSelectionBox = false;
+            StaticData.IsDraging = false;
+            if (_hudSelectionBoxDisplayer) _hudSelectionBoxDisplayer.CloseSelectionBox();
         }
-
-        public void CalculateSelectionPathFinding(Cell targetCell)
-        {
-            List<Chunk> startchunks = new List<Chunk>();
-            
-            List<Chunk> totalChunks = GetChunksPathFromZombie(Selected, targetCell);
-            if (totalChunks == null) return;
-            Subgrid subgrid = new Subgrid();
-            subgrid.GenerateSubGrid(totalChunks.ToArray(), GridManager.Size, GridManager.Offset);
-            subgrid.StartCalcFlowfield(new []{targetCell});
-
-            foreach (var zombieAgent in Selected)
-            {
-                if (zombieAgent == null) continue;
-                zombieAgent.SetNewSubGrid(subgrid);
-            }
-            
-            GridManager.ColorAllDebugGridToColor(Color.white);
-
-            foreach (var chunk in totalChunks)
-            {
-                foreach (var cell in chunk.cells)
-                {
-                    cell.ColorDebugCell(Color.blue);
-                }
-            }
-            foreach (var chunk in startchunks) {
-                foreach (var cell in chunk.cells) {
-                    cell.ColorDebugCell(Color.red);
-                }
-            }
-
-            foreach (var cell in targetCell.Chunk.cells) {
-                cell.ColorDebugCell(Color.green);
-            }
-            //foreach (var chunk in pathChunks) {
-                //    foreach (var cell in chunk.cells) {
-                //        cell.ColorDebugCell(Color.green);
-                //    }
-                //}
-//
-                //foreach (var chunk in GridManager.GetNeighborsOfPath(pathChunks)) {
-                //    foreach (var cell in chunk.cells) {
-                //        cell.ColorDebugCell(Color.yellow);
-                //    }
-                //}
-        }
-        public void CalculateSelectionExtraPathFinding(Cell targetCell)
-        {
-            List<Chunk> startchunks = new List<Chunk>();
-            
-            List<Chunk> totalChunks = GetChunksPathFromSubGrid(targetCell);
-            if (totalChunks == null) return;
-            Subgrid subgrid = new Subgrid();
-            subgrid.GenerateSubGrid(totalChunks.ToArray(), GridManager.Size, GridManager.Offset);
-            subgrid.StartCalcFlowfield(new []{targetCell});
-            
-            List<Subgrid> analizeSubgrid = new List<Subgrid>();
-            foreach (var zombieAgent in Selected) {
-                if (zombieAgent == null) continue;
-                if (zombieAgent.Subgrid != null) {
-                    if( analizeSubgrid.Contains(zombieAgent.Subgrid.GetLastSubgrid()))return;
-                    zombieAgent.Subgrid.GetLastSubgrid().SetNextSubGrid( subgrid);
-                    analizeSubgrid.Add(zombieAgent.Subgrid.GetLastSubgrid());
-                }
-                else zombieAgent.SetNewSubGrid( subgrid);
-            }
-        }
-
         private void ManageRayCastSelection() {
             Debug.Log("Do raycats selection");
             if (EventSystem.current.IsPointerOverGameObject()) return;
             Debug.Log("Do a ray");
             RaycastHit hit;
-            if(Physics.Raycast(Camera.ScreenPointToRay(Input.mousePosition), out hit)) {
+            if(Physics.Raycast(_camera.ScreenPointToRay(Input.mousePosition), out hit)) {
                 Debug.Log("ray hit");
                 ClearSelection();
                 if (hit.collider.GetComponent<ZombieAgent>())
                 {
                     Debug.Log("Ray hit a zombie");
-                    Selected = new List<GridAgent>() {hit.collider.GetComponent<ZombieAgent>()};
-                    Selected[0].IsSelected = true;
-                    StaticEvents.ChangeSelection(Selected);
+                    _selected = new List<GridAgent>() {hit.collider.GetComponent<ZombieAgent>()};
+                    _selected[0].IsSelected = true;
+                    StaticEvents.ChangeSelection(_selected);
                 }
             }
             
         }
-        public void ManageBoxSelectionDisplay() {
+        private void ManageBoxSelectionDisplay() {
             if (!_isInSelectionBox) {
                 _startSelectionBox = Input.mousePosition;
                 _isInSelectionBox = true;
@@ -233,9 +92,7 @@ namespace script
             
             if( _hudSelectionBoxDisplayer )_hudSelectionBoxDisplayer.SetSelectionBox(center, size);
         }
-        
-        
-        public void ManageBoxSelection() {
+        private void ManageBoxSelection() {
             Vector2[] points2D = new Vector2[4];
             Vector3[] points3D = new Vector3[8];
 
@@ -248,9 +105,9 @@ namespace script
             if (_startSelectionBox == (Vector2)Input.mousePosition) return;
             RaycastHit hit;
             for (int i = 0; i < points2D.Length; i++) {
-                if (Physics.Raycast(Camera.ScreenPointToRay(points2D[i]), out hit)) {
-                    points3D[i] = new Vector3(hit.point.x, SelectionBoxMin, hit.point.z);
-                    points3D[i+4] = new Vector3(hit.point.x, SelectionBoxMax, hit.point.z);
+                if (Physics.Raycast(_camera.ScreenPointToRay(points2D[i]), out hit)) {
+                    points3D[i] = new Vector3(hit.point.x, Metrics.SelectionBoxMinY, hit.point.z);
+                    points3D[i+4] = new Vector3(hit.point.x, Metrics.SelectionBoxMaxY, hit.point.z);
                 }
                 else {
                     points3D[i] = points3D[i + 4] = Vector3.zero;
@@ -279,64 +136,115 @@ namespace script
             meshcollier.sharedMesh = mesh;
             meshcollier.convex = true;
             meshcollier.isTrigger = true;
-
-            if (DebugCube != null)
-            {
-                GameObject go =Instantiate(DebugCube);
-                go.GetComponent<MeshFilter>().mesh = mesh;
-            }
             
             Destroy(meshcollier , 0.2f);
             ClearSelection();
         }
         private void OnTriggerEnter(Collider other) {
            
-            if (other.GetComponent<ZombieAgent>() != null&&!Selected.Contains(other.GetComponent<ZombieAgent>())) {
-                Selected.Add(other.GetComponent<ZombieAgent>());
+            if (other.GetComponent<ZombieAgent>() != null&&!_selected.Contains(other.GetComponent<ZombieAgent>())) {
+                _selected.Add(other.GetComponent<ZombieAgent>());
                 other.GetComponent<ZombieAgent>().IsSelected = true;
             }
-            StaticEvents.ChangeSelection(Selected);
+            StaticEvents.ChangeSelection(_selected);
             
+        }
+        private void ClearSelection() {
+            foreach (var zombie in _selected) {
+                if (zombie != null) zombie.IsSelected = false;
+            }
+            _selected.Clear();
+            StaticEvents.ChangeSelection(_selected);
+        }
+        private void SetSelection(List<GridAgent> selection)
+        {
+            Debug.Log("Selection submited = " + selection.Count);
+            ClearSelection();
+            foreach (var gridAgent in selection) {
+                gridAgent.IsSelected = true;
+            }
+
+            _selected = selection;
+            StaticEvents.ChangeSelection(selection);
+        }
+        private void ManagerSelectAllZombies() {
+            ClearSelection();
+            foreach (var zombie in StaticData.AllZombies) {
+                AddGridAGentToSelection(null, zombie);
+            }
+        }
+        #endregion
+        
+        #region Orders
+        private void ManageGiveOrder() {
+            RaycastHit hit;
+            if (Physics.Raycast(_camera.ScreenPointToRay(Input.mousePosition), out hit)) {
+                if (hit.collider.transform.GetComponent<House>()) {
+                    ManageAttackBuilding(hit.collider.transform.GetComponent<House>());
+                    return;
+                }
+                    
+                Cell targetCell = _gridManager.GetCellFromWorldPos(hit.point);
+                if (Input.GetKey(KeyCode.LeftShift)) {
+                    ManagerGiveExtraOrder(targetCell);
+                    if (_prefabsVFXMoveOrder != null) {
+                        Instantiate(_prefabsVFXMoveOrder, hit.point, quaternion.identity);
+                    }
+                    return;
+                }
+                ManagerGiveMoveOrder(targetCell);
+                if (_prefabsVFXMoveOrder != null) {
+                    Instantiate(_prefabsVFXMoveOrder, hit.point, quaternion.identity);
+                }
+            }
+        }
+        private void CalculateSelectionPathFinding(Cell targetCell) {
+            List<Chunk> totalChunks = GetChunksPathFromZombie(_selected, targetCell);
+            if (totalChunks == null) return;
+            Subgrid subgrid = new Subgrid();
+            subgrid.GenerateSubGrid(totalChunks.ToArray(), _gridManager.Size, _gridManager.Offset);
+            subgrid.StartCalcFlowfield(new []{targetCell});
+
+            foreach (var zombieAgent in _selected) {
+                if (zombieAgent == null) continue;
+                zombieAgent.SetNewSubGrid(subgrid);
+            }
+        }
+        private void CalculateSelectionExtraPathFinding(Cell targetCell) {
+            List<Chunk> totalChunks = GetChunksPathFromSubGrid(targetCell);
+            if (totalChunks == null) return;
+            Subgrid subgrid = new Subgrid();
+            subgrid.GenerateSubGrid(totalChunks.ToArray(), _gridManager.Size, _gridManager.Offset);
+            subgrid.StartCalcFlowfield(new []{targetCell});
+            
+            List<Subgrid> analizeSubgrid = new List<Subgrid>();
+            foreach (var zombieAgent in _selected) {
+                if (zombieAgent == null) continue;
+                if (zombieAgent.Subgrid != null) {
+                    if( analizeSubgrid.Contains(zombieAgent.Subgrid.GetLastSubgrid()))return;
+                    zombieAgent.Subgrid.GetLastSubgrid().SetNextSubGrid( subgrid);
+                    analizeSubgrid.Add(zombieAgent.Subgrid.GetLastSubgrid());
+                }
+                else zombieAgent.SetNewSubGrid( subgrid);
+            }
         }
         private void ManagerGiveMoveOrder(Cell targetCell) {
             Chunk target = targetCell.Chunk;
             if (target != null) {
-                if (Selected.Count > 0) {
+                if (_selected.Count > 0) {
                     CalculateSelectionPathFinding(targetCell);
                     return;
                 }
-
-                Debug.Log("Try doing A start on chunks");
-                GridManager.ColorAllDebugGridToColor(Color.white);
                 List<Chunk> list =
-                    GridManager.GetAStartPath(GridManager.GetCellFromPos(originChunkTarget.x, originChunkTarget.y).Chunk,
+                    _gridManager.GetAStartPath(_gridManager.GetCellFromPos(originChunkTarget.x, originChunkTarget.y).Chunk,
                         target);
                 originChunkTarget = targetCell.Pos;
-                Debug.Log("Done");
-                if (list == null)
-                {
-                    Debug.Log("No path found");
-                    return;
-                }
-                foreach (var chunk in list) {
-                    foreach (var cell in chunk.cells) {
-                        cell.ColorDebugCell(Color.green);
-                    }
-                }
-
-                foreach (var chunk in GridManager.GetNeighborsOfPath(list)) {
-                    foreach (var cell in chunk.cells) {
-                        cell.ColorDebugCell(Color.yellow);
-                    }
-                }
             }
         }
-
-        private void ManagerGiveExtraOrder(Cell targetCell)
-        {
+        private void ManagerGiveExtraOrder(Cell targetCell) {
             Chunk target = targetCell.Chunk;
             if (target != null) {
-                if (Selected.Count > 0) {
+                if (_selected.Count > 0) {
                     CalculateSelectionExtraPathFinding(targetCell);
                 }
             }
@@ -344,38 +252,36 @@ namespace script
         private List<Chunk> GetChunksPathFromZombie(List<GridAgent> zombie, Cell targetCell) {
             List<Chunk> startchunks = new List<Chunk>();
             List<Chunk> pathChunks = new List<Chunk>();
-            foreach (var ZombieAgent in Selected) {
+            foreach (var ZombieAgent in _selected) {
                 if (ZombieAgent == null) continue;
                 if (!startchunks.Contains(
-                    GridManager.GetCellFromWorldPos(ZombieAgent.transform.position).Chunk))
+                    _gridManager.GetCellFromWorldPos(ZombieAgent.transform.position).Chunk))
                 {
-                    startchunks.Add(GridManager.GetCellFromWorldPos(ZombieAgent.transform.position).Chunk);
+                    startchunks.Add(_gridManager.GetCellFromWorldPos(ZombieAgent.transform.position).Chunk);
                 }
             }
 
             if (startchunks.Count == 0) {
-                Debug.LogWarning("StartChunks not founds ");
                 return null;
             }
 
             foreach (var chunk in startchunks) {
-                foreach (var chunkpath in GridManager.GetAStartPath(chunk, targetCell.Chunk)) {
+                foreach (var chunkpath in _gridManager.GetAStartPath(chunk, targetCell.Chunk)) {
                     if (!pathChunks.Contains(chunkpath)) pathChunks.Add(chunkpath);
                 }
             }
-            pathChunks.AddRange(GridManager.GetNeighborsOfPath(pathChunks));
+            pathChunks.AddRange(_gridManager.GetNeighborsOfPath(pathChunks));
             return pathChunks;
         }
-        
         private List<Chunk> GetChunksPathFromSubGrid( Cell targetCell) {
             List<Chunk> startchunks = new List<Chunk>();
             List<Chunk> pathChunks = new List<Chunk>();
-            foreach (var ZombieAgent in Selected) {
+            foreach (var ZombieAgent in _selected) {
                 if (ZombieAgent == null) continue;
                 if (ZombieAgent.Subgrid == null) {
                     if (!startchunks.Contains(
-                        GridManager.GetCellFromWorldPos(ZombieAgent.transform.position).Chunk)) {
-                        startchunks.Add(GridManager.GetCellFromWorldPos(ZombieAgent.transform.position).Chunk);
+                        _gridManager.GetCellFromWorldPos(ZombieAgent.transform.position).Chunk)) {
+                        startchunks.Add(_gridManager.GetCellFromWorldPos(ZombieAgent.transform.position).Chunk);
                     }
                 }
                 else {
@@ -388,24 +294,23 @@ namespace script
             }
 
             if (startchunks.Count == 0) {
-                Debug.LogWarning("StartChunks not founds ");
                 return null;
             }
 
             foreach (var chunk in startchunks) {
-                foreach (var chunkpath in GridManager.GetAStartPath(chunk, targetCell.Chunk)) {
+                foreach (var chunkpath in _gridManager.GetAStartPath(chunk, targetCell.Chunk)) {
                     if (!pathChunks.Contains(chunkpath)) pathChunks.Add(chunkpath);
                 }
             }
-            pathChunks.AddRange(GridManager.GetNeighborsOfPath(pathChunks));
+            pathChunks.AddRange(_gridManager.GetNeighborsOfPath(pathChunks));
             return pathChunks;
         }
         private void ManageAttackBuilding(House house) {
-            Cell centerCell = GridManager.GetCellFromWorldPos(house.transform.position);
-            List<Cell> investigatedCells = GridManager.GetCellNeighborRange(centerCell, 5);
+            Cell centerCell = _gridManager.GetCellFromWorldPos(house.transform.position);
+            List<Cell> investigatedCells = _gridManager.GetCellNeighborRange(centerCell, 5);
             List<Cell> homeCells = new List<Cell>();
             
-            GridManager.ColorAllDebugGridToColor(Color.white);
+            _gridManager.ColorAllDebugGridToColor(Color.white);
             foreach (var neighbor in investigatedCells) {
                 if (neighbor.CheckCellColliderContain(house.gameObject)) {
                     homeCells.Add(neighbor);
@@ -416,13 +321,13 @@ namespace script
             }
 
             
-            List<Chunk> totalChunks = GetChunksPathFromZombie(Selected, centerCell);
+            List<Chunk> totalChunks = GetChunksPathFromZombie(_selected, centerCell);
             if (totalChunks == null) return;
             Subgrid subgrid = new Subgrid();
-            subgrid.GenerateSubGrid(totalChunks.ToArray(), GridManager.Size, GridManager.Offset);
+            subgrid.GenerateSubGrid(totalChunks.ToArray(), _gridManager.Size, _gridManager.Offset);
             subgrid.StartAttackBuilding(homeCells.ToArray());
             
-            foreach (var zombieAgent in Selected)
+            foreach (var zombieAgent in _selected)
             {
                 if (zombieAgent == null) continue;
                 zombieAgent.SetNewSubGrid(subgrid);
@@ -431,46 +336,19 @@ namespace script
 
 
         }
-        public void ClearSelection() {
-            foreach (var zombie in Selected) {
-                if (zombie != null) zombie.IsSelected = false;
-            }
-            Selected.Clear();
-            StaticEvents.ChangeSelection(Selected);
-        }
-
-        public void AddGridAGentToSelection(GridAgent gridAgent) {
-            if (gridAgent == null) return;
-            Selected.Add(gridAgent);
-            gridAgent.IsSelected = true;
-            StaticEvents.ChangeSelection(Selected);
-        }
-
-        public void SetSelection(List<GridAgent> selection)
-        {
-            Debug.Log("Selection submited = " + selection.Count);
-            ClearSelection();
-            foreach (var gridAgent in selection) {
-                gridAgent.IsSelected = true;
-            }
-
-            Selected = selection;
-            StaticEvents.ChangeSelection(selection);
-        }
-
+        #endregion
         private void ManageBorderCameraMovement()
         {
             Vector3 mousePosition = Input.mousePosition;
             Vector3 dir = Vector3.zero;
-            if( mousePosition.x<PixelBorder) dir+= Vector3.left;
-            if( mousePosition.x>Screen.width-PixelBorder) dir+= Vector3.right;
-            if( mousePosition.y<PixelBorder) dir+= Vector3.back;
-            if( mousePosition.y>Screen.height-PixelBorder) dir+= Vector3.forward;
+            if( mousePosition.x<_pixelBorder) dir+= Vector3.left;
+            if( mousePosition.x>Screen.width-_pixelBorder) dir+= Vector3.right;
+            if( mousePosition.y<_pixelBorder) dir+= Vector3.back;
+            if( mousePosition.y>Screen.height-_pixelBorder) dir+= Vector3.forward;
             StaticData.CameraMoveVector = dir;
         }
-
         private void ManagePressEscape() {
-            if (Selected.Count > 0) {
+            if (_selected.Count > 0) {
                 ClearSelection();
             }
             else {
@@ -478,26 +356,28 @@ namespace script
                 StaticEvents.SetGameOnPause();
             }
         }
-
-        private void DebugOpenMenuPause(object sender, bool e) {
-            Debug.Log("Open Menu Pause");
-        }
-
-        private void ManagerSelectAllZombies() {
-            ClearSelection();
-            foreach (var zombie in StaticData.AllZombies) {
-                AddGridAGentToSelection(zombie);
-            }
-        }
-        
         private void StaticEventsOnOnSubmitSelectionChange(object sender, List<GridAgent> e) {
             SetSelection(e);
         }
-
+        private void AddGridAGentToSelection(object arg, GridAgent gridAgent) {
+            if (gridAgent == null) return;
+            _selected.Add(gridAgent);
+            gridAgent.IsSelected = true;
+            StaticEvents.ChangeSelection(_selected);
+        }
         private bool CanBeSelectBox(Vector2 a, Vector2 b) {
-            if (Mathf.Abs(a.x - b.x) < MinimumSelectBoxSize) return false;
-            if (Mathf.Abs(a.y - b.y) < MinimumSelectBoxSize) return false;
+            if (Mathf.Abs(a.x - b.x) < Metrics.SelectionBoxMinSize) return false;
+            if (Mathf.Abs(a.y - b.y) < Metrics.SelectionBoxMinSize) return false;
             return true;
+        }
+        private void CheatSpawnZombie(){
+            RaycastHit hit;
+            if (Physics.Raycast(_camera.ScreenPointToRay(Input.mousePosition), out hit)) {
+                Cell cell = _gridManager.GetCellFromWorldPos(hit.point);
+                ZombieAgent zombie = Instantiate(_prfZombieAgent, hit.point + new Vector3(0, 0.5f, 0),
+                    Quaternion.identity);
+                zombie.Generate(_gridManager);
+            }
         }
     }
     

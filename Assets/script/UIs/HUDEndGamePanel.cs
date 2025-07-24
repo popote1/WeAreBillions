@@ -6,6 +6,8 @@ using UnityEngine.UI;
 
 public class HUDEndGamePanel : MonoBehaviour
 {
+   [SerializeField] private UIAsyncSceneLoader _uiAsyncSceneLoader;
+   [Space(10)]
    [SerializeField] private UIFBScoreEndGame _uifbScoreEndZombieCount;
    [SerializeField] private UIFBScoreEndGame _uifbScoreHordeMaxSize;
    [SerializeField] private UIFBScoreEndGame _uifbScoreCiviliansAlive;
@@ -14,15 +16,7 @@ public class HUDEndGamePanel : MonoBehaviour
    [SerializeField] private UIFBScoreEndGame _uifbScoreRunTime;
    [SerializeField] private UIFBScoreEndGame _uifbScoreTotalScore;
    
-   
    [SerializeField] private TMP_Text _txtEndGameLable;
-   //[SerializeField] private TMP_Text _txtZombieCount;
-   //[SerializeField] private TMP_Text _txtHordeMaxSize;
-   //[SerializeField] private TMP_Text _txtCivilansAlive;
-   //[SerializeField] private TMP_Text _txtDefenderTransform;
-   //[SerializeField] private TMP_Text _txtBuildingDestroy;
-   //[SerializeField] private TMP_Text _txtRunTime;
-   //[SerializeField] private TMP_Text _txtTotalScore;
    [SerializeField] private Button _bpMainMenu;
    [SerializeField] private Button _bpRestart;
    
@@ -50,20 +44,11 @@ public class HUDEndGamePanel : MonoBehaviour
       _uifbScoreRunTime.StartDisplaying(Mathf.RoundToInt(StaticData.GameTimer));
       _uifbScoreTotalScore.StartDisplaying(StaticScoringSystem.CurrentScore);
       
-      //_txtZombieCount.text = StaticData.zombieCount.ToString();
-      //_txtHordeMaxSize.text = StaticData.zombieMaxCount.ToString();
-      //_txtCivilansAlive.text = StaticData.CiviliansCounts.ToString();
-      //_txtDefenderTransform.text = StaticData.DefendersKill.ToString();
-      //_txtBuildingDestroy.text = StaticData.DestroyBuilding.ToString();
-      //_txtRunTime.text = StaticData.GetGameTime();
-      //_txtTotalScore.text = StaticScoringSystem.CurrentScore.ToString();
-
       for (int i = 0; i < soEndGameScoringArray.EndGameScorings.Length; i++) {
          if (soEndGameScoringArray.EndGameScorings[i] == null || _endGameScoringElements[i] == null) return;
          _endGameScoringElements[i].DiplayScoringElement(soEndGameScoringArray.EndGameScorings[i]);
       }
    }
-
    private void AddEndGameScoring() {
       if (StaticData.SoLevelInfoDataArray.GetLevelInfoDataBySceneName(SceneManager.GetActiveScene().name) != null) {
          soEndGameScoringArray = StaticData.SoLevelInfoDataArray.GetLevelInfoDataBySceneName(
@@ -74,19 +59,18 @@ public class HUDEndGamePanel : MonoBehaviour
          StaticScoringSystem.CurrentScore += soEndGameScoringArray.EndGameScorings[i].GetScore().Item2;
       }
    }
-   
-   
-
    private void SetupButtons() {
       _bpRestart.onClick.AddListener(ClickOnRestart);
       _bpMainMenu.onClick.AddListener(ClickOnMainMenu);
    }
 
    private void ClickOnRestart() {
-      SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+      if (_uiAsyncSceneLoader != null) _uiAsyncSceneLoader.StartLoadingScene(SceneManager.GetActiveScene().name);
+      else SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
    }
 
    private void ClickOnMainMenu() {
-      SceneManager.LoadScene(0);
+      if (_uiAsyncSceneLoader != null) _uiAsyncSceneLoader.StartLoadingScene("MainMenu");
+      else SceneManager.LoadScene("0");
    } 
 }
