@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace script.UIs
 {
@@ -10,6 +11,7 @@ namespace script.UIs
         [SerializeField] private GameController _gameController;
         [Header("InspectionPanel")] 
         [SerializeField] private GameObject _panelInfo;
+        [SerializeField] private RawImage _imgPortrait; 
         [SerializeField] private TMP_Text _txtInspectorHeader;
         [SerializeField] private TMP_Text _txtInspectorHP;
         [SerializeField] private TMP_Text _txtInspectorSpeed;
@@ -44,6 +46,7 @@ namespace script.UIs
             _txtInspectorSpeed.text = zombieAgent.MaxMoveSpeed.ToString();
             _txtInspectorAttack.text = ((ZombieAgent)zombieAgent).Attack.Damage.ToString();
             _txtInspectorKeyWord.text = zombieAgent.UniteType.ToString();
+            _imgPortrait.texture = zombieAgent.Portrait.texture;
             _panelInfo.SetActive(true);
         }
 

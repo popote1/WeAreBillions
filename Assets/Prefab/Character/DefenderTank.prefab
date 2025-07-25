@@ -297,6 +297,7 @@ MonoBehaviour:
   _maxHp: 5
   _uniteType: 0
   _canBeTransform: 0
+  _canBeDestroy: 1
   _transformationTime: 2
   _maxMoveSpeed: 3
   _moveSpeed: 50
@@ -307,6 +308,7 @@ MonoBehaviour:
   _wonderringDelayMin: 1
   _wonderringDelayMax: 10
   _wonderringdistance: 3
+  _transformEmote: {fileID: 0}
   PSEmoteRedSquare: {fileID: 0}
   HeightOffSetting: 0.5
   GroundLayer:

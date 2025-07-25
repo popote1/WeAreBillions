@@ -50,6 +50,7 @@ namespace script.UIs
         private void ClickOnPauseButton() {
             StaticEvents.SetGameOnPause(true);
         }
+
         
     }
-} 
+}

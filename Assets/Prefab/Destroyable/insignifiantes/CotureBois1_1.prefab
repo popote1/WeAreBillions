@@ -44,14 +44,16 @@ MonoBehaviour:
   m_GameObject: {fileID: 3749577604342998683}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fb19b210d9fb22947b36601e3dc40bdc, type: 3}
+  m_Script: {fileID: 11500000, guid: 9b5845202a5d408c8e3ff6139f584354, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  prefabsDebrie: {fileID: 8779110063686997644, guid: e28707770b2674a4b8cd364622851f3d,
-    type: 3}
   prefabsFX: {fileID: 5220036826837692117, guid: 398553180ba0e8b4d9aaa2cd134d7122,
     type: 3}
   _impulse: {fileID: 6172812638019554252}
+  _prfDebris:
+  - {fileID: 8779110063686997644, guid: e28707770b2674a4b8cd364622851f3d, type: 3}
+  _colliders:
+  - {fileID: 8793404140656025060}
 --- !u!65 &8793404140656025060
 BoxCollider:
   m_ObjectHideFlags: 0

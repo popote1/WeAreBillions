@@ -26,11 +26,9 @@ namespace script
 
         [Header("TransformationParameters")] 
         [SerializeField] private TransformStruct _transformData;
-
-        [Header("HeightOffSetting")] 
         private IDestructible _desctructibleTarget;
 
-        private GridAgent _grabbedTarget; 
+        private GridAgent _agentTarget; 
         private float _attacktimer;
         private bool _isTransformting;
         private float _transformationTimer;
@@ -52,6 +50,7 @@ namespace script
             StaticEvents.ZombieLose();
             StaticData.RemoveZombie(this);
             base.OnDestroy();
+            
         } 
         public float GetNormalizeHp() => (float) _hp / _maxHp;
         public float GetNormalizeTransformation() =>  _transformationTimer / _totalTransformationTime;
@@ -60,11 +59,13 @@ namespace script
         
 
         public override void KillAgent() {
-            if( _grabbedTarget!=null)_grabbedTarget.SetAsGrabbed(false);
+            if( _agentTarget!=null)_agentTarget.SetAsGrabbed(false);
             Instantiate(_prefabDeathPS, transform.position, Quaternion.identity);
-            VFXBloodSpalterController blood =Instantiate(_prefabBloodSplater, transform.position+new Vector3(0,0.5f,0), Quaternion.identity);
-            blood.transform.forward = Vector3.down;
-            blood.transform.Rotate(Vector3.forward, Random.Range(0,360));
+            if(_prefabBloodSplater!=null){
+                VFXBloodSpalterController blood =Instantiate(_prefabBloodSplater, transform.position+new Vector3(0,0.5f,0), Quaternion.identity);
+                blood.transform.forward = Vector3.down;
+                blood.transform.Rotate(Vector3.forward, Random.Range(0,360));
+            }
             base.KillAgent();
             
         }
@@ -82,13 +83,13 @@ namespace script
         }
 
         protected override void ManageTransformation() {
-            if (_grabbedTarget == null) {
+            if (_agentTarget == null) {
                 Rigidbody.isKinematic = false;
                 ChangeStat(GridActorStat.Idle);
             }
-            _grabbedTarget.transform.forward = transform.position - _grabbedTarget.transform.position+new Vector3(0,0.5f,0);
-            transform.forward =  (_grabbedTarget.transform.position-new Vector3(0,0.5f,0)) -transform.position ;
-            _grabbedTarget.transform.position = transform.position + transform.forward * 0.4f;
+            _agentTarget.transform.forward = transform.position - _agentTarget.transform.position+new Vector3(0,0.5f,0);
+            transform.forward =  (_agentTarget.transform.position-new Vector3(0,0.5f,0)) -transform.position ;
+            _agentTarget.transform.position = transform.position + transform.forward * 0.4f;
             
             
             _transformationTimer -= Time.deltaTime;
@@ -101,20 +102,21 @@ namespace script
         }
       
         protected virtual void TransformGrabbedTarget() {
-            ZombieAgent z =Instantiate(StaticData.PrefabZombieStandardAgent,  _grabbedTarget.transform.position, _grabbedTarget.transform.rotation);
+            ZombieAgent z =Instantiate(StaticData.PrefabZombieStandardAgent,  _agentTarget.transform.position, _agentTarget.transform.rotation);
             z.Generate(GridManager);
             z.SetNewSubGrid(Subgrid);
             Instantiate(_prefabDeathPS, transform.position, Quaternion.identity);
             
-            if (_grabbedTarget is CivillianAgent) StaticData.AddCivilianKill();
+            if (_agentTarget is CivillianAgent) StaticData.AddCivilianKill();
             else StaticData.AddDefenderKill();
             
-            _grabbedTarget.KillAgent();
+            _agentTarget.KillAgent();
             
             
             _animator.SetBool("IsGrabbing", false);
             ChangeStat(GridActorStat.Idle);
-            if (IsSelected) GameController.AddAgentToSelection.Invoke(z);
+            if (IsSelected) StaticEvents.AddAgentToSelection(z);
+            z.SetNewSubGrid(Subgrid);
             _isTransformting = false;
             
         }
@@ -124,19 +126,65 @@ namespace script
             if (_attacktimer >= _attack.AttackSpeed) {
                 _desctructibleTarget.TakeDamage(_attack.GetDamage(Metrics.UniteType.Heavy), this);
                 _attacktimer = 0;
-                _animator.SetTrigger("Attack");
-                _audioSource.clip = _attackSound[Random.Range(0, _attackSound.Length)];
-                _audioSource.Play();
-                Instantiate(_prefabsAttackEffect, transform.position, quaternion.identity);
+                PlayerAttackEffect();
             }
+        }
+
+        protected override void ManageMovingAttack()
+        {
+            if (_agentTarget == null) {
+                Debug.Log("TagetAgent not found");
+                ChangeStat(GridActorStat.Idle);
+                _agentTarget = null;
+                return;
+            }
+            RaycastHit[] Hits = Physics.RaycastAll(transform.position, _agentTarget.transform.position - transform.position);
+            Vector3 hitPos = new Vector3(5000, 5000, 5000);
+            foreach (var hit in Hits) {
+                if (hit.transform.GetComponent<GridAgent>()==null) continue;
+                hitPos = hit.point;
+                Debug.Log("attack distance  = " + Vector3.Distance(hitPos, transform.position));
+            }
+
+            if (Vector3.Distance(hitPos, transform.position) > 20) {
+                _agentTarget = null;
+                ChangeStat(GridActorStat.Idle);
+                
+                Debug.Log("Target To Far");
+            }
+            else if(Vector3.Distance(hitPos, transform.position) <= 3)
+            {
+                Debug.Log("Target InAttackRange");
+                ManageAttackTimer();
+                if (_attacktimer >= _attack.AttackSpeed) {
+                    _agentTarget.TakeDamage(_attack.GetDamage(_agentTarget.UniteType));
+                    _attacktimer = 0;
+                    Vector3 forward = hitPos - transform.position;
+                    forward.y = 0;
+                    transform.forward = forward;
+                    PlayerAttackEffect();
+                    Debug.Log("Attack !!");
+                }
+            }
+            else {
+                SetNewMoveDestination(GridManager.GetCellFromWorldPos(_agentTarget.transform.position));
+                _agentTarget = null;
+                ChangeStat(GridActorStat.Move);
+                
+                Debug.Log("Target in chasse range");
+            }
+            base.ManageMovingAttack();
         }
 
         protected override void Update() {
             base.Update();
             _animator.SetFloat("Velocity", Rigidbody.linearVelocity.magnitude/_maxMoveSpeed);
+            if (Stat!=GridActorStat.Attack && Stat!= GridActorStat.MovingAttack)ManageAttackTimer();
         }
 
-        private void OnCollisionEnter(Collision other) {
+        private void OnCollisionEnter(Collision other)
+        {
+            if (!IsFreeToTakeTarget()) return;
             if (other.gameObject.CompareTag("Destructible")) {
                 if (other.gameObject.GetComponent<IDestructible>()!=null) {
                     _desctructibleTarget = other.gameObject.GetComponent<IDestructible>();
@@ -150,17 +198,28 @@ namespace script
 
             if (other.gameObject.GetComponent<GridAgent>() ) {
                 GridAgent target = other.gameObject.GetComponent<GridAgent>();
-                if (!target.CanBetransform || target.Stat == GridActorStat.Grabed||_grabbedTarget!=null) return;
+                
+                if (target.CanBeDestroy) {
+                    StartMoveAttack(target);
+                    return;
+                }
+                
+                if (!target.CanBetransform || target.Stat == GridActorStat.Grabed||_agentTarget!=null) return;
                 StartTransformation(target);
             }
         }
 
         protected virtual void StartTransformation(GridAgent target) {
-            _grabbedTarget = target;
-            _grabbedTarget.SetAsGrabbed();
+            _agentTarget = target;
+            _agentTarget.SetAsGrabbed();
             _transformationTimer =_totalTransformationTime= target.TransformTime*_transformData.GetTransformationMod(target.UniteType);
             _isTransformting = true;
             ChangeStat(GridActorStat.Transforming);
+        }
+
+        protected virtual void StartMoveAttack(GridAgent target) {
+            _agentTarget = target;
+            ChangeStat(GridActorStat.MovingAttack);
         }
 
         protected override void GetToMoveTarget() {
@@ -169,13 +228,29 @@ namespace script
         }
         
         protected override void ChangeStat(GridActorStat stat) {
-            if (stat == GridActorStat.Move && (_desctructibleTarget != null||_grabbedTarget!=null))return;
+            if (stat == GridActorStat.Move && (_desctructibleTarget != null||_agentTarget!=null))return;
             base.ChangeStat(stat);
         }
 
         public override void SetNewSubGrid(Subgrid subgrid) {
             AudioManager.Instance?.PlaySFX(_spawnSound[Random.Range(0, _spawnSound.Length)],1,Random.Range(0.8f, 1.2f));
             base.SetNewSubGrid(subgrid);
+        }
+
+        private bool IsFreeToTakeTarget() {
+            return Stat != GridActorStat.Transforming && Stat != GridActorStat.Attack &&
+                   Stat != GridActorStat.MovingAttack;
+        }
+
+        private void ManageAttackTimer() {
+            if (_attacktimer< _attack.AttackSpeed) _attacktimer += Time.deltaTime;
+        }
+
+        private void PlayerAttackEffect() {
+            _animator.SetTrigger("Attack");
+            _audioSource.clip = _attackSound[Random.Range(0, _attackSound.Length)];
+            _audioSource.Play();
+            Instantiate(_prefabsAttackEffect, transform.position, quaternion.identity);
         }
     }
 }

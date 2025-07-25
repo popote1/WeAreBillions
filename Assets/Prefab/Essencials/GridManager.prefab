@@ -151,27 +151,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 517b005758e24affb2af711c2d19528e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Camera: {fileID: 0}
-  GridManager: {fileID: 5713922494004897930}
-  PrefabsZombieAgent: {fileID: 2444219041533692552, guid: adf5d6fdbd056e04790ca9363b48d07c,
-    type: 3}
+  _camera: {fileID: 0}
+  _gridManager: {fileID: 5713922494004897930}
   _hudSelectionBoxDisplayer: {fileID: 0}
   _prefabsVFXMoveOrder: {fileID: 6092588951434967032, guid: e737e2d69d5a38543a6bbdc7a15ec16b,
     type: 3}
-  zombies:
-  - {fileID: 0}
-  SelectionBoxMin: -10
-  SelectionBoxMax: 10
-  GroundLayer:
-    serializedVersion: 2
-    m_Bits: 128
-  SelectingLayer:
-    serializedVersion: 2
-    m_Bits: 64
-  Selected: []
-  MinimumSelectBoxSize: 0.1
-  DebugCube: {fileID: 0}
-  PixelBorder: 50
+  _selected: []
+  _pixelBorder: 50
+  _prfZombieAgent: {fileID: 2444219041533692552, guid: adf5d6fdbd056e04790ca9363b48d07c,
+    type: 3}
 --- !u!114 &7970261791973139699
 MonoBehaviour:
   m_ObjectHideFlags: 0

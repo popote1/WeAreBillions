@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -17,6 +18,7 @@ namespace script.UIs
         
         private void Start() {
             _bpObjectif.onClick.AddListener(ShowHideObjectifPanel);
+            _bpZombieCount.onClick.AddListener(UISelectAllZombies);
         }
 
         private void Update() {
@@ -33,6 +35,10 @@ namespace script.UIs
 
         public void SetObjectifText(string text) {
             _txtObjectifs.text = text;
+        }
+
+        private void UISelectAllZombies() {
+            StaticEvents.SubmitSelection(StaticData.GetAllZombies());
         }
         
     }
