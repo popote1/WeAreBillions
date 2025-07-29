@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using Unity.Cinemachine;
+using UnityEngine;
 
 public class InsignifiantPhysics : InsignifiantProbs
 {
@@ -37,5 +38,12 @@ public class InsignifiantPhysics : InsignifiantProbs
         DisableColliders(_colliders);
         Destroy(_rigidbody);
         Destroy(this);
+    }
+
+    [ContextMenu("SetupRefsTool")]
+    private void SetupRefsTool() {
+        _colliders = GetComponents<Collider>();
+        _rigidbody = GetComponent<Rigidbody>();
+        _impulse = GetComponent<CinemachineImpulseSource>();
     }
 }
