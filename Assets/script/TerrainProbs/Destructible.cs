@@ -9,7 +9,7 @@ using UnityEngine;
         public GameObject prefabsFX;
         public int HP;
 
-        public void TakeDamage(int damage, GridAgent source = null) {
+        public virtual void TakeDamage(int damage, GridAgent source = null) {
             if (HP <= 0) return;
             HP -= damage;
             if (HP <= 0)
@@ -18,14 +18,14 @@ using UnityEngine;
             }
         }
 
-        public void DestroyDestructible(GridAgent source = null)
+        public virtual void DestroyDestructible(GridAgent source = null)
         {
             if (prefabsFX) Instantiate(prefabsFX, transform.position, transform.rotation);
             if (prefabsDebrie) Instantiate(prefabsDebrie, transform.position, transform.rotation);
             Destroy(gameObject);
         }
 
-        public bool IsAlive() {
+        public virtual bool IsAlive() {
             return (HP > 0);
         }
 

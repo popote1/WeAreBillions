@@ -2,8 +2,7 @@ using UnityEditor;
 using UnityEngine;
 
 [CustomPropertyDrawer(typeof(AttackStruct.SpecialAttack))]
-public class EditorSpecialAttackCustomPropertyDrawer : PropertyDrawer
-{
+public class EditorSpecialAttackCustomPropertyDrawer : PropertyDrawer {
     public override void OnGUI(Rect position, SerializedProperty property, GUIContent label) {
         EditorGUI.BeginProperty(position, label, property);
         Rect enumRect = new Rect(position.x, position.y, position.width / 2, position.height);
