@@ -18,7 +18,6 @@ public class DestructibleDisplacement : Destructible
         _collider.enabled = false;
         Displace();
         SpawnAdditionalVFX();
-        Destroy(gameObject);
     }
     private void Displace() {
         transform.position += _positionChange;
