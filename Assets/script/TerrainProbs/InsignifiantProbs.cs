@@ -5,6 +5,7 @@ using UnityEngine;
 
 public class InsignifiantProbs : MonoBehaviour
 {
+    [SerializeField] protected VFXPoolManager.VFXPooledType vfxType = VFXPoolManager.VFXPooledType.SmallExplosion; 
     [SerializeField]protected GameObject prefabsFX;
     [SerializeField]protected CinemachineImpulseSource _impulse;
     protected virtual void OnCollisionEnter(Collision other) {
@@ -18,7 +19,7 @@ public class InsignifiantProbs : MonoBehaviour
     
     [ContextMenu("DestroyTest")]
     protected virtual void Destroy() {
-        if (prefabsFX) Instantiate(prefabsFX, transform.position, transform.rotation);
+        ManageSpawnVFX();
         if (_impulse) _impulse.GenerateImpulse();
         StaticData.DestroyElement();
     }
@@ -28,4 +29,13 @@ public class InsignifiantProbs : MonoBehaviour
             col.enabled = false;
         }
     } 
+    private void ManageSpawnVFX() {
+        if (VFXPoolManager.Instance != null) {
+            VfxPoolableMono vfx =VFXPoolManager.Instance.GetPooledVFXOfType(vfxType);
+            vfx.transform.position = transform.position;
+        }
+        else if (prefabsFX) {
+            Instantiate(prefabsFX, transform.position, transform.rotation);
+        }
+    }
 }

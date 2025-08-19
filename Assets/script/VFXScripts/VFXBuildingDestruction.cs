@@ -38,7 +38,7 @@ public class VFXBuildingDestruction : MonoBehaviour
     {
         _originalPos = transform.position;
         _originalRot = transform.rotation;
-        Instantiate(_prfVfxDestruction, transform.position, transform.rotation);
+        ManageSpawnVFXBuildingColaps();
         transform.DOShakeRotation(_duration, _strength, _vibrato);
         transform.DOMoveY(transform.position.y - _buildingheight, _duration).SetEase(_CurveBuildingdestruiction);
         SpawnVfXStrips();
@@ -55,10 +55,27 @@ public class VFXBuildingDestruction : MonoBehaviour
 
     private void SpawnVfXStrips() {
         for (int i = 0; i < Random.Range(_vfxStripSpawnCountMin, _vfxStripSpawnCountMax); i++) {
-            VFXControllerSmokeStripe strip = Instantiate(_prfVfxController,
-                new Vector3(Random.Range(-_vfxStripSpawnRange, _vfxStripSpawnRange), 0, Random.Range(-_vfxStripSpawnRange, _vfxStripSpawnRange))+_originalPos
-                , Quaternion.identity);
-            strip.DoFadeIn();
+            Vector3 pos = new Vector3(Random.Range(-_vfxStripSpawnRange, _vfxStripSpawnRange), 0,
+                Random.Range(-_vfxStripSpawnRange, _vfxStripSpawnRange)) + _originalPos;
+            ManageSpawnVFXSmokeStrip(pos);
+        }
+    }
+    private void ManageSpawnVFXBuildingColaps() {
+        if (VFXPoolManager.Instance != null) {
+            VfxPoolableMono vfx =VFXPoolManager.Instance.GetPooledVFXOfType(VFXPoolManager.VFXPooledType.buildingColaps);
+            vfx.transform.position = transform.position;
+        }
+        else if (_prfVfxDestruction) {
+            Instantiate(_prfVfxDestruction, transform.position, transform.rotation);
+        }
+    }
+    private void ManageSpawnVFXSmokeStrip(Vector3 pos) {
+        if (VFXPoolManager.Instance != null) {
+            VfxPoolableMono vfx =VFXPoolManager.Instance.GetPooledVFXOfType(VFXPoolManager.VFXPooledType.SmokeStripe);
+            vfx.transform.position = pos;
+        }
+        else if (_prfVfxDestruction) {
+            Instantiate(_prfVfxController, pos, Quaternion.identity);
         }
     }
 }

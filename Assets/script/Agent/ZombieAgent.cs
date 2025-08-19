@@ -11,12 +11,16 @@ using Random = UnityEngine.Random;
 namespace script
 {
     [SelectionBase]
-    public class ZombieAgent : GridAgent {
+    public class ZombieAgent : GridAgent
+    {
         [Header("Zombie Parameters")] 
+        [SerializeField] private VFXPoolManager.VFXPooledType _vfxDeathType = VFXPoolManager.VFXPooledType.Death;
         [SerializeField]private GameObject _prefabDeathPS;
+        [SerializeField] private VFXPoolManager.VFXPooledType _vfxBloodSplaterType = VFXPoolManager.VFXPooledType.bloodSplater;
         [SerializeField] private VFXBloodSpalterController _prefabBloodSplater; 
         [Header("Attack Parameters")] 
         [SerializeField] private AttackStruct _attack;
+        [SerializeField] private VFXPoolManager.VFXPooledType _vfxAttackType = VFXPoolManager.VFXPooledType.zombieAttack;
         [SerializeField] private GameObject _prefabsAttackEffect;
         [Header("Audio")]
         [SerializeField] private AudioSource _audioSource;
@@ -60,12 +64,8 @@ namespace script
 
         public override void KillAgent() {
             if( _agentTarget!=null)_agentTarget.SetAsGrabbed(false);
-            Instantiate(_prefabDeathPS, transform.position, Quaternion.identity);
-            if(_prefabBloodSplater!=null){
-                VFXBloodSpalterController blood =Instantiate(_prefabBloodSplater, transform.position+new Vector3(0,0.5f,0), Quaternion.identity);
-                blood.transform.forward = Vector3.down;
-                blood.transform.Rotate(Vector3.forward, Random.Range(0,360));
-            }
+            ManageSpawnVFXDeath();
+            ManageSpawnVFXBloodSplater();
             base.KillAgent();
             
         }
@@ -105,7 +105,7 @@ namespace script
             ZombieAgent z =Instantiate(StaticData.PrefabZombieStandardAgent,  _agentTarget.transform.position, _agentTarget.transform.rotation);
             z.Generate(GridManager);
             z.SetNewSubGrid(Subgrid);
-            Instantiate(_prefabDeathPS, transform.position, Quaternion.identity);
+            ManageSpawnVFXDeath();
             
             if (_agentTarget is CivillianAgent) StaticData.AddCivilianKill();
             else StaticData.AddDefenderKill();
@@ -250,7 +250,38 @@ namespace script
             _animator.SetTrigger("Attack");
             _audioSource.clip = _attackSound[Random.Range(0, _attackSound.Length)];
             _audioSource.Play();
-            Instantiate(_prefabsAttackEffect, transform.position, quaternion.identity);
+            ManageSpawnVFXAttack();
+            
+        }
+        private void ManageSpawnVFXDeath() {
+            if (VFXPoolManager.Instance != null) {
+                VfxPoolableMono vfx =VFXPoolManager.Instance.GetPooledVFXOfType(_vfxDeathType);
+                vfx.transform.position = transform.position;
+            }
+            else if (_prefabDeathPS) {
+                Instantiate(_prefabDeathPS, transform.position, transform.rotation);
+            }
+        }
+        private void ManageSpawnVFXAttack() {
+            if (VFXPoolManager.Instance != null) {
+                VfxPoolableMono vfx =VFXPoolManager.Instance.GetPooledVFXOfType(_vfxAttackType);
+                vfx.transform.position = transform.position;
+            }
+            else if (_prefabsAttackEffect) {
+                Instantiate(_prefabsAttackEffect, transform.position, transform.rotation);
+            }
+        }
+        private void ManageSpawnVFXBloodSplater() {
+            if (VFXPoolManager.Instance != null) {
+                VfxPoolableMono vfx =VFXPoolManager.Instance.GetPooledVFXOfType(_vfxBloodSplaterType);
+                vfx.gameObject.SetActive(true);
+                vfx.transform.position = transform.position+new Vector3(0,0.5f,0);
+                vfx.transform.forward = Vector3.down;
+                vfx.transform.Rotate(Vector3.forward, Random.Range(0,360));
+            }
+            else if (_prefabBloodSplater) {
+                Instantiate(_prefabBloodSplater, transform.position, transform.rotation);
+            }
         }
     }
 }

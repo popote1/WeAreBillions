@@ -888,14 +888,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 953802bacca3436cbd685608de367d2b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  AgentName: 
+  Radius: 0.5
   GridManager: {fileID: 0}
   _animator: {fileID: 6326999831858152543}
   Rigidbody: {fileID: 3691186380955031167}
-  AgentName: 
   _maxHp: 0
   _uniteType: 0
   _canBeTransform: 1
+  _canBeDestroy: 0
   _transformationTime: 3
+  _imgPortrait: {fileID: 0}
   _maxMoveSpeed: 3
   _moveSpeed: 10
   _speedModulator: 0.05
@@ -905,13 +908,14 @@ MonoBehaviour:
   _wonderringDelayMin: 10
   _wonderringDelayMax: 20
   _wonderringdistance: 2
-  PSEmoteRedSquare: {fileID: 0}
-  HeightOffSetting: 0.5
-  GroundLayer:
+  _transformEmote: {fileID: 0}
+  _psEmoteRedSquare: {fileID: 0}
+  _heightOffSetting: 0.5
+  _groundLayer:
     serializedVersion: 2
     m_Bits: 128
   IsSelectable: 0
-  SelectionSprite: {fileID: 0}
+  _selectionSprite: {fileID: 0}
   _chanceOfCall: 10
   _durationOfCall: 4
   _alertIncrease: 30

@@ -22,10 +22,13 @@ public class VFXBloodSpalterController : MonoBehaviour
         InitiateDecal();
     }
 
+    private void OnEnable()
+    {
+        InitiateDecal();
+    }
+
     private void InitiateDecal() {
         _material.SetInt("_Tile", Random.Range(0,5));
-        
-        
         _timer = 0;
     }
 

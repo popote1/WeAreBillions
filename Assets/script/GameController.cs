@@ -6,6 +6,7 @@ using Unity.Mathematics;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.Serialization;
 
 namespace script
 {
@@ -14,6 +15,7 @@ namespace script
         [SerializeField]private Camera _camera;
         [SerializeField]private GridManager _gridManager;
         [SerializeField] private HUDSelectionBoxDisplayer _hudSelectionBoxDisplayer;
+        [SerializeField] private VFXPoolManager.VFXPooledType _vfxMoveOrderType = VFXPoolManager.VFXPooledType.MoveOrder;
         [SerializeField] private GameObject _prefabsVFXMoveOrder;
 
         [Header("SelectedZombie")] 
@@ -187,15 +189,11 @@ namespace script
                 Cell targetCell = _gridManager.GetCellFromWorldPos(hit.point);
                 if (Input.GetKey(KeyCode.LeftShift)) {
                     ManagerGiveExtraOrder(targetCell);
-                    if (_prefabsVFXMoveOrder != null) {
-                        Instantiate(_prefabsVFXMoveOrder, hit.point, quaternion.identity);
-                    }
+                    ManageSpawnVFXMoveOrder(hit.point);
                     return;
                 }
                 ManagerGiveMoveOrder(targetCell);
-                if (_prefabsVFXMoveOrder != null) {
-                    Instantiate(_prefabsVFXMoveOrder, hit.point, quaternion.identity);
-                }
+                ManageSpawnVFXMoveOrder(hit.point);
             }
         }
         private void CalculateSelectionPathFinding(Cell targetCell) {
@@ -377,6 +375,17 @@ namespace script
                 ZombieAgent zombie = Instantiate(_prfZombieAgent, hit.point + new Vector3(0, 0.5f, 0),
                     Quaternion.identity);
                 zombie.Generate(_gridManager);
+            }
+        }
+        private void ManageSpawnVFXMoveOrder(Vector3 pos) {
+            Debug.Log( "try to spawn VFX");
+            if (VFXPoolManager.Instance != null) {
+                VfxPoolableMono vfx =VFXPoolManager.Instance.GetPooledVFXOfType(_vfxMoveOrderType);
+                Debug.Log( "VFX Spawn");
+                vfx.transform.position = pos;
+            }
+            else if (_prefabsVFXMoveOrder) {
+                Instantiate(_prefabsVFXMoveOrder, pos, transform.rotation);
             }
         }
     }

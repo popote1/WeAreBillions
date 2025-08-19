@@ -45,16 +45,44 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _vfxPoolInitializeData:
-  - Type: 0
-    PrfVfx: {fileID: 1489784974431806611, guid: aa70accd5984427478dc1680f5fc1751,
-      type: 3}
-    CollectionCheck: 0
-    DefaultCapacity: 20
-    MaxCapacity: 100
   - Type: 1
     PrfVfx: {fileID: 4794254557800326490, guid: f9583cfda7e8bd047af8edd19ab9eeab,
       type: 3}
     CollectionCheck: 0
     DefaultCapacity: 20
     MaxCapacity: 100
-  _camera: {fileID: 0}
+  - Type: 2
+    PrfVfx: {fileID: 367547055574233961, guid: e68fa63ec45c61440a1a978fe3672450, type: 3}
+    CollectionCheck: 0
+    DefaultCapacity: 20
+    MaxCapacity: 100
+  - Type: 4
+    PrfVfx: {fileID: 6929231755208889460, guid: f080b6b2d5236a9409a82254bd007d1a,
+      type: 3}
+    CollectionCheck: 0
+    DefaultCapacity: 20
+    MaxCapacity: 100
+  - Type: 6
+    PrfVfx: {fileID: 4270127139550698641, guid: bb77fe3d76e54f34098f463349b204df,
+      type: 3}
+    CollectionCheck: 0
+    DefaultCapacity: 20
+    MaxCapacity: 100
+  - Type: 5
+    PrfVfx: {fileID: -603726815124907585, guid: 28f0c8e0ab71a1041a2912e9e4d8439f,
+      type: 3}
+    CollectionCheck: 0
+    DefaultCapacity: 20
+    MaxCapacity: 100
+  - Type: 3
+    PrfVfx: {fileID: -4661355266510514823, guid: 57bc9ec51501dd44ba5488a77028090e,
+      type: 3}
+    CollectionCheck: 0
+    DefaultCapacity: 20
+    MaxCapacity: 100
+  - Type: 0
+    PrfVfx: {fileID: 1489784974431806611, guid: aa70accd5984427478dc1680f5fc1751,
+      type: 3}
+    CollectionCheck: 0
+    DefaultCapacity: 20
+    MaxCapacity: 100

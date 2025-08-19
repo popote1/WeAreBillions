@@ -18,11 +18,20 @@ using UnityEngine;
             }
         }
 
-        public virtual void DestroyDestructible(GridAgent source = null)
-        {
-            if (prefabsFX) Instantiate(prefabsFX, transform.position, transform.rotation);
+        public virtual void DestroyDestructible(GridAgent source = null) {
+            ManageSpawnVFX();
             if (prefabsDebrie) Instantiate(prefabsDebrie, transform.position, transform.rotation);
             Destroy(gameObject);
+        }
+
+        private void ManageSpawnVFX() {
+            if (VFXPoolManager.Instance) {
+                VfxPoolableMono vfx =VFXPoolManager.Instance.GetPooledVFXOfType(VFXPoolManager.VFXPooledType.SmallExplosion);
+                vfx.transform.position = transform.position;
+            }
+            else if (prefabsFX) {
+                Instantiate(prefabsFX, transform.position, transform.rotation);
+            }
         }
 
         public virtual bool IsAlive() {

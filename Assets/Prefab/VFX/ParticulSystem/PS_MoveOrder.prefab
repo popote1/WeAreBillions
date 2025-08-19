@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 1422497648200855659}
   - component: {fileID: 7006304322151638091}
   m_Layer: 0
-  m_Name: PS_Point
+  m_Name: PS_MoveOrder
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

@@ -9,14 +9,15 @@ public class VFXPoolManager : MonoBehaviour
     public static VFXPoolManager Instance;
     
     public enum VFXPooledType {
-        SmallExplosion , BigExplosion
+        SmallExplosion , BigExplosion, MoveOrder, bloodSplater, buildingColaps, SmokeStripe, Death, zombieAttack
     }
     
     [SerializeField] private VFXPoolInitializeData[] _vfxPoolInitializeData;
     private Dictionary<VFXPooledType, VFXPoolHolder> _vfxPools;
     private void Awake() {
-        if (Instance != null) {
+        if (Instance == null) {
             Instance = this;
+            Debug.Log("VFXPoolManager Set is"+ Instance);
         }
         else {
             Debug.LogWarning("VFXPoolManager Already in the scene");
@@ -82,7 +83,7 @@ public class VFXPoolManager : MonoBehaviour
     
     //-----------------------------------Test Part---------------------------------------------//
 
-    [SerializeField]private Camera _camera;
+   /* [SerializeField]private Camera _camera;
 
     private void Start() {
         _camera = Camera.main;
@@ -111,5 +112,5 @@ public class VFXPoolManager : MonoBehaviour
                 vfx.transform.position = hit.point;
             }
         }
-    }
+    }*/
 }

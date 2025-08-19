@@ -29,9 +29,6 @@ namespace script
         [SerializeField] private float MaxStamina = 10;
         [SerializeField] private float RunAwayMoveSpeed =30;
         [SerializeField] private float StaminaRegenRate = 0.5f;
-
-        public ZombieAgent PrefabsZombieAgent;
-        public GameObject PrefabsDeathPS;
         
         [Header("Audio")]
         [SerializeField] private AudioSource _audioSource;

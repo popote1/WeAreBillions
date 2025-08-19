@@ -1,4 +1,3 @@
-
 using System;
 using System.Timers;
 using UnityEngine;
@@ -8,7 +7,7 @@ public class VFXControllerSmokeStripe : MonoBehaviour
 {
    [SerializeField] private LineRenderer _renderer;
    [SerializeField] private float FadeInTimer;
-
+   [SerializeField] private bool _playOnAwake =true;
    private bool _isFadeIn;
    private float _timer = 0;
 
@@ -19,6 +18,7 @@ public class VFXControllerSmokeStripe : MonoBehaviour
       
       _material.SetFloat("_FlipBookIndex", Mathf.FloorToInt(Random.Range(0,4.9f)));
       _material.SetFloat("_ScrollingOffSet", Random.Range(0,1));
+      if( _playOnAwake)DoFadeIn();
    }
 
    [ContextMenu("Do FadeIn")]
