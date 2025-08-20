@@ -4,7 +4,7 @@ using UnityEditor;
 using UnityEngine;
 
 [CustomEditor(typeof(CameratargetController))]
-public class EditorCameraController : Editor
+public class EditorCameraController : UnityEditor.Editor
 {
     private CameratargetController m_target;
     private void OnSceneGUI()

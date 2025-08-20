@@ -2,7 +2,7 @@
     using UnityEditor;
     using UnityEngine;
     [CustomEditor(typeof(PoliceMan))]
-    public class EditorPoliceMan :Editor
+    public class EditorPoliceMan :UnityEditor.Editor
     {
         private PoliceMan m_target;
         private void OnSceneGUI() {

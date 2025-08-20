@@ -4,7 +4,7 @@ using Unity.VisualScripting;
 using UnityEditor;
 using UnityEngine;
 [CustomEditor(typeof(House))]
-public class EditorToolHouse : Editor
+public class EditorToolHouse : UnityEditor.Editor
 {
     private House _house;
 

@@ -3,7 +3,7 @@ using UnityEditor;
 using UnityEngine;
 
 [CustomEditor(typeof(Defender))]
-public class EditorDefender :Editor
+public class EditorDefender :UnityEditor.Editor
 {
     private Defender m_target;
     private void OnSceneGUI() {

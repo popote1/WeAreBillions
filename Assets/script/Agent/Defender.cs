@@ -29,6 +29,7 @@ public class Defender: GridAgent
     protected float _attackTimer;
 
     public event EventHandler<bool> OnChangeAlertCallingStat;
+    public event EventHandler OnSuprise;
 
     protected bool CheckForAlertCalling() {
         if (_hadAlertCalling) return false;
@@ -75,6 +76,8 @@ public class Defender: GridAgent
             return;
         }
         _target =GetTheClosest(_triggerZoneDetector.Zombis);
+        if( Stat == GridActorStat.Idle || Stat == GridActorStat.Move || Stat== GridActorStat.MovingAttack)
+            OnSuprise?.Invoke(this, EventArgs.Empty);
         ChangeStat(GridActorStat.Attack);
 
     }
