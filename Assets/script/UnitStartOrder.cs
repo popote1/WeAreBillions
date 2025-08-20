@@ -10,6 +10,7 @@ public class UnitStartOrder : MonoBehaviour
         public bool IsLoop;
 
         public Vector3[] Targets;
+        [SerializeField] private bool _giveOrderOnAwake;
         protected Vector2Int originChunkTarget = new Vector2Int(0, 0);
     
     
@@ -19,6 +20,7 @@ public class UnitStartOrder : MonoBehaviour
                 Debug.LogWarning("No Grid Manager Fount", this);
                 return;
             }
+            if( _giveOrderOnAwake)GiveUniteMoveOrder();
         }
 
         public void GiveAgentMoveOrder(List<GridAgent> agents) {
