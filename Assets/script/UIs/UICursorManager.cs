@@ -6,7 +6,7 @@ using UnityEngine.EventSystems;
 
 public class UICursorManager : MonoBehaviour
 {
-
+    [SerializeField]private Camera _camera;
     public static CursorStatEnum CursorStat;
     public enum CursorStatEnum {
         Idle, Select, UI, Drag, Attack
@@ -19,9 +19,9 @@ public class UICursorManager : MonoBehaviour
     [SerializeField] private Texture2D _texDrag;
     [SerializeField] private Texture2D _texAttack;
 
-    private Camera _camera;
+    
     void Start() {
-        _camera = Camera.main;
+        if( _camera==null)_camera = Camera.main;
         Cursor.SetCursor(_textIdle,new Vector2(1f,1),CursorMode.Auto);
     }
 

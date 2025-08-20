@@ -284,14 +284,17 @@ MonoBehaviour:
     m_Bits: 128
   IsSelectable: 0
   _selectionSprite: {fileID: 5954307353746965907}
+  _vfxDeathType: 6
   _prefabDeathPS: {fileID: 540054392838581951, guid: 0af1e0599763dda47be91aad1e77c51d,
     type: 3}
+  _vfxBloodSplaterType: 3
   _prefabBloodSplater: {fileID: 4224899161540997600, guid: 5d300fc16e457f24ea514e4a0112684b,
     type: 3}
   _attack:
     AttackSpeed: 1.2
     Damage: 5
     SpecialAttacks: []
+  _vfxAttackType: 7
   _prefabsAttackEffect: {fileID: 4266808841945952343, guid: 81a00df2fec0e814e95ed6e1c27414ba,
     type: 3}
   _audioSource: {fileID: 1880556154188307026}
