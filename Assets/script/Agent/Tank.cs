@@ -89,8 +89,7 @@ public class Tank : Defender
                 return;
             }
 
-            if (Subgrid.TargetCells[0].Pos == cell.Pos)
-            {
+            if (Subgrid.TargetCells[0].Pos == cell.Pos) {
                 GetToMoveTarget();
                 return;
             }
