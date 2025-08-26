@@ -1291,7 +1291,7 @@ MonoBehaviour:
   _txtZombieCount: {fileID: 5122074647405253638}
   _panelObjectif: {fileID: 7134162367882632254}
   _bpObjectif: {fileID: 8734477758432071782}
-  _txtObjectifs: {fileID: 641532362553943034}
+  _txtObjectifs: {fileID: 8974806815196104639}
 --- !u!1 &9095214737081519006
 GameObject:
   m_ObjectHideFlags: 0
