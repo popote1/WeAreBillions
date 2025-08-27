@@ -2,7 +2,7 @@
     using UnityEditor;
     using UnityEngine;
     [CustomEditor(typeof(CivillianAgent))]
-    public class EditorCivillian :Editor
+    public class EditorCivillian :UnityEditor.Editor
     {
         private CivillianAgent m_target;
         private void OnSceneGUI() {

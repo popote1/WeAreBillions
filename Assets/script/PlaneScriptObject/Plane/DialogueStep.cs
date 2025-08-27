@@ -7,7 +7,6 @@ namespace script {
     {
         [TextArea]public string TxtDialogue;
         public Sprite SpriteDialogue;
-        [Header("CameraTravel")]
         public bool UsCameraScroll;
         public bool ReturnToBeginingCameraPos;
         public float ScrollSpeed = 3;

@@ -2,7 +2,7 @@
 using UnityEngine;
 
 [CustomEditor(typeof(UnitStartOrder))]
-public class EditorUnitStartOrder : Editor {
+public class EditorUnitStartOrder : UnityEditor.Editor {
     private UnitStartOrder m_targget;
     private void OnSceneGUI()
     {

@@ -2,7 +2,7 @@
 using UnityEngine;
 
 [CustomEditor(typeof(AmbianceSourceTracker))]
-public class AmbianceSourceTrackerManager : Editor
+public class AmbianceSourceTrackerManager : UnityEditor.Editor
 {
     private AmbianceSourceTracker m_targget;
 

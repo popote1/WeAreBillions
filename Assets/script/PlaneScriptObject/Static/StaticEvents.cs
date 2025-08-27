@@ -19,6 +19,11 @@ namespace script
         public static event EventHandler<List<GridAgent>> OnSelectionChange;
         public static event EventHandler<List<GridAgent>> OnSubmitSelectionChange;
         public static event EventHandler<GridAgent> OnAddAgentToSelection;
+        public static event EventHandler<int> OnAlertLevelChange;
+        public static event EventHandler<ObjectifAbstract> OnCurrentObjectifChange;
+        public static event EventHandler<int> OnObjectifStart;
+        public static event EventHandler<int> OnObjectifEnded; 
+        
     
         public static void ZombieLose() {
             StaticData.ZombieCount--;
@@ -45,8 +50,11 @@ namespace script
         public static void StartPlayingDialogue(DialogueStep[] dialogueSteps) => OnPlayDialogue?.Invoke(null,dialogueSteps);
         public static void SubmitSelection(List<GridAgent> newSelection) => OnSubmitSelectionChange?.Invoke(null, newSelection);
         public static void ChangeSelection(List<GridAgent> selection)=> OnSelectionChange?.Invoke(null, selection);
-
         public static void AddAgentToSelection(GridAgent agent) => OnAddAgentToSelection?.Invoke(null, agent);
+        public static void ChangeAlertLevel(int lvl) => OnAlertLevelChange?.Invoke(null, lvl);
+        public static void ChangeCurrentObjectif(ObjectifAbstract objo) => OnCurrentObjectifChange?.Invoke(null, objo);
+        public static void DoObjectifStart(int id) => OnObjectifStart?.Invoke(null, id);
+        public static void DoObjectifEnded(int id) => OnObjectifEnded?.Invoke(null, id);
 
         public static void EndGame(bool isWin) {
             if (isWin) OnGameWin?.Invoke();

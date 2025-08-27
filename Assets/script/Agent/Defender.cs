@@ -1,8 +1,9 @@
 ﻿using System;
+using System.Collections.Generic;
 using script;
 using UnityEngine;
 using Random = UnityEngine.Random;
-
+[SelectionBase]
 public class Defender: GridAgent
 {
     [Header("AlertCall")]
@@ -28,6 +29,7 @@ public class Defender: GridAgent
     protected float _attackTimer;
 
     public event EventHandler<bool> OnChangeAlertCallingStat;
+    public event EventHandler OnSuprise;
 
     protected bool CheckForAlertCalling() {
         if (_hadAlertCalling) return false;
@@ -52,6 +54,32 @@ public class Defender: GridAgent
             ChangeStat(GridActorStat.Idle);
             _hadAlertCalling = true;
         }
+    }
+    protected virtual ZombieAgent GetTheClosest(List<ZombieAgent> zombies) {
+        ZombieAgent z = null;
+        float distance = Mathf.Infinity;
+        foreach (var zombie in zombies) {
+            if (distance > Vector3.Distance(zombie.transform.position, transform.position)) {
+                z = zombie;
+                distance = Vector3.Distance(zombie.transform.position, transform.position);
+            }
+        }
+        return z;
+    }
+    protected virtual void ManageLookingForTarget() {
+        _triggerZoneDetector.CheckOfNull();
+            
+        if (_triggerZoneDetector.Zombis.Count <= 0) return;
+        if (CheckForAlertCalling()) {
+            StartAlertCalling();
+            
+            return;
+        }
+        _target =GetTheClosest(_triggerZoneDetector.Zombis);
+        if( Stat == GridActorStat.Idle || Stat == GridActorStat.Move || Stat== GridActorStat.MovingAttack)
+            OnSuprise?.Invoke(this, EventArgs.Empty);
+        ChangeStat(GridActorStat.Attack);
+
     }
 
     protected void EndAlertCalling() {

@@ -9,7 +9,7 @@ public class VFXPoolManager : MonoBehaviour
     public static VFXPoolManager Instance;
     
     public enum VFXPooledType {
-        SmallExplosion , BigExplosion, MoveOrder, bloodSplater, buildingColaps, SmokeStripe, Death, zombieAttack
+        SmallExplosion , BigExplosion, MoveOrder, bloodSplater, buildingColaps, SmokeStripe, Death, zombieAttack, EmoteSurprise, EmoteAlert, EmoteExost
     }
     
     [SerializeField] private VFXPoolInitializeData[] _vfxPoolInitializeData;
@@ -42,12 +42,13 @@ public class VFXPoolManager : MonoBehaviour
 
    
     [Serializable]
-    private struct VFXPoolInitializeData {
+    public struct VFXPoolInitializeData {
         public VFXPooledType Type;
         public VfxPoolableMono PrfVfx;
         public bool CollectionCheck ;
         public int DefaultCapacity ;
         public int MaxCapacity;
+        
 
         public VFXPoolInitializeData(VFXPooledType type, VfxPoolableMono prf) {
             Type = type;

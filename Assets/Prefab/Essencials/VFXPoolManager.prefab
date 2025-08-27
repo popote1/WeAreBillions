@@ -86,3 +86,27 @@ MonoBehaviour:
     CollectionCheck: 0
     DefaultCapacity: 20
     MaxCapacity: 100
+  - Type: 8
+    PrfVfx: {fileID: 1357844182571338170, guid: b1c343d98c49a1447abb7368d471b5a7,
+      type: 3}
+    CollectionCheck: 0
+    DefaultCapacity: 20
+    MaxCapacity: 100
+  - Type: 9
+    PrfVfx: {fileID: -3099797538137442153, guid: 8818fcc234bc2a84d80f587f08770489,
+      type: 3}
+    CollectionCheck: 0
+    DefaultCapacity: 20
+    MaxCapacity: 100
+  - Type: 10
+    PrfVfx: {fileID: 6893698555345833564, guid: b38421e39d9e7ac4f82c5b232b18d897,
+      type: 3}
+    CollectionCheck: 0
+    DefaultCapacity: 20
+    MaxCapacity: 100
+  - Type: 7
+    PrfVfx: {fileID: 6255402359390769635, guid: 0ff7b2861dd1ee647962b77fc86abe96,
+      type: 3}
+    CollectionCheck: 0
+    DefaultCapacity: 20
+    MaxCapacity: 100

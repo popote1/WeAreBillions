@@ -10,7 +10,7 @@ using UnityEngine.Rendering;
 public class AlertSystemManager : MonoBehaviour
 {
     public static AlertSystemManager Instance;
-    public event EventHandler<int> OnAlertLevelChange; 
+    //public event EventHandler<int> OnAlertLevelChange; 
     public float AlertScore {
         get => _alertScore;
     }
@@ -104,7 +104,7 @@ public class AlertSystemManager : MonoBehaviour
     private void LevelDownAlert() {
         _alertLevel--;
         _currentAlertData = _alertLevelDatas[_alertLevel];
-        OnAlertLevelChange?.Invoke(this, _alertLevel);
+        StaticEvents.ChangeAlertLevel(_alertLevel);
         StaticData.SetCurrentAlertLevel(_alertLevel);
     }
 
@@ -113,7 +113,7 @@ public class AlertSystemManager : MonoBehaviour
         _currentAlertData = _alertLevelDatas[_alertLevel];
         _currentAlertData.DoOnStartEvents();
         StaticData.SetCurrentAlertLevel(_alertLevel);
-        OnAlertLevelChange?.Invoke(this, _alertLevel);
+        StaticEvents.ChangeAlertLevel(_alertLevel);
     }
     
     private bool CanAlertIncrease() {
