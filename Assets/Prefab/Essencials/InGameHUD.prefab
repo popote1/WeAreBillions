@@ -902,11 +902,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: PanelDialogue
       objectReference: {fileID: 0}
-    - target: {fileID: 5571915300281418950, guid: bdce2c8beaf353f40a55e83870af1d39,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
