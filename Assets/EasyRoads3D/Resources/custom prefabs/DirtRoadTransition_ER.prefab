@@ -104,7 +104,9 @@ MonoBehaviour:
     sidewalkRightConnectionVecInts: 
     doConnectionTri: 0101
     outerVecInts: 0300000000000000
-    outerVecs: []
+    outerVecs:
+    - {x: 1.25, y: 0, z: 1}
+    - {x: 0.75, y: 0, z: -1}
     rotationPriority: 0
     centerPointAngle: 1000
     connectedRoad: {fileID: 0}
@@ -118,18 +120,18 @@ MonoBehaviour:
     roadMaterials:
     - {fileID: 2100000, guid: f182e2714eb8a714a99ed091081ce16c, type: 2}
     centerPointPercentage: 0.5
-    leftIndent: -1
-    rightIndent: -1
-    leftSurrounding: -1
-    rightSurrounding: -1
+    leftIndent: 0
+    rightIndent: 3
+    leftSurrounding: 0
+    rightSurrounding: 3
     leftRoadIndent: 0
     rightRoadIndent: 0
     leftRoadSurrounding: 0
     rightRoadSurrounding: 0
-    leftIndentV3: {x: 0, y: 0, z: 0}
-    leftSurroundingV3: {x: 0, y: 0, z: 0}
-    rightIndentV3: {x: 0, y: 0, z: 0}
-    rightSurroundingV3: {x: 0, y: 0, z: 0}
+    leftIndentV3: {x: 1.25, y: 0, z: 1}
+    leftSurroundingV3: {x: 1.25, y: 0, z: 1}
+    rightIndentV3: {x: -1.25, y: 0, z: 1}
+    rightSurroundingV3: {x: -1.25, y: 0, z: 1}
     leftRoadpoint: {x: 0, y: 0, z: 0}
     rightRoadpoint: {x: 0, y: 0, z: 0}
     leftRoundingPoints: []
@@ -367,7 +369,8 @@ MonoBehaviour:
     sidewalkRightConnectionVecInts: 
     doConnectionTri: 0101
     outerVecInts: 01000000
-    outerVecs: []
+    outerVecs:
+    - {x: -0.75, y: 0, z: -1}
     rotationPriority: 0
     centerPointAngle: 1000
     connectedRoad: {fileID: 0}
@@ -381,18 +384,18 @@ MonoBehaviour:
     roadMaterials:
     - {fileID: 2100000, guid: 5a898300a222dae47944cb7cc73c2323, type: 2}
     centerPointPercentage: 0.5
-    leftIndent: -1
-    rightIndent: -1
-    leftSurrounding: -1
-    rightSurrounding: -1
+    leftIndent: 2
+    rightIndent: 1
+    leftSurrounding: 2
+    rightSurrounding: 1
     leftRoadIndent: 0
     rightRoadIndent: 0
     leftRoadSurrounding: 0
     rightRoadSurrounding: 0
-    leftIndentV3: {x: 0, y: 0, z: 0}
-    leftSurroundingV3: {x: 0, y: 0, z: 0}
-    rightIndentV3: {x: 0, y: 0, z: 0}
-    rightSurroundingV3: {x: 0, y: 0, z: 0}
+    leftIndentV3: {x: -0.75, y: 0, z: -1}
+    leftSurroundingV3: {x: -0.75, y: 0, z: -1}
+    rightIndentV3: {x: 0.75, y: 0, z: -1}
+    rightSurroundingV3: {x: 0.75, y: 0, z: -1}
     leftRoadpoint: {x: 0, y: 0, z: 0}
     rightRoadpoint: {x: 0, y: 0, z: 0}
     leftRoundingPoints: []
@@ -710,7 +713,7 @@ MonoBehaviour:
   indent: 0
   surrounding: 0
   customTriangulation: 0
-  roundingPointsSet: 0
+  roundingPointsSet: 1
   signPostsSet: 0
   displayLaneData: 1
 --- !u!33 &3261530324645802295
@@ -744,7 +747,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: -3033667219593020291, guid: 235149163e3daab43a797047d66f7491, type: 3}
+  - {fileID: 2100000, guid: d25452d2422541b439a90e3e580d9e57, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
