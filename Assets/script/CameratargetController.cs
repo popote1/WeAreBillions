@@ -1,12 +1,10 @@
-using System.Collections;
-using System.Collections.Generic;
-using Cinemachine;
 using script;
+using Unity.Cinemachine;
 using UnityEngine;
 
 public class CameratargetController : MonoBehaviour
 {
-    [SerializeField] private CinemachineVirtualCamera _camera;
+    [SerializeField] private CinemachineCamera _camera;
     public float CameraScrollmoveSpeed;
 
     public Vector2 MaxPosition = new Vector2(10,10);

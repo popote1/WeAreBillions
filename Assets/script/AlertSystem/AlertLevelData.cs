@@ -47,6 +47,7 @@ public class AlertLevelData {
     public void DoOnStartEvents() {
         _timerEventsDuringLevel = 0;
         foreach (var startEvent in _eventOnLevelStart) {
+            if (startEvent == null) continue;
             startEvent.DoEvent();
         }
     }
@@ -56,7 +57,8 @@ public class AlertLevelData {
         
         _timerEventsDuringLevel += Time.deltaTime;
         if (_timerEventsDuringLevel >= _timeForEvent) {
-            _eventsDuringLevel[Random.Range(0,_eventsDuringLevel.Length)].DoEvent();
+            AlertEvent alert =_eventsDuringLevel[Random.Range(0,_eventsDuringLevel.Length)];
+                if (alert!=null)alert.DoEvent();
             _timerEventsDuringLevel = 0;
             GenerateNewTimeForEvent();
         }

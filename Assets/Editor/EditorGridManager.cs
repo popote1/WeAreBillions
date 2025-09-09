@@ -10,7 +10,7 @@ using Color = UnityEngine.Color;
 using Vector3 = UnityEngine.Vector3;
 
 [CustomEditor(typeof(GridManager))]
-public class EditorGridManager : Editor
+public class EditorGridManager : UnityEditor.Editor
 {
    private GridManager m_targget;
    private void OnSceneGUI()
@@ -58,7 +58,7 @@ public class EditorGridManager : Editor
    }
 }
 [CustomEditor(typeof(TerrainLocomotionData))]
-public class EditorTerrainLocomotionData : Editor
+public class EditorTerrainLocomotionData : UnityEditor.Editor
 {
    private TerrainLocomotionData m_targget;
    public override void OnInspectorGUI()

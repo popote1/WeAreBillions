@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -14,9 +15,23 @@ namespace script.UIs
         [SerializeField] private GameObject _panelObjectif;
         [SerializeField] private Button _bpObjectif;
         [SerializeField] private TMP_Text _txtObjectifs;
-        
+
+        private void Awake() {
+            StaticEvents.OnCurrentObjectifChange+= StaticEventsOnOnCurrentObjectifChange;
+        }
+
+        private void OnDestroy()
+        {
+            StaticEvents.OnCurrentObjectifChange-= StaticEventsOnOnCurrentObjectifChange;
+        }
+
         private void Start() {
             _bpObjectif.onClick.AddListener(ShowHideObjectifPanel);
+            _bpZombieCount.onClick.AddListener(UISelectAllZombies);
+        }
+
+        private void StaticEventsOnOnCurrentObjectifChange(object sender, ObjectifAbstract e) {
+           SetObjectifText( e.Description);
         }
 
         private void Update() {
@@ -33,6 +48,11 @@ namespace script.UIs
 
         public void SetObjectifText(string text) {
             _txtObjectifs.text = text;
+            _panelObjectif.SetActive(true);
+        }
+
+        private void UISelectAllZombies() {
+            StaticEvents.SubmitSelection(StaticData.GetAllZombies());
         }
         
     }

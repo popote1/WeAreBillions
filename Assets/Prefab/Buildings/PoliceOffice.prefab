@@ -1,0 +1,288 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &8696770217710248307
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4861594536812405948}
+  - component: {fileID: 185157080046802427}
+  - component: {fileID: 1143462898568404064}
+  - component: {fileID: 2838460449957481703}
+  - component: {fileID: -7831290917043407290}
+  m_Layer: 0
+  m_Name: PoliceOffice
+  m_TagString: Destructible
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4861594536812405948
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8696770217710248307}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 5945847458965899264}
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &185157080046802427
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8696770217710248307}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 23d5bc3d8c95421bb1a6a33bd8d5f17d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  WinOnDestruction: 1
+  HP: 20
+  OnDestruction:
+    m_PersistentCalls:
+      m_Calls: []
+  _impulseSource: {fileID: -7831290917043407290}
+  _vfxBuildingDestruction: {fileID: 7207176948695513411}
+--- !u!65 &1143462898568404064
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8696770217710248307}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 5.236299, y: 2.7300072, z: 4.6152706}
+  m_Center: {x: -1.2531462, y: 1.1976972, z: -0.11089766}
+--- !u!65 &2838460449957481703
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8696770217710248307}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 3.8833451, y: 2.2198768, z: 2.9628925}
+  m_Center: {x: 2.872255, y: 0.96481156, z: 0.16080189}
+--- !u!114 &-7831290917043407290
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8696770217710248307}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 180ecf9b41d478f468eb3e9083753217, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ImpulseDefinition:
+    ImpulseChannel: 1
+    ImpulseShape: 4
+    CustomImpulseShape:
+      serializedVersion: 2
+      m_Curve: []
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    ImpulseDuration: 0.2
+    ImpulseType: 3
+    DissipationRate: 0.557
+    RawSignal: {fileID: 11400000, guid: e120f1000d237a0439051eade2580cec, type: 2}
+    AmplitudeGain: 1
+    FrequencyGain: 1
+    RepeatMode: 0
+    Randomize: 1
+    TimeEnvelope:
+      AttackShape:
+        serializedVersion: 2
+        m_Curve: []
+        m_PreInfinity: 2
+        m_PostInfinity: 2
+        m_RotationOrder: 4
+      DecayShape:
+        serializedVersion: 2
+        m_Curve: []
+        m_PreInfinity: 2
+        m_PostInfinity: 2
+        m_RotationOrder: 4
+      AttackTime: 0
+      SustainTime: 4
+      DecayTime: 0.7
+      ScaleWithImpact: 1
+      HoldForever: 0
+    ImpactRadius: 100
+    DirectionMode: 0
+    DissipationMode: 2
+    DissipationDistance: 50
+    PropagationSpeed: 343
+  DefaultVelocity: {x: 0, y: -1, z: 0}
+--- !u!1001 &3574598534992270811
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 4861594536812405948}
+    m_Modifications:
+    - target: {fileID: 7140565714104671707, guid: e4171e4a952ba3045b722dec8280c6e3,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7140565714104671707, guid: e4171e4a952ba3045b722dec8280c6e3,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7140565714104671707, guid: e4171e4a952ba3045b722dec8280c6e3,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7140565714104671707, guid: e4171e4a952ba3045b722dec8280c6e3,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7140565714104671707, guid: e4171e4a952ba3045b722dec8280c6e3,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7140565714104671707, guid: e4171e4a952ba3045b722dec8280c6e3,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7140565714104671707, guid: e4171e4a952ba3045b722dec8280c6e3,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7140565714104671707, guid: e4171e4a952ba3045b722dec8280c6e3,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7140565714104671707, guid: e4171e4a952ba3045b722dec8280c6e3,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7140565714104671707, guid: e4171e4a952ba3045b722dec8280c6e3,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7517547932694513505, guid: e4171e4a952ba3045b722dec8280c6e3,
+        type: 3}
+      propertyPath: m_Name
+      value: PoliceOfficeVisual
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 7517547932694513505, guid: e4171e4a952ba3045b722dec8280c6e3,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 7207176948695513411}
+  m_SourcePrefab: {fileID: 100100000, guid: e4171e4a952ba3045b722dec8280c6e3, type: 3}
+--- !u!4 &5945847458965899264 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 7140565714104671707, guid: e4171e4a952ba3045b722dec8280c6e3,
+    type: 3}
+  m_PrefabInstance: {fileID: 3574598534992270811}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &6469478513561965242 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 7517547932694513505, guid: e4171e4a952ba3045b722dec8280c6e3,
+    type: 3}
+  m_PrefabInstance: {fileID: 3574598534992270811}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &7207176948695513411
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6469478513561965242}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 22e89b6262633974a87b763caa40609a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _duration: 3
+  _strength: 3
+  _vibrato: 20
+  _buildingheight: 3
+  _prfVfxDestruction: {fileID: 6177001271971117344, guid: aca7581edb1241f48a470066018ad5ad,
+    type: 3}
+  _CurveBuildingdestruiction:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 1
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  _prfRuines: {fileID: 8522946641476728923, guid: 88c7f802afe1f6d459db45198f382afd,
+    type: 3}
+  _ruineBaseSpawnYOffSet: -3
+  _ruinBaseSpawnSpeed: 2
+  _ruinBaseDelay: 2
+  _prfVfxController: {fileID: 2152695037291736157, guid: fc4fb90a474075f4a97883242ad2fa88,
+    type: 3}
+  _vfxStripSpawnRange: 1.5
+  _vfxStripSpawnCountMin: 1
+  _vfxStripSpawnCountMax: 2

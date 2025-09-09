@@ -311,6 +311,7 @@ MeshRenderer:
   m_RayTraceProcedural: 0
   m_RayTracingAccelStructBuildFlagsOverride: 0
   m_RayTracingAccelStructBuildFlags: 1
+  m_SmallMeshCulling: 1
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -625,6 +626,7 @@ MeshRenderer:
   m_RayTraceProcedural: 0
   m_RayTracingAccelStructBuildFlagsOverride: 0
   m_RayTracingAccelStructBuildFlags: 1
+  m_SmallMeshCulling: 1
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -722,6 +724,7 @@ SkinnedMeshRenderer:
   m_RayTraceProcedural: 0
   m_RayTracingAccelStructBuildFlagsOverride: 0
   m_RayTracingAccelStructBuildFlags: 1
+  m_SmallMeshCulling: 1
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -864,6 +867,37 @@ Transform:
   - {fileID: 2870619398451847357}
   m_Father: {fileID: 156960525790399124}
   m_LocalEulerAnglesHint: {x: 41.29828, y: 81.44936, z: 10.897381}
+--- !u!1 &7932209268610113357
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 730441496173857573}
+  m_Layer: 0
+  m_Name: TransformEmote
+  m_TagString: Untagged
+  m_Icon: {fileID: 1206586993520771344, guid: 0000000000000000d000000000000000, type: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &730441496173857573
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7932209268610113357}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -0.053, y: 0.37, z: -0.238}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 3588888328940639706}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &8751721295894699737
 GameObject:
   m_ObjectHideFlags: 0
@@ -967,6 +1001,7 @@ Transform:
   - {fileID: 3892645034844781729}
   - {fileID: 4859742215338365727}
   - {fileID: 2473208976563649014}
+  - {fileID: 730441496173857573}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: -66.03, z: 0}
 --- !u!33 &398679564742948678
@@ -996,6 +1031,7 @@ MeshRenderer:
   m_RayTraceProcedural: 0
   m_RayTracingAccelStructBuildFlagsOverride: 0
   m_RayTracingAccelStructBuildFlags: 1
+  m_SmallMeshCulling: 1
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -1056,12 +1092,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 60fd6e173c4e2f44dbc71e661e1c6341, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  AgentName: 
+  Radius: 0.5
   GridManager: {fileID: 0}
   _animator: {fileID: 2865205535390336310}
   Rigidbody: {fileID: 8776133592687920192}
   _maxHp: 0
   _uniteType: 0
   _canBeTransform: 1
+  _canBeDestroy: 0
   _transformationTime: 3
   _maxMoveSpeed: 3
   _moveSpeed: 2
@@ -1072,19 +1111,24 @@ MonoBehaviour:
   _wonderringDelayMin: 1
   _wonderringDelayMax: 10
   _wonderringdistance: 3
-  PSEmoteRedSquare: {fileID: 0}
-  HeightOffSetting: 0.5
-  GroundLayer:
+  _transformEmote: {fileID: 730441496173857573}
+  _psEmoteRedSquare: {fileID: 0}
+  _heightOffSetting: 0.5
+  _groundLayer:
     serializedVersion: 2
     m_Bits: 128
   IsSelectable: 0
-  SelectionSprite: {fileID: 0}
+  _selectionSprite: {fileID: 0}
   _prefabDeathPS: {fileID: 540054392838581951, guid: 0af1e0599763dda47be91aad1e77c51d,
+    type: 3}
+  _prfEmoteExost: {fileID: 5604642705188548174, guid: 7e6bf1a319061414f8c25e412478d0bd,
+    type: 3}
+  _prfEmoteSuprice: {fileID: 926921378615203529, guid: 1dda29e6a3f760049afdfc10746ca6fd,
     type: 3}
   DetectionDistance: 10
   TriggerZoneDetector: {fileID: 762801531907399770}
   RunAwayDistance: 10
-  MaxStamina: 2
+  MaxStamina: 5
   RunAwayMoveSpeed: 6
   StaminaRegenRate: 0.5
   PrefabsZombieAgent: {fileID: 2444219041533692552, guid: adf5d6fdbd056e04790ca9363b48d07c,
@@ -1450,7 +1494,7 @@ PrefabInstance:
     - target: {fileID: 5991794082412608324, guid: df18534e1ea1734459f7b0d5a95385ee,
         type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8229872740625256611, guid: df18534e1ea1734459f7b0d5a95385ee,
         type: 3}

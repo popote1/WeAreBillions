@@ -1,9 +1,5 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using script;
-using TMPro;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Audio;
 using UnityEngine.SceneManagement;
@@ -11,21 +7,20 @@ using UnityEngine.UI;
 
 public class HUDPauseMenu : MonoBehaviour
 {
+    public event Action OnPanelClose;
+    
     [Header("PauseMenu")]
-    [SerializeField] private GameObject _panelPauseMenu;
+    [SerializeField] private UIOptionMenu _uiOptionPanel;
+    [SerializeField] private HUDRestartPauseMenu _hudRestartPauseMenu;
+    [SerializeField] private HUDReturnToMainMenu _hudReturnToMainMenu;
+    [SerializeField] private HUDStatistiquePauseMenu _hudStatistiquePauseMenu;
+    [Space(10)]
     [SerializeField] private Button _bpResume;
     [SerializeField] private Button _bpOptions;
     [SerializeField] private Button _bpStatistics;
     [SerializeField] private Button _bpRestart;
-    [SerializeField] private Button _bpMaineMenu;
-    [Header("Options")] 
-    [SerializeField] private GameObject _panelOptions;
-    [SerializeField] private Slider _sliderAudioMaster;
-    [SerializeField] private Slider _sliderAudioMusic;
-    [SerializeField] private Slider _sliderAudioSFX;
-    [SerializeField] private Slider _sliderAudioAmbiance;
-    [SerializeField] private Button _bpOptionReturn;
-    [SerializeField] private AudioMixer _audioMixer;
+    [SerializeField] private Button _bpMainMenu;
+    
 
 
     private void Start() {
@@ -33,87 +28,77 @@ public class HUDPauseMenu : MonoBehaviour
         _bpOptions.onClick.AddListener(UIBpOption);
         _bpStatistics.onClick.AddListener(UIBpStatistics);
         _bpRestart.onClick.AddListener(UIBpRestart);
-        _bpMaineMenu.onClick.AddListener(UIBpMainMenu);
-        
-        _sliderAudioMaster.onValueChanged.AddListener(UISliderAudioMasterChange);
-        _sliderAudioMusic.onValueChanged.AddListener(UiSliderAudioMusicChange);
-        _sliderAudioSFX.onValueChanged.AddListener(UISliderAudioSFXChange);
-        _sliderAudioAmbiance.onValueChanged.AddListener(UISliderAudioAmbianceChange);
-        _bpOptionReturn.onClick.AddListener(UIBpOptionReturn);
-        
-        StaticData.OnSetGameOnPause+= StaticDataOnOnSetGameOnPause;
-        ClosePauseMenu();
+        _bpMainMenu.onClick.AddListener(UIBpMainMenu);
+       
+        _uiOptionPanel.OnPanelClose+= UiOptionPanelOnOnPanelClose;
+        _hudRestartPauseMenu.OnPanelClose+= HudRestartPauseMenuOnOnPanelClose;
+        _hudReturnToMainMenu.OnPanelClose+= HudReturnToMainMenuOnOnPanelClose;
+        _hudStatistiquePauseMenu.OnPanelClose+= HudStatistiquePauseMenuOnOnPanelClose;
     }
 
-    private void OnDestroy() {
-        StaticData.OnSetGameOnPause-= StaticDataOnOnSetGameOnPause;
-    }
-
-    private void StaticDataOnOnSetGameOnPause(object sender, bool e) {
-        if( e)OpenPauseMenu();
-        else ClosePauseMenu();
-    }
-
-    private void UIBpOptionReturn() {
-        _panelOptions.SetActive(false);
-        _bpOptions.Select();
-    }
-
-
-    private void UISliderAudioAmbianceChange(float value) {
-        StaticData.AudioVolumeAmbiances = value;
-        _audioMixer.SetFloat("AmbianceVolume", Mathf.Log10(value) * 20);
-    }
-
-    private void UISliderAudioSFXChange(float value) {
-        StaticData.AudioVolumeSFX = value;
-        _audioMixer.SetFloat("SFXVolume", Mathf.Log10(value) * 20);
-    }
-
-    private void UiSliderAudioMusicChange(float value) {
-        StaticData.AudioVolumeMusic = value;
-        _audioMixer.SetFloat("MusicVolume", Mathf.Log10(value) * 20);
-    }
-
-    private void UISliderAudioMasterChange(float value) {
-        StaticData.AudioVolumeMaster = value;
-        _audioMixer.SetFloat("MasterVolume", Mathf.Log10(value) * 20);
-    }
-
-    private void UIBpMainMenu() {
-        StaticData.SetPause(false);
-        SceneManager.LoadScene(0);
-    }
-
-    private void UIBpRestart() {
-        StaticData.SetPause(false);
-        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
-    }
-
-    private void UIBpStatistics() {
-        
-    }
-
-    private void UIBpOption() {
-        _panelOptions.SetActive(true);
-        _sliderAudioMaster.Select();
-        _sliderAudioMaster.SetValueWithoutNotify(StaticData.AudioVolumeMaster);
-        _sliderAudioMusic.SetValueWithoutNotify(StaticData.AudioVolumeMusic);
-        _sliderAudioSFX.SetValueWithoutNotify(StaticData.AudioVolumeSFX);
-        _sliderAudioAmbiance.SetValueWithoutNotify(StaticData.AudioVolumeAmbiances);
-    }
-
-    private void UIBpResume() {
-        StaticData.SetGameOnPause(false);
-    }
-
-    public void OpenPauseMenu() {
-        _panelPauseMenu.SetActive(true);
+    public void Open()
+    {
+        gameObject.SetActive(true);
         _bpResume.Select();
     }
 
-    public void ClosePauseMenu() {
-        _panelPauseMenu.SetActive(false);
+    public void ForceClose() {
+        _uiOptionPanel.ForceClose();
+        _hudRestartPauseMenu.ForceClose();
+        _hudReturnToMainMenu.ForceClose();
+        _hudStatistiquePauseMenu.ForceClose();
+        gameObject.SetActive(false);
+    }
+
+    private void OnDestroy() {
+        _uiOptionPanel.OnPanelClose-= UiOptionPanelOnOnPanelClose;
+        _hudRestartPauseMenu.OnPanelClose-= HudRestartPauseMenuOnOnPanelClose;
+        _hudReturnToMainMenu.OnPanelClose-= HudReturnToMainMenuOnOnPanelClose;
+        _hudStatistiquePauseMenu.OnPanelClose-= HudStatistiquePauseMenuOnOnPanelClose;
+    }
+    private void HudStatistiquePauseMenuOnOnPanelClose() {
+        gameObject.SetActive(true);
+        _bpStatistics.Select();
+    }
+
+    private void HudReturnToMainMenuOnOnPanelClose() {
+        gameObject.SetActive(true);
+        _bpMainMenu.Select();
+    }
+
+    private void HudRestartPauseMenuOnOnPanelClose() {
+        gameObject.SetActive(true);
+        _bpRestart.Select();
+    }
+
+    private void UiOptionPanelOnOnPanelClose(object sender, EventArgs e) {
+        gameObject.SetActive(true);
+        _bpOptions.Select();
+    }
+  
+    private void UIBpMainMenu() {
+        _hudReturnToMainMenu.OpenPanel();
+        gameObject.SetActive(false);
+    }
+
+    private void UIBpRestart() {
+        _hudRestartPauseMenu.OpenPanel();
+        gameObject.SetActive(false);
+    }
+
+    private void UIBpStatistics() {
+        _hudStatistiquePauseMenu.OpenPanel();
+        gameObject.SetActive(false);
+    }
+
+    private void UIBpOption() {
+        _uiOptionPanel.OpenOptionPanel();
+        gameObject.SetActive(false);
+    }
+
+    private void UIBpResume() {
+        OnPanelClose?.Invoke();
+        gameObject.SetActive(false);
     }
     
 }

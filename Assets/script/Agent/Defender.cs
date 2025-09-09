@@ -1,8 +1,9 @@
 ﻿using System;
+using System.Collections.Generic;
+using script;
 using UnityEngine;
-using UnityEngine.EventSystems;
 using Random = UnityEngine.Random;
-
+[SelectionBase]
 public class Defender: GridAgent
 {
     [Header("AlertCall")]
@@ -10,18 +11,25 @@ public class Defender: GridAgent
     [SerializeField] protected float _durationOfCall = 4;
     [SerializeField] protected float _alertIncrease = 30;
     [SerializeField] protected float _alertCheckRadius = 3;
-    
+    [Header("AttackParameters")] 
+    [SerializeField] protected float _attackRange;
+    [SerializeField] protected ParticleSystem _pSAttack;
+    [SerializeField] protected ZombieAgent _target;
+    [SerializeField] protected TriggerZoneDetector _triggerZoneDetector;
     [SerializeField] protected AttackStruct _attack;
     
 
     public bool IsCallingAlert => Stat == GridActorStat.CallingAlert;
     public float AlertCallProgress => _alertCallingTimer / _durationOfCall;
     public float AlertCheckRadius => _alertCheckRadius;
+    public float AttackRange => _attackRange;
 
     protected bool _hadAlertCalling;
     protected float _alertCallingTimer;
+    protected float _attackTimer;
 
     public event EventHandler<bool> OnChangeAlertCallingStat;
+    public event EventHandler OnSuprise;
 
     protected bool CheckForAlertCalling() {
         if (_hadAlertCalling) return false;
@@ -47,14 +55,40 @@ public class Defender: GridAgent
             _hadAlertCalling = true;
         }
     }
+    protected virtual ZombieAgent GetTheClosest(List<ZombieAgent> zombies) {
+        ZombieAgent z = null;
+        float distance = Mathf.Infinity;
+        foreach (var zombie in zombies) {
+            if (distance > Vector3.Distance(zombie.transform.position, transform.position)) {
+                z = zombie;
+                distance = Vector3.Distance(zombie.transform.position, transform.position);
+            }
+        }
+        return z;
+    }
+    protected virtual void ManageLookingForTarget() {
+        _triggerZoneDetector.CheckOfNull();
+            
+        if (_triggerZoneDetector.Zombis.Count <= 0) return;
+        if (CheckForAlertCalling()) {
+            StartAlertCalling();
+            
+            return;
+        }
+        _target =GetTheClosest(_triggerZoneDetector.Zombis);
+        if( Stat == GridActorStat.Idle || Stat == GridActorStat.Move || Stat== GridActorStat.MovingAttack)
+            OnSuprise?.Invoke(this, EventArgs.Empty);
+        ChangeStat(GridActorStat.Attack);
+
+    }
 
     protected void EndAlertCalling() {
-        OnChangeAlertCallingStat.Invoke(this, false);
+        OnChangeAlertCallingStat?.Invoke(this, false);
         _alertCallingTimer = 0;
     } 
 
-    public override void SetAsGrabbed() {
+    public override void SetAsGrabbed(bool grabed = true) {
         EndAlertCalling();
-        base.SetAsGrabbed();
+        base.SetAsGrabbed(grabed);
     }
 }

@@ -8,16 +8,17 @@ namespace script.UIs
     public class HUDManager :MonoBehaviour
     {
         //public TMP_Text TxtZombieCount;
-        public GameObject PanelWin;
-        public GameObject PanelLose;
+        //public GameObject PanelWin;
+        //public GameObject PanelLose;
         [SerializeField] private Button _bpMenuPause;
+        [SerializeField] private HUDEndGamePanel _hudEndGamePanel;
         
 
         private void Start() {
             //StaticData.OnZombieGain += SetZombieValue;
             //StaticData.OnZombieLose += SetZombieValue;
-            StaticData.OnGameWin += PlayWin;
-            StaticData.OnGameLose += PlayLose;
+            StaticEvents.OnGameWin += PlayWin;
+            StaticEvents.OnGameLose += PlayLose;
             _bpMenuPause.onClick.AddListener(ClickOnPauseButton);
         }
 
@@ -25,8 +26,8 @@ namespace script.UIs
         {
             //StaticData.OnZombieGain -= SetZombieValue;
             //StaticData.OnZombieLose -= SetZombieValue;
-            StaticData.OnGameWin -= PlayWin;
-            StaticData.OnGameLose -= PlayLose;
+            StaticEvents.OnGameWin -= PlayWin;
+            StaticEvents.OnGameLose -= PlayLose;
         }
 
         //public void SetZombieValue() {
@@ -34,11 +35,11 @@ namespace script.UIs
         //}
 
         public void PlayWin() {
-            PanelWin.SetActive(true);
+            _hudEndGamePanel.OpenEndGamePanel();
         }
 
         public void PlayLose() {
-            PanelLose.SetActive(true);
+            _hudEndGamePanel.OpenEndGamePanel(false);
         }
 
         public void ReturnToMainMenu() {
@@ -47,7 +48,9 @@ namespace script.UIs
         }
         
         private void ClickOnPauseButton() {
-            StaticData.SetGameOnPause(true);
+            StaticEvents.SetGameOnPause(true);
         }
+
+        
     }
-} 
+}

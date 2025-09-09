@@ -68,6 +68,7 @@ MeshRenderer:
   m_RayTraceProcedural: 0
   m_RayTracingAccelStructBuildFlagsOverride: 0
   m_RayTracingAccelStructBuildFlags: 1
+  m_SmallMeshCulling: 1
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -105,13 +106,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f927529c847142bdace53ca4b7080ead, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  AgentName: Zombie
+  Radius: 0.5
   GridManager: {fileID: 0}
   _animator: {fileID: 7194648810330254502}
   Rigidbody: {fileID: 6032425623059702544}
-  _maxHp: 0
+  _maxHp: 5
   _uniteType: 0
   _canBeTransform: 0
+  _canBeDestroy: 0
   _transformationTime: 2
+  _imgPortrait: {fileID: 21300000, guid: 455ad9931e47a2f4abaa68b6e0676691, type: 3}
   _maxMoveSpeed: 3
   _moveSpeed: 10
   _speedModulator: 0.05
@@ -121,19 +126,25 @@ MonoBehaviour:
   _wonderringDelayMin: 1
   _wonderringDelayMax: 10
   _wonderringdistance: 3
-  PSEmoteRedSquare: {fileID: 5012726649260427936}
-  HeightOffSetting: 0
-  GroundLayer:
+  _transformEmote: {fileID: 0}
+  _psEmoteRedSquare: {fileID: 5012726649260427936}
+  _heightOffSetting: 0
+  _groundLayer:
     serializedVersion: 2
     m_Bits: 128
   IsSelectable: 0
-  SelectionSprite: {fileID: 3759194787182890189}
+  _selectionSprite: {fileID: 3759194787182890189}
+  _vfxDeathType: 6
   _prefabDeathPS: {fileID: 540054392838581951, guid: 0af1e0599763dda47be91aad1e77c51d,
+    type: 3}
+  _vfxBloodSplaterType: 3
+  _prefabBloodSplater: {fileID: 4224899161540997600, guid: 5d300fc16e457f24ea514e4a0112684b,
     type: 3}
   _attack:
     AttackSpeed: 1
     Damage: 3
     SpecialAttacks: []
+  _vfxAttackType: 7
   _prefabsAttackEffect: {fileID: 4266808841945952343, guid: 81a00df2fec0e814e95ed6e1c27414ba,
     type: 3}
   _audioSource: {fileID: 6815450481921267788}
@@ -148,9 +159,11 @@ MonoBehaviour:
   - {fileID: 8300000, guid: aa985475b2f21fe4880dccc2f26b1aa2, type: 3}
   - {fileID: 8300000, guid: bd34efc49cdbd8847bcaff2f74af6bbf, type: 3}
   _dieSound: []
-  _totalTransformationTime: 0
-  _transformationMod: 1
-  _prefabZombieAgent: {fileID: 2444219041533692552}
+  _transformData:
+    TransformationMod: 1
+    SpecialTransformations:
+    - UniteType: 1
+      TransformationMod: 0.5
 --- !u!136 &1891030187320269572
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -173,7 +186,7 @@ CapsuleCollider:
   m_Radius: 0.5
   m_Height: 1
   m_Direction: 1
-  m_Center: {x: 0, y: 0.6, z: 0}
+  m_Center: {x: 0, y: 0.7, z: 0}
 --- !u!54 &6032425623059702544
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -622,6 +635,7 @@ SpriteRenderer:
   m_RayTraceProcedural: 0
   m_RayTracingAccelStructBuildFlagsOverride: 0
   m_RayTracingAccelStructBuildFlags: 1
+  m_SmallMeshCulling: 1
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:

@@ -16,7 +16,7 @@ namespace script.UIs
             if (_alertSystemManager == null) {
                 Debug.LogWarning("Alert System not found", this);
             }
-            _alertSystemManager.OnAlertLevelChange+= AlertSystemManagerOnOnAlertLevelChange;
+            StaticEvents.OnAlertLevelChange+= AlertSystemManagerOnOnAlertLevelChange;
             AlertSystemManagerOnOnAlertLevelChange(this ,0);
         }
 

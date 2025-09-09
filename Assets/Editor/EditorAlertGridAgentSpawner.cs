@@ -2,7 +2,7 @@
 using UnityEngine;
 
 [CustomEditor(typeof(AlertGridAgentSpawner))]
-public class EditorAlertGridAgentSpawner : Editor {
+public class EditorAlertGridAgentSpawner : UnityEditor.Editor {
     private AlertGridAgentSpawner m_targget;
     private void OnSceneGUI() {
         m_targget = (AlertGridAgentSpawner) target;

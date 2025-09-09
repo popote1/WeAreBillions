@@ -14,6 +14,12 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 3265763198335787075, guid: cd2f392205469d14881f460994d9ec5b,
         type: 3}
+    - target: {fileID: 6557488755546321730, guid: b3b1c249577edfc49914fd26ebc142c0,
+        type: 3}
+      propertyPath: '_prfDebris.Array.data[0]'
+      value: 
+      objectReference: {fileID: 3265763198335787075, guid: cd2f392205469d14881f460994d9ec5b,
+        type: 3}
     - target: {fileID: 8689521922937793817, guid: b3b1c249577edfc49914fd26ebc142c0,
         type: 3}
       propertyPath: m_Name

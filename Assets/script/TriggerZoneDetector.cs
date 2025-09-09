@@ -39,6 +39,7 @@ namespace script
             }
         }
         public ZombieAgent GetTheClosest() {
+            CheckOfNull();
             ZombieAgent z = null;
             float distance = Mathf.Infinity;
             foreach (var zombie in Zombis) {
@@ -49,5 +50,6 @@ namespace script
             }
             return z;
         }
+        
     }
 }
