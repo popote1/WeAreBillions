@@ -1,0 +1,21 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b1f27925125b3c4448dc5d061ea8a85d, type: 3}
+  m_Name: Palissades
+  m_EditorClassIdentifier: 
+  _objects:
+  - {fileID: 2968258159493497663, guid: a66e1dc2c4f31514f8fd61e63c8efb3c, type: 3}
+  - {fileID: 1010698349509101996, guid: 6d0276df612a7704f9a707b495d9d4fd, type: 3}
+  - {fileID: 675404661293443528, guid: d50723e8b6cadf34883ae84c33dfe569, type: 3}
+  - {fileID: 5673251361781147853, guid: 56de963aa980a4e4cb36daa19c52c250, type: 3}
+  - {fileID: 1968723268561944236, guid: 2e613c285afeab946b796090236b35b4, type: 3}
+  - {fileID: 8028884910390236452, guid: 3a66f4100044d9a4f82cd406e02ef9cf, type: 3}
