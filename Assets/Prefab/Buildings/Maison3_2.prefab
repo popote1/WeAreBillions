@@ -63,8 +63,8 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 128
   _spawningBounds:
-    m_Center: {x: 0.23758316, y: 0, z: -0.09224701}
-    m_Extent: {x: 1.0761147, y: 0, z: 0.5674057}
+    m_Center: {x: 0.17609024, y: 0, z: -0.041934967}
+    m_Extent: {x: 0.98667145, y: 0, z: 0.5785866}
   _zombieSpawnChanceStandrard: 0.7
   _zombieSpawnChanceBrute: 0.2
   _zombieSpawnChanceEngineer: 0.1
@@ -87,8 +87,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 2.0983124, y: 3.2078583, z: 1.8928375}
-  m_Center: {x: -0.21877289, y: 1.533899, z: -0.012371063}
+  m_Size: {x: 2.2101154, y: 3.2078583, z: 1.5406532}
+  m_Center: {x: 0.20608234, y: 1.533899, z: -0.07665825}
 --- !u!65 &1477916567205991772
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -108,8 +108,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 1.6612759, y: 2.235352, z: 1.2543373}
-  m_Center: {x: 0.89744663, y: 1.0972836, z: -0.45417213}
+  m_Size: {x: 2.756956, y: 2.235352, z: 1.1704826}
+  m_Center: {x: -0.3435793, y: 1.0972836, z: 0.52131844}
 --- !u!114 &5745328819388436993
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -189,7 +189,7 @@ PrefabInstance:
     - target: {fileID: 106632864344184988, guid: f458d4d3a06d777408655b4d352df5a2,
         type: 3}
       propertyPath: m_LocalRotation.w
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 106632864344184988, guid: f458d4d3a06d777408655b4d352df5a2,
         type: 3}
@@ -199,7 +199,7 @@ PrefabInstance:
     - target: {fileID: 106632864344184988, guid: f458d4d3a06d777408655b4d352df5a2,
         type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0
+      value: -1
       objectReference: {fileID: 0}
     - target: {fileID: 106632864344184988, guid: f458d4d3a06d777408655b4d352df5a2,
         type: 3}
@@ -214,7 +214,7 @@ PrefabInstance:
     - target: {fileID: 106632864344184988, guid: f458d4d3a06d777408655b4d352df5a2,
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
+      value: -180
       objectReference: {fileID: 0}
     - target: {fileID: 106632864344184988, guid: f458d4d3a06d777408655b4d352df5a2,
         type: 3}
