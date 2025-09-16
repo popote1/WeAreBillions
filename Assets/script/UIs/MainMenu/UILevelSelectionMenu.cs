@@ -7,7 +7,7 @@ public class UILevelSelectionMenu : MonoBehaviour
 {
     public event EventHandler OnPanelClose;
     
-    [SerializeField]  private SOLevelInfoDataArray _levelInfoDataArray;
+    [SerializeField] private SOLevelInfoDataArray _levelInfoDataArray;
     [SerializeField] private UIAsyncSceneLoader _asyncSceneLoader;
     [Space(10)]
     [SerializeField] private Transform _transformButtonHolder;

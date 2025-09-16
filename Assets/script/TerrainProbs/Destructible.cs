@@ -1,10 +1,7 @@
-﻿
-using script;
+﻿using script;
 using UnityEngine;
 
-
-    public class Destructible : MonoBehaviour, IDestructible
-    {
+public class Destructible : MonoBehaviour, IDestructible {
         public GameObject prefabsDebrie;
         public GameObject prefabsFX;
         public int HP;
@@ -41,4 +38,4 @@ using UnityEngine;
         public Vector3 GetWorldPos() {
             return transform.position;
         }
-    }
+}
