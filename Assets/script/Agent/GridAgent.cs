@@ -7,7 +7,8 @@ using Random = UnityEngine.Random;
 
 public class GridAgent : MonoBehaviour
 {
-    
+
+    public event EventHandler OnGridAgentDestroy;
     public Subgrid Subgrid;
     public string AgentName;
     public float Radius = 0.5f;
@@ -95,6 +96,7 @@ public class GridAgent : MonoBehaviour
     }
     protected virtual void OnDestroy() {
         StaticData.RemoveGridAgent(this);
+        OnGridAgentDestroy?.Invoke(this, EventArgs.Empty);
     }
     protected virtual void Update() {
         ManageSelfElevation();

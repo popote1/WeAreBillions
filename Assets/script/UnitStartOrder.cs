@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using script;
 using UnityEngine;
 
@@ -8,6 +9,7 @@ public class UnitStartOrder : MonoBehaviour
         public GridManager GridManager;
         public GridAgent[] Agents;
         public bool IsLoop;
+        public bool GiveOrderAtStart=true;
 
         public Vector3[] Targets;
         protected Vector2Int originChunkTarget = new Vector2Int(0, 0);
@@ -19,6 +21,7 @@ public class UnitStartOrder : MonoBehaviour
                 Debug.LogWarning("No Grid Manager Fount", this);
                 return;
             }
+            if( GiveOrderAtStart)GiveUniteMoveOrder();
         }
 
         public void GiveAgentMoveOrder(List<GridAgent> agents) {

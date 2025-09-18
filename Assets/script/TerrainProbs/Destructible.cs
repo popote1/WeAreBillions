@@ -1,10 +1,13 @@
-﻿using script;
+﻿using System;
+using script;
 using UnityEngine;
 
 public class Destructible : MonoBehaviour, IDestructible {
         public GameObject prefabsDebrie;
         public GameObject prefabsFX;
         public int HP;
+
+        public event EventHandler OnDestructibleDestroy;
 
         public virtual void TakeDamage(int damage, GridAgent source = null) {
             if (HP <= 0) return;
@@ -18,6 +21,7 @@ public class Destructible : MonoBehaviour, IDestructible {
         public virtual void DestroyDestructible(GridAgent source = null) {
             ManageSpawnVFX();
             if (prefabsDebrie) Instantiate(prefabsDebrie, transform.position, transform.rotation);
+            OnDestructibleDestroy?.Invoke(this, EventArgs.Empty);
             Destroy(gameObject);
         }
 
@@ -33,6 +37,10 @@ public class Destructible : MonoBehaviour, IDestructible {
 
         public virtual bool IsAlive() {
             return (HP > 0);
+        }
+
+        public Vector3 GetPosition() {
+            return transform.position;
         }
 
         public Vector3 GetWorldPos() {

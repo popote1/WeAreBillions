@@ -1,9 +1,7 @@
 ﻿using script;
 using UnityEngine;
 
-public class TriggerZoneDialogue : MonoBehaviour
-{
-
+public class TriggerZoneDialogue : MonoBehaviour {
     [SerializeField] private bool _wasPlay;
     [SerializeField] private DialogueStep[] _dialogueSteps;
     

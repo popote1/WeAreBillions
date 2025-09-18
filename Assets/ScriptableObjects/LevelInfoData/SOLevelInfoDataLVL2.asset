@@ -17,3 +17,4 @@ MonoBehaviour:
   Description: "Quand les autorit\xE9es s'emmellent \xE7a ne finis jamais biens."
   Illustration: {fileID: 21300000, guid: bcc19ad51b0b9fe459e61614c6450257, type: 3}
   SceneName: Niveau2
+  SoEndGameScoring: {fileID: 11400000, guid: 1115790c7f374da4cbdb6f448ae19ff9, type: 2}
