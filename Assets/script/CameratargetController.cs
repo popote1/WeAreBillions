@@ -1,3 +1,4 @@
+using System;
 using script;
 using Unity.Cinemachine;
 using UnityEngine;
@@ -10,6 +11,7 @@ public class CameratargetController : MonoBehaviour
     public Vector2 MaxPosition = new Vector2(10,10);
     public Vector2 MinPosition = new Vector2(0,0);
     [SerializeField] private LayerMask _groundLayer;
+    
 
     //[Space(10), Header("Zoom")] 
     //[SerializeField] private float _minZoom = 10;

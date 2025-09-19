@@ -1,5 +1,6 @@
 using System;
 using script;
+using TMPro;
 using UnityEngine;
 using UnityEngine.Rendering;
 using UnityEngine.UI;
@@ -12,6 +13,7 @@ public class HUDCheatMenu : MonoBehaviour
     [SerializeField] private Toggle _toggleZombieSpawning;
     [SerializeField] private Button _bpWin;
     [SerializeField] private Button _bpLose;
+    [SerializeField] private TMP_Text _txtFPSCounter;
 
     private void Awake() {
         StaticData.OptionsUpdate+= StaticDataOnOptionsUpdate;
@@ -26,6 +28,10 @@ public class HUDCheatMenu : MonoBehaviour
 
     private void OnDestroy() {
         StaticData.OptionsUpdate -= StaticDataOnOptionsUpdate;
+    }
+
+    private void Update() {
+        _txtFPSCounter.text = "FPS:"+((int)(1 / Time.unscaledDeltaTime)).ToString();
     }
 
     private void StaticDataOnOptionsUpdate(object sender, EventArgs e) {

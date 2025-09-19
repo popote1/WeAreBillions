@@ -1,13 +1,9 @@
 using System;
-using System.Diagnostics;
 using DG.Tweening;
 using script;
-using Unity.VisualScripting;
 using UnityEngine;
-using UnityEngine.Rendering;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
-using Debug = UnityEngine.Debug;
 
 public class UIAsyncSceneLoader : MonoBehaviour
 {
@@ -91,8 +87,7 @@ public class UIAsyncSceneLoader : MonoBehaviour
     }
 
     private void ManagePostLoadingWait() {
-        Debug.Log("PostLoadingDelay");
-        _timer += Time.deltaTime;
+        _timer += Time.unscaledDeltaTime;
         if (_timer >= _postLoadingDelay) {
             _loadingStat = LoadingStat.PostLoading;
             _canvasGroupPanal.alpha = 1;
@@ -119,17 +114,16 @@ public class UIAsyncSceneLoader : MonoBehaviour
     }
 
     private void ManageUnloadingScene() {
-        Debug.Log("Unloading Scene");
         SetProgressAmount(loading.progress/2+0.5f);
         //_imgLoading.fillAmount = (loading.progress/2)+0.5f;
         if (loading.isDone) {
             _loadingStat = LoadingStat.PostLoadingWait;
+            _timer = 0;
         }
         
     }
 
     private void ManagePostLoad() {
-        Debug.Log("PostLoading");
         if (_canvasGroupPanal.alpha == 0) {
             _loadingStat = LoadingStat.none; 
             gameObject.SetActive(false);

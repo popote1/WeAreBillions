@@ -1,0 +1,33 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b1f27925125b3c4448dc5d061ea8a85d, type: 3}
+  m_Name: WalkBlockers
+  m_EditorClassIdentifier: 
+  _objects:
+  - {fileID: 2772617097503199503, guid: a76da12aec231b84da6ecd40e6b6335b, type: 3}
+  - {fileID: 1319661583546946210, guid: 68fc1b6e157437f43b6662fca4d41043, type: 3}
+  - {fileID: 2758888812988376436, guid: b3eb7b1ae3f82aa40830072327f6520d, type: 3}
+  - {fileID: 1152409970016331651, guid: 11f738a358f05d34c8ec71a8f43d104a, type: 3}
+  - {fileID: 3399580834920781265, guid: ec9bf0e83f00d884b961645649a37563, type: 3}
+  - {fileID: 5572699435391554072, guid: c929e336761ecd1428c106b3daa6b180, type: 3}
+  - {fileID: 7023338388819505305, guid: 7ccd1d0ae7e574746882f7a362adecc7, type: 3}
+  - {fileID: 2772617097503199503, guid: a76da12aec231b84da6ecd40e6b6335b, type: 3}
+  - {fileID: 1319661583546946210, guid: 68fc1b6e157437f43b6662fca4d41043, type: 3}
+  - {fileID: 2758888812988376436, guid: b3eb7b1ae3f82aa40830072327f6520d, type: 3}
+  - {fileID: 1152409970016331651, guid: 11f738a358f05d34c8ec71a8f43d104a, type: 3}
+  - {fileID: 3399580834920781265, guid: ec9bf0e83f00d884b961645649a37563, type: 3}
+  - {fileID: 5572699435391554072, guid: c929e336761ecd1428c106b3daa6b180, type: 3}
+  - {fileID: 7023338388819505305, guid: 7ccd1d0ae7e574746882f7a362adecc7, type: 3}
+  - {fileID: 7533064642572253392, guid: 8ea7a5c5334f0c74bbfed2e6c39afc13, type: 3}
+  - {fileID: 3867508123573175198, guid: 97683e9c81c4d4241a0c90dcf798a383, type: 3}
+  - {fileID: 231871754696101406, guid: bb1946a0a9484c643be5c537f5807637, type: 3}
+  - {fileID: 8681903982026188082, guid: d3d5dd59013f7334ab4de99a8035e3d8, type: 3}

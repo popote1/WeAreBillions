@@ -50,7 +50,9 @@ namespace script
 
 
         public void ClearCellCoordinateData() => _cellsCoordinates.Clear();
-        
+
+        public event EventHandler OnDestructibleDestroy;
+
         public void TakeDamage(int damage, GridAgent source = null) {
             if (_hp <= 0) return;
             _hp -= damage;
@@ -73,6 +75,7 @@ namespace script
             }
             ManageZombieSpawn(source);
             _vfxBuildingDestruction.StartDestruction();
+            OnDestructibleDestroy?.Invoke(this, EventArgs.Empty);
             OnDestroy();
         }
         [ExecuteInEditMode]
@@ -85,6 +88,9 @@ namespace script
         {
             return (_hp > 0);
         }
+
+        public Vector3 GetPosition() =>transform.position;
+        
 
         private void ManageZombieSpawn(GridAgent source = null) {
             ZombieAgent zSource=null;

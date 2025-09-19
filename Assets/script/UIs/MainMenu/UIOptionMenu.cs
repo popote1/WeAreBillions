@@ -1,5 +1,8 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using script;
+using TMPro;
 using UnityEngine;
 using UnityEngine.Audio;
 using UnityEngine.UI;
@@ -18,6 +21,7 @@ public class UIOptionMenu : MonoBehaviour
     [SerializeField] private Slider _sliderCameraKeybordSpeed;
     [SerializeField] private Slider _sliderCameraPanningSpeed;
     [SerializeField] private Toggle _toggleAllowCheatMenu;
+    [SerializeField] private TMP_Dropdown _dropdownMoitor;
     [Space(10)] 
     [SerializeField] private Transform _panelAudio;
     [SerializeField] private Slider _sliderAudioMaster;
@@ -51,6 +55,14 @@ public class UIOptionMenu : MonoBehaviour
         _sliderCameraKeybordSpeed.SetValueWithoutNotify(StaticData.ControlCameraKeyboardSpeed);
         _sliderCameraPanningSpeed.SetValueWithoutNotify(StaticData.ControlCameraPanningSpeed);
         _toggleAllowCheatMenu.SetIsOnWithoutNotify(StaticData.GamePlayAllowCheatMenu);
+
+        _dropdownMoitor.ClearOptions();
+        List<TMP_Dropdown.OptionData> _options = new List<TMP_Dropdown.OptionData>();
+        for (int i = 0; i < Display.displays.Length; i++) {
+            _options.Add(new TMP_Dropdown.OptionData(i.ToString()));
+        }
+        _dropdownMoitor.AddOptions(_options);
+        _dropdownMoitor.SetValueWithoutNotify(Display.activeEditorGameViewTarget);
     }
     
     
@@ -73,6 +85,7 @@ public class UIOptionMenu : MonoBehaviour
                 throw new ArgumentOutOfRangeException();
         }
     }
+    
     
     private void Awake() {
         _sliderCameraKeybordSpeed.onValueChanged.AddListener(UISetCameraKeyboardSpeed);

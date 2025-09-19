@@ -50,7 +50,7 @@ public class HUDEndGamePanel : MonoBehaviour
       }
    }
    private void AddEndGameScoring() {
-      if (StaticData.SoLevelInfoDataArray.GetLevelInfoDataBySceneName(SceneManager.GetActiveScene().name) != null) {
+      if (StaticData.SoLevelInfoDataArray!=null&&StaticData.SoLevelInfoDataArray.GetLevelInfoDataBySceneName(SceneManager.GetActiveScene().name) != null) {
          soEndGameScoringArray = StaticData.SoLevelInfoDataArray.GetLevelInfoDataBySceneName(
             SceneManager.GetActiveScene().name).SoEndGameScoring;
       }

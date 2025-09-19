@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using Unity.Mathematics;
-using UnityEngine;
-using UnityEngine.Rendering;
+﻿using UnityEngine;
 using Random = UnityEngine.Random;
 
 namespace script

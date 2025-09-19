@@ -29,6 +29,7 @@ public class GameManager : MonoBehaviour
         StaticData.BlockControls = false;
         StaticData.BlockCameraMovement = false;
         StaticData.IsGameEnd = false;
+        StaticEvents.SetGameOnPause(false);
     }
 
     private void OnDestroy() {

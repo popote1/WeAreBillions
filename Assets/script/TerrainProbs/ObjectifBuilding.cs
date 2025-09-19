@@ -1,4 +1,5 @@
-﻿using Unity.Cinemachine;
+﻿using System;
+using Unity.Cinemachine;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -11,7 +12,9 @@ namespace script
         [SerializeField]private int HP;
         public UnityEvent OnDestruction;
         [Space(10)] [SerializeField] private CinemachineImpulseSource _impulseSource;
-        [SerializeField] private VFXBuildingDestruction _vfxBuildingDestruction; 
+        [SerializeField] private VFXBuildingDestruction _vfxBuildingDestruction;
+        public event EventHandler OnDestructibleDestroy;
+
         public void TakeDamage(int damage, GridAgent source = null)
         {
             if (HP <= 0) return;
@@ -29,10 +32,13 @@ namespace script
             if (_impulseSource) _impulseSource.GenerateImpulse();
             OnDestruction?.Invoke();
             if (WinOnDestruction) StaticEvents.OnGameWin?.Invoke();
+            OnDestructibleDestroy?.Invoke(this, EventArgs.Empty);
         }
 
         public bool IsAlive() {
             return (HP > 0);
         }
+
+        public Vector3 GetPosition() => transform.position;
     }
 }

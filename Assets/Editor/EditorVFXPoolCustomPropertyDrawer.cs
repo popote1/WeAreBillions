@@ -1,6 +1,5 @@
 ﻿using UnityEditor;
 using UnityEngine;
-using UnityEngine.UIElements;
 
 
 [CustomPropertyDrawer(typeof(VFXPoolManager.VFXPoolInitializeData))]

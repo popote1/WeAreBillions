@@ -4,9 +4,12 @@ using UnityEngine;
 
 public class InvisibleWallContaner : MonoBehaviour
 {
-    [SerializeField] private Material _material;
+    public string _tagHandle = "WalkBlocker";
+    public LayerMask _layerMask = 4;
+    public Material _material;
+    
     [ContextMenu("ShowBlocks")]
-    private void ShowAllChildrens() {
+    public void ShowAllChildrens() {
         for (int i = 0; i < transform.childCount; i++)
         {
             transform.GetChild(i).GetComponent<MeshRenderer>().enabled = true;
@@ -14,10 +17,17 @@ public class InvisibleWallContaner : MonoBehaviour
         }
     }
     [ContextMenu("HideBlocks")]
-    private void HideAllChildrens() {
+    public void HideAllChildrens() {
         for (int i = 0; i < transform.childCount; i++)
         {
             transform.GetChild(i).GetComponent<MeshRenderer>().enabled = false;
+        }
+    }
+
+    public void ApplyTagAndLayer() {
+        for (int i = 0; i < transform.childCount; i++) {
+            transform.GetChild(i).gameObject.tag = _tagHandle;
+            transform.GetChild(i).gameObject.layer = _layerMask;
         }
     }
 }

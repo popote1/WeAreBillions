@@ -1,5 +1,7 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 namespace script
 {
@@ -37,7 +39,9 @@ namespace script
         }
 
         public void ClearCellCoordinateData() => CellsCoordinates.Clear();
-        
+
+        public event EventHandler OnDestructibleDestroy;
+
         public void TakeDamage(int damage, GridAgent source)
         {
             if (HP <= 0) return;
@@ -55,6 +59,7 @@ namespace script
             if( PrefabsDestruciotnParticules)Instantiate(PrefabsDestruciotnParticules, transform.position, transform.rotation);
             Collider.enabled = false;
             ManageZombiSpawn();
+            OnDestructibleDestroy?.Invoke(this, EventArgs.Empty);
             //DestroyBuilding(gameObject);
             
         }
@@ -69,6 +74,8 @@ namespace script
         {
             return (HP > 0);
         }
+
+        public Vector3 GetPosition() => transform.position;
 
         private void ManageZombiSpawn()
         {
