@@ -43,6 +43,7 @@ namespace script
         }
         public static void SetGameOnPause(bool value) {
             StaticData.IsGamePause = value;
+            Debug.Log("Game Pause Set to "+ value);
             SetPause(StaticData.IsGamePause);
             OnSetGameOnPause?.Invoke(new object(), StaticData.IsGamePause);
         }

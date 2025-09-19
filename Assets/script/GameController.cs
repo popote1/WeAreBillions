@@ -61,16 +61,11 @@ namespace script
             if (_hudSelectionBoxDisplayer) _hudSelectionBoxDisplayer.CloseSelectionBox();
         }
         private void ManageRayCastSelection() {
-            Debug.Log("Do raycats selection");
             if (EventSystem.current.IsPointerOverGameObject()) return;
-            Debug.Log("Do a ray");
             RaycastHit hit;
             if(Physics.Raycast(_camera.ScreenPointToRay(Input.mousePosition), out hit)) {
-                Debug.Log("ray hit");
                 ClearSelection();
-                if (hit.collider.GetComponent<ZombieAgent>())
-                {
-                    Debug.Log("Ray hit a zombie");
+                if (hit.collider.GetComponent<ZombieAgent>()) {
                     _selected = new List<GridAgent>() {hit.collider.GetComponent<ZombieAgent>()};
                     _selected[0].IsSelected = true;
                     StaticEvents.ChangeSelection(_selected);
@@ -378,10 +373,8 @@ namespace script
             }
         }
         private void ManageSpawnVFXMoveOrder(Vector3 pos) {
-            Debug.Log( "try to spawn VFX");
             if (VFXPoolManager.Instance != null) {
                 VfxPoolableMono vfx =VFXPoolManager.Instance.GetPooledVFXOfType(_vfxMoveOrderType);
-                Debug.Log( "VFX Spawn");
                 vfx.transform.position = pos;
             }
             else if (_prefabsVFXMoveOrder) {
