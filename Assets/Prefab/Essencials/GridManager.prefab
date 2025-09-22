@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4823181764003041997}
   - component: {fileID: 8709357014651303586}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: whitepixel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -99,7 +99,7 @@ GameObject:
   - component: {fileID: 5713922494004897930}
   - component: {fileID: 5713922494004897928}
   - component: {fileID: 7970261791973139699}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: GridManager
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -154,6 +154,7 @@ MonoBehaviour:
   _camera: {fileID: 0}
   _gridManager: {fileID: 5713922494004897930}
   _hudSelectionBoxDisplayer: {fileID: 0}
+  _vfxMoveOrderType: 2
   _prefabsVFXMoveOrder: {fileID: 6092588951434967032, guid: e737e2d69d5a38543a6bbdc7a15ec16b,
     type: 3}
   _selected: []
@@ -188,7 +189,7 @@ GameObject:
   m_Component:
   - component: {fileID: 696261786912242013}
   - component: {fileID: 1902592032091946014}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: DebugCell(Clone)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
