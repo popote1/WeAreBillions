@@ -35,20 +35,24 @@ namespace script
             StaticEvents.OnSubmitSelectionChange+= StaticEventsOnOnSubmitSelectionChange; 
         }
 
+        
+
         private void OnDestroy() {
             StaticEvents.OnAddAgentToSelection -= AddGridAGentToSelection;
             StaticEvents.OnSubmitSelectionChange-= StaticEventsOnOnSubmitSelectionChange; 
         }
 
-        public void Update() {
+        public void Update()
+        {
             if (StaticData.BlockControls) return;
             ManageBorderCameraMovement();
-            if (Input.GetKeyDown(KeyCode.Escape))ManagePressEscape();
-            if (Input.GetKeyDown(KeyCode.F2))ManagerSelectAllZombies();
+            if (Input.GetKeyDown(KeyCode.Escape)) ManagePressEscape();
+            if (Input.GetKeyDown(KeyCode.F2)) ManagerSelectAllZombies();
             if (Input.GetButton("Fire1")) ManageBoxSelectionDisplay();
             if (Input.GetButtonUp("Fire1")) ManageSelection();
             if (Input.GetButtonDown("Fire2")) ManageGiveOrder();
-            if (Input.GetKeyDown(KeyCode.A)&& StaticData.CheatEnableZombieSpawning) CheatSpawnZombie();
+            if (Input.GetKeyDown(KeyCode.A) && StaticData.CheatEnableZombieSpawning) CheatSpawnZombie();
+            
         }
         #region Selection 
         private void ManageSelection() {

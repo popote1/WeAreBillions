@@ -19,3 +19,6 @@ MonoBehaviour:
   Illustration: {fileID: 21300000, guid: 3919ec0349027094c879d66870050f9a, type: 3}
   SceneName: Niveau1
   SoEndGameScoring: {fileID: 11400000, guid: 7f1939b22ab462d4daeaa3640a878291, type: 2}
+  _standardZombieSpawnChance: 1
+  _bruteZombieSpawnChance: 0
+  _engineerZombieSpawnChance: 0

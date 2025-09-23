@@ -34,10 +34,8 @@ namespace script
 
         public static Action OnClearPathFindingData;
 
-        private void Awake()
-        {
-            if (Instance != null)
-            {
+        private void Awake() {
+            if (Instance != null) {
                 Debug.LogWarning(" GridManager Déjà référencer");
                 Destroy(gameObject);
             }
@@ -54,8 +52,17 @@ namespace script
                 //GenerateCells();
                 //CheckColliders();
             }
+            StaticEvents.OnStartLoading += OnStartLoading;
         }
-        
+
+        private void OnDestroy() {
+            StaticEvents.OnStartLoading -= OnStartLoading;
+        }
+
+        private void OnStartLoading() {
+            Instance = null;
+        }
+
         #region Accessor
 
         public Cell[,] GetAllCells()=>  _cells;

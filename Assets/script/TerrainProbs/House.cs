@@ -38,13 +38,14 @@ namespace script
 
         [ExecuteInEditMode]
         public void Awake() {
-            _gridManager = GridManager.Instance;
-            GridManager.OnClearPathFindingData += ClearCellCoordinateData;
-            if(!_gridManager) Debug.LogWarning(" GridManager non Assigner sur Maison "+name);
-            StaticData.AddBuilding(this);
+            
         }
 
         private void Start() {
+            _gridManager = GridManager.Instance;
+            GridManager.OnClearPathFindingData += ClearCellCoordinateData;
+            if(!_gridManager) Debug.LogWarning(" GridManager non Assigner sur Maison "+name, this);
+            StaticData.AddBuilding(this);
             SetZombieCountToSpawn();
         }
 

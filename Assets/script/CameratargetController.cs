@@ -11,6 +11,8 @@ public class CameratargetController : MonoBehaviour
     public Vector2 MaxPosition = new Vector2(10,10);
     public Vector2 MinPosition = new Vector2(0,0);
     [SerializeField] private LayerMask _groundLayer;
+
+    public Vector3 testPos;
     
 
     //[Space(10), Header("Zoom")] 
@@ -48,5 +50,17 @@ public class CameratargetController : MonoBehaviour
             return hit.point.y;
         }
         return 0;
+    }
+
+    [ContextMenu("Test")]
+    public void TestDispaceToPos() {
+        Debug.Log("Force Pos");
+        //
+        transform.position = testPos;
+    }
+
+    public void SetCameraToPos(Vector3 pos)
+    {   _camera.ForceCameraPosition(pos, Quaternion.identity );
+        transform.position = pos;
     }
 }

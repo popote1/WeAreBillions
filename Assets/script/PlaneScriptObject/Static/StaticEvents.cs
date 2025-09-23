@@ -12,7 +12,9 @@ namespace script
         public static Action OnZombieGain;
         public static Action OnZombieLose;
 
+        public static Action OnStartLoading;
         public static Action OnLoadingComplet;
+        
         
         public static event EventHandler<bool> OnSetGameOnPause;
         public static event EventHandler<DialogueStep[]> OnPlayDialogue;
@@ -36,14 +38,14 @@ namespace script
             else Time.timeScale = 1;
         }
         public static void SetGameOnPause() {
-            StaticData.IsGamePause = !StaticData.IsGamePause;
-            SetPause(StaticData.IsGamePause);
+            //StaticData.IsGamePause = !StaticData.IsGamePause;
+            SetPause(!StaticData.IsGamePause);
             
             OnSetGameOnPause?.Invoke(new object(), StaticData.IsGamePause);
         }
         public static void SetGameOnPause(bool value) {
             StaticData.IsGamePause = value;
-            Debug.Log("Game Pause Set to "+ value);
+            Debug.LogWarning("Game Pause Set to "+ value);
             SetPause(StaticData.IsGamePause);
             OnSetGameOnPause?.Invoke(new object(), StaticData.IsGamePause);
         }

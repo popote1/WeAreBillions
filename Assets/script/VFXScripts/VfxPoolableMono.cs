@@ -13,7 +13,7 @@ public class VfxPoolableMono : MonoBehaviour {
         else
         {
             _pooledObject.Release(this);
-            Debug.Log("Object Release", this);
+            //Debug.Log("Object Release", this);
         }
     }
 }

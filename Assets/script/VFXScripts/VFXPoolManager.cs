@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using script;
 using UnityEngine;
 using UnityEngine.Pool;
 
@@ -23,6 +24,15 @@ public class VFXPoolManager : MonoBehaviour
             Debug.LogWarning("VFXPoolManager Already in the scene");
         }
         SetUpPools();
+        StaticEvents.OnStartLoading += OnStartLoading;
+    }
+
+    private void OnDestroy() {
+        StaticEvents.OnStartLoading -= OnStartLoading;
+    }
+
+    private void OnStartLoading() {
+        Instance = null;
     }
 
     private void SetUpPools() {

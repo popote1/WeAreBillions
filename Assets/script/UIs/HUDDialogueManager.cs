@@ -49,9 +49,9 @@ namespace script.UIs
 
         private void StartCameraScroll(DialogueStep step) {
             StaticData.BlockCameraMovement = true;
-            if (step.ReturnToBeginingCameraPos) 
-                _cameraTravelTime = Vector3.Distance(_camBeginingPos,_cameratargetController.transform.position)/step.ScrollSpeed;
-            else 
+            //if (step.ReturnToBeginingCameraPos) 
+            //    _cameraTravelTime = Vector3.Distance(_camBeginingPos,_cameratargetController.transform.position)/step.ScrollSpeed;
+            //else 
                 _cameraTravelTime = Vector3.Distance(step.EndCameraPosition,_cameratargetController.transform.position)/step.ScrollSpeed;
             
             _camStarPos = _cameratargetController.transform.position;
@@ -69,14 +69,17 @@ namespace script.UIs
             if (_cameraTimer >= _cameraTravelTime) {
                 _cameraTimer = _cameraTravelTime;
             }
-            if(_currentDialogue[_currentStep].ReturnToBeginingCameraPos )
-                _cameratargetController.transform.position =Vector3.Lerp(_camStarPos,_camBeginingPos, _cameraTimer/_cameraTravelTime);
-            else
-                _cameratargetController.transform.position = Vector3.Lerp(_camStarPos,_currentDialogue[_currentStep].EndCameraPosition, _cameraTimer/_cameraTravelTime);
+            //if(_currentDialogue[_currentStep].ReturnToBeginingCameraPos )
+            //    _cameratargetController.transform.position =Vector3.Lerp(_camStarPos,_camBeginingPos, _cameraTimer/_cameraTravelTime);
+            //else
+            _cameratargetController.transform.position = Vector3.Lerp(_camStarPos,_currentDialogue[_currentStep].EndCameraPosition, _cameraTimer/_cameraTravelTime);
         }
 
         private void NextDialogueStep() {
             if (_currentDialogue.Length-1 <=_currentStep) {
+                if (_currentDialogue[_currentStep].ReturnToBeginingCameraPos) {
+                    _cameratargetController.SetCameraToPos(_camBeginingPos);
+                }
                 CloseDialogue();
                 return;
             }

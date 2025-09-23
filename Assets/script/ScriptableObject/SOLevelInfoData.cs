@@ -9,4 +9,7 @@ public class SOLevelInfoData : ScriptableObject
     public Sprite Illustration;
     public string SceneName;
     public SOEndGameScoringArray SoEndGameScoring;
+    public float _standardZombieSpawnChance = 1;
+    public float _bruteZombieSpawnChance = 1;
+    public float _engineerZombieSpawnChance = 1;
 }
