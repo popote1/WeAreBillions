@@ -82,6 +82,7 @@ public class GridAgent : MonoBehaviour
     public void Generate(GridManager gridManager) => GridManager = gridManager;
 
     public virtual void KillAgent() {
+        OnGridAgentDestroy?.Invoke(this, this);
         Destroy(gameObject);
     }
     protected virtual void Start() {
@@ -98,7 +99,7 @@ public class GridAgent : MonoBehaviour
 
     protected virtual void OnDestroy() {
         StaticData.RemoveGridAgent(this);
-        OnGridAgentDestroy?.Invoke(this, this);
+        
     }
     protected virtual void Update() {
         ManageSelfElevation();
