@@ -132,6 +132,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: NoColBus0
       objectReference: {fileID: 0}
+    - target: {fileID: 4891210225814997729, guid: bddb1c0f69be50e429697b80a53dee5c,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

@@ -6,5 +6,4 @@ public class SoObjectList : ScriptableObject {
    public GameObject GetRandomObject() {
       return _objects[Random.Range(0, _objects.Length)];
    }
-
 }

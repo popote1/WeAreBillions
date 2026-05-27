@@ -9968,6 +9968,7 @@ MonoBehaviour:
   GridManager: {fileID: 0}
   Agents: []
   IsLoop: 0
+  GiveOrderAtStart: 1
   Targets:
   - {x: 42.295868, y: 0, z: 22.176498}
   - {x: 31.11334, y: 0, z: 29.076792}
@@ -13222,6 +13223,7 @@ MonoBehaviour:
   GridManager: {fileID: 0}
   Agents: []
   IsLoop: 0
+  GiveOrderAtStart: 1
   Targets:
   - {x: 46.57766, y: 0, z: 23.43475}
   - {x: 38.47584, y: 0, z: 16.728434}
@@ -13304,6 +13306,7 @@ MonoBehaviour:
   GridManager: {fileID: 0}
   Agents: []
   IsLoop: 1
+  GiveOrderAtStart: 1
   Targets:
   - {x: 18.537949, y: 0, z: 35.596977}
   - {x: 17.874468, y: 0, z: 21.386305}

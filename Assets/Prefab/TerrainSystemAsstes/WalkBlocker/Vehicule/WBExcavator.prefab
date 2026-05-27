@@ -67,6 +67,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: NoColExcavator0
       objectReference: {fileID: 0}
+    - target: {fileID: 2078988458847704275, guid: 460f884198a18a64e8f5d18fe2eaba5b,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
     - target: {fileID: 4165458224945162750, guid: 460f884198a18a64e8f5d18fe2eaba5b,
         type: 3}
       propertyPath: m_LocalScale.x

@@ -15,7 +15,7 @@ GameObject:
   m_TagString: WalkBlocker
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!4 &935781717637247398
 Transform:
@@ -68,6 +68,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Arbre4Visual
+      objectReference: {fileID: 0}
+    - target: {fileID: 1500174955220650058, guid: 10bfa058b70cd5d428ff7d464a25a2c3,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
       objectReference: {fileID: 0}
     - target: {fileID: 2277239768006595312, guid: 10bfa058b70cd5d428ff7d464a25a2c3,
         type: 3}

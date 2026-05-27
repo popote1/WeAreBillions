@@ -135,6 +135,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: NoColPickUp2
       objectReference: {fileID: 0}
+    - target: {fileID: 8204181550091609227, guid: 2c300b4d7c815db4c96c0efe5242bfad,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -219,6 +224,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: NoColCar4
       objectReference: {fileID: 0}
+    - target: {fileID: 5754611275228737123, guid: a22ee0c166dd617419df753e92f6ba4e,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -293,6 +303,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: NoColCar5
       objectReference: {fileID: 0}
+    - target: {fileID: 7759891336491267700, guid: af00272ee93059e41ae93cfac7a46cb3,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -316,6 +331,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: NoColTaxi0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3252276402970761581, guid: 19be3523faa7d6446955d8845a8aab8f,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
       objectReference: {fileID: 0}
     - target: {fileID: 3639867379045486022, guid: 19be3523faa7d6446955d8845a8aab8f,
         type: 3}

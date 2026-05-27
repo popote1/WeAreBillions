@@ -70,6 +70,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: NoColTruck1 1
       objectReference: {fileID: 0}
+    - target: {fileID: 1494890207991694252, guid: ecedcc3ad032cdf45b05c5dcbbb861a1,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
     - target: {fileID: 2202621754163897781, guid: ecedcc3ad032cdf45b05c5dcbbb861a1,
         type: 3}
       propertyPath: m_LocalScale.x
@@ -163,6 +168,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: NoColCar8
+      objectReference: {fileID: 0}
+    - target: {fileID: 4376270863261254936, guid: a61c614c7d825b24d84f2375aba3753b,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
       objectReference: {fileID: 0}
     - target: {fileID: 6882407073959170621, guid: a61c614c7d825b24d84f2375aba3753b,
         type: 3}
@@ -303,6 +313,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: NoColPickUp0
       objectReference: {fileID: 0}
+    - target: {fileID: 9099012783676228974, guid: 1ba2e530f02f49842b44909d0c5cf6ae,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -396,6 +411,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: NoColPickUp2
+      objectReference: {fileID: 0}
+    - target: {fileID: 8204181550091609227, guid: 2c300b4d7c815db4c96c0efe5242bfad,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
