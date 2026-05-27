@@ -1,0 +1,24 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 18cc3e58bf9c4ab6a582e8ef5b2ab0ea, type: 3}
+  m_Name: AutoQuartersListes
+  m_EditorClassIdentifier: 
+  _objectListHouses: {fileID: 11400000, guid: 2d0e291cd84e31346933d6310b520743, type: 2}
+  _objectListCars: {fileID: 11400000, guid: 5dd3b6c0d313ebb438ec472b6d87d368, type: 2}
+  _objectListPalissade: {fileID: 11400000, guid: eaecbb3d3ce0e7e46a71608e5a14342c,
+    type: 2}
+  _objectListInsignifiant: {fileID: 11400000, guid: 597713f8baf63d54487ed13899f9244b,
+    type: 2}
+  _objectListWalkBlocker: {fileID: 11400000, guid: 2746662de565e7d4f9f20eaa28c3affb,
+    type: 2}
+  _objectListNoColliders: {fileID: 11400000, guid: 6d7b2258b81ece54bb52f52d35c57473,
+    type: 2}

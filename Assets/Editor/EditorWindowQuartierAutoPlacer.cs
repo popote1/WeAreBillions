@@ -42,6 +42,7 @@ public class EditorWindowQuartierAutoPlacer : EditorWindow {
     public Transform _rootNoColliders;
     public Transform _rootWalkBlockers;
 
+    public SoAutoQuarterObjectList _soAutoQuarterObjectList;
     public SoObjectList _objectListHouses;
     public SoObjectList _objectListCars;
     public SoObjectList _objectListPalissade;
@@ -136,6 +137,11 @@ public class EditorWindowQuartierAutoPlacer : EditorWindow {
             if (GUILayout.Button("ClearAllData")) ClearAllData();
             EditorGUILayout.EndHorizontal();
         }
+        GUILayout.BeginHorizontal();
+        EditorGUILayout.LabelField("SoAutoQuarterObjectList");
+        _soAutoQuarterObjectList = (SoAutoQuarterObjectList)EditorGUILayout.ObjectField(_soAutoQuarterObjectList, typeof(SoAutoQuarterObjectList));
+        if (GUILayout.Button("SetupSoObjectList")) SetUpListFromSOQuesterObjectList();
+        GUILayout.EndHorizontal();
         _showObjectSpawningDetail = EditorGUILayout.Foldout(_showObjectSpawningDetail, "Show Object Spawning Details");
         if (_showObjectSpawningDetail)
         {
@@ -392,11 +398,13 @@ public class EditorWindowQuartierAutoPlacer : EditorWindow {
     }
     
     private void SpawnHouse(PropertyAutoQuarter property) {
-        GameObject house  =Instantiate(
-            _objectListHouses.GetRandomObject()
-            ,GetWorldPosFromCell(property.CenterCell)
-            ,Quaternion.identity) ;
-
+        //GameObject house  =Instantiate(
+        //    _objectListHouses.GetRandomObject()
+        //    ,GetWorldPosFromCell(property.CenterCell)
+        //    ,Quaternion.identity) ;
+        GameObject house  =PrefabUtility.InstantiatePrefab(_objectListHouses.GetRandomObject())as GameObject;
+        
+        house.transform.position = GetWorldPosFromCell(property.CenterCell);
         house.transform.forward = new Vector3(property.DirectionToRoad.x, 0,property.DirectionToRoad.y );
         house.transform.eulerAngles += new Vector3(0, Random.Range(_houseMinRot, _houseMaxRot), 0);
         house.transform.SetParent(_rootBuildings);
@@ -410,8 +418,10 @@ public class EditorWindowQuartierAutoPlacer : EditorWindow {
         }
         CellAutoQuarter[] keycell = property.GetPalissadeKeyCells();
         if (keycell == null || keycell.Length == 1) return;
-
-        GameObject palissade =Instantiate(_objectListPalissade.GetRandomObject(), GetWorldPosFromCell(keycell[0]), Quaternion.identity);
+        
+        //GameObject palissade =Instantiate(_objectListPalissade.GetRandomObject(), GetWorldPosFromCell(keycell[0]), Quaternion.identity);
+        GameObject palissade =PrefabUtility.InstantiatePrefab(_objectListPalissade.GetRandomObject()) as GameObject;
+        palissade.transform.position = GetWorldPosFromCell(keycell[0]);        
         palissade.transform.SetParent(_rootInsignifiants);
         _spawnedGameObjects.Add(palissade);
         SplineContainer spline = palissade.GetComponent<SplineContainer>();
@@ -425,7 +435,9 @@ public class EditorWindowQuartierAutoPlacer : EditorWindow {
     private void SpawnCar(PropertyAutoQuarter property) {
         if (Random.Range(0, 100) > _carChanceToSpawn) return;
         Vector3 pos = GetWorldPosFromCell(property.GetRandomPassCell());
-        GameObject car = Instantiate(_objectListCars.GetRandomObject(), pos, Quaternion.identity);
+        //GameObject car = Instantiate(_objectListCars.GetRandomObject(), pos, Quaternion.identity);
+        GameObject car = PrefabUtility.InstantiatePrefab(_objectListCars.GetRandomObject())as GameObject;
+        car.transform.position = pos;
         car.transform.SetParent(_rootDestructible);
         car.transform.forward = new Vector3(property.DirectionToRoad.x, 0, property.DirectionToRoad.y);
         car.transform.eulerAngles += new Vector3(0, Random.Range(_carMinRot, _carMaxRot), 0);
@@ -441,17 +453,24 @@ public class EditorWindowQuartierAutoPlacer : EditorWindow {
             float randomValue = Random.Range(0, 100);
             if (randomValue < _gardenWalkBlockerPart) {
                 //SpawnWalkBlokers
-                go= Instantiate(_objectListWalkBlocker.GetRandomObject(), GetWorldPosFromCell(cell), Quaternion.identity);
+                //go= Instantiate(_objectListWalkBlocker.GetRandomObject(), GetWorldPosFromCell(cell), Quaternion.identity);
+                go= PrefabUtility.InstantiatePrefab(_objectListWalkBlocker.GetRandomObject())as GameObject;
+                go.transform.position = GetWorldPosFromCell(cell);
                 go.transform.SetParent(_rootWalkBlockers);
             }
             else if (randomValue < _gardenWalkBlockerPart-_gardenInsignifiantPart) {
                 //SpawnInsignifiant
-                go= Instantiate(_objectListInsignifiant.GetRandomObject(), GetWorldPosFromCell(cell), Quaternion.identity);
+                //go= Instantiate(_objectListInsignifiant.GetRandomObject(), GetWorldPosFromCell(cell), Quaternion.identity);
+                go= PrefabUtility.InstantiatePrefab(_objectListInsignifiant.GetRandomObject())as GameObject;
+                
+                go.transform.position = GetWorldPosFromCell(cell);
                 go.transform.SetParent(_rootInsignifiants);
             }
             else {
                 //Spawn NoColliders
-                go= Instantiate(_objectListNoColliders.GetRandomObject(), GetWorldPosFromCell(cell), Quaternion.identity);
+                //go= Instantiate(_objectListNoColliders.GetRandomObject(), GetWorldPosFromCell(cell), Quaternion.identity);
+                go= PrefabUtility.InstantiatePrefab(_objectListNoColliders.GetRandomObject())as  GameObject;
+                go.transform.position = GetWorldPosFromCell(cell);
                 go.transform.SetParent(_rootNoColliders);
             }
             go.transform.eulerAngles += new Vector3(0, Random.Range(-180, 180), 0);
@@ -459,6 +478,22 @@ public class EditorWindowQuartierAutoPlacer : EditorWindow {
             freeCells.Remove(cell);
         }
     }
+
+    private void SetUpListFromSOQuesterObjectList()
+    {
+        if (_soAutoQuarterObjectList == null) {
+            Debug.LogWarning("SOAutoQuarterObjectList not found");
+            return;
+        }
+
+        _objectListHouses = _soAutoQuarterObjectList._objectListHouses;
+        _objectListCars = _soAutoQuarterObjectList._objectListCars;
+        _objectListPalissade = _soAutoQuarterObjectList._objectListPalissade;
+        _objectListInsignifiant = _soAutoQuarterObjectList._objectListInsignifiant;
+        _objectListWalkBlocker = _soAutoQuarterObjectList._objectListWalkBlocker;
+        _objectListNoColliders = _soAutoQuarterObjectList._objectListNoColliders;
+    }
+    
     #endregion
     #region BSP
 

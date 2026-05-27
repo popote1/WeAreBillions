@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -19,7 +20,7 @@ namespace script.UIs
         [SerializeField] private TMP_Text _txtInspectorKeyWord;
         [Header("ZombieSelection")] 
         [SerializeField]private UIZombieSelection[] _uiZombieSelections;
-        
+
         private Dictionary<string, List<GridAgent>> _selectedAgents;
         
 
@@ -27,11 +28,17 @@ namespace script.UIs
             CleanAllSelection();
             _panelInfo.SetActive(false);
             StaticEvents.OnSelectionChange+= GameControllerOnOnSelectionChange;
+            foreach (var panel in _uiZombieSelections)
+            {
+                panel.OnPanelClose+= PanelOnOnPanelClose;
+            }
         }
-
-        private void OnDestroy()
-        {
+        
+        private void OnDestroy() {
             StaticEvents.OnSelectionChange-= GameControllerOnOnSelectionChange;
+            foreach (var panel in _uiZombieSelections) {
+                panel.OnPanelClose-= PanelOnOnPanelClose;
+            }
         }
 
         private void GameControllerOnOnSelectionChange(object sender, List<GridAgent> e)
@@ -50,10 +57,12 @@ namespace script.UIs
             _panelInfo.SetActive(true);
         }
 
-        public void SetSelection(List<GridAgent> selection) {
+        public void SetSelection(List<GridAgent> selection)
+        {
             _selectedAgents = new Dictionary<string, List<GridAgent>>();
 
             foreach (var agent in selection) {
+                
                 if (_selectedAgents.ContainsKey(agent.AgentName)) {
                     _selectedAgents[agent.AgentName].Add(agent);
                 }
@@ -65,14 +74,11 @@ namespace script.UIs
             
             
             if (selection == null|| selection.Count==0) {
-                CleanAllSelection();
-                _panelInfo.SetActive(false);
-                return;
+                ClosePanel();
             }
 
             int i = 0;
-            foreach (var selections in _selectedAgents)
-            {
+            foreach (var selections in _selectedAgents) {
                 _uiZombieSelections[i].DisplaySelectionInformation(selections.Value);
                 i++;
             }
@@ -82,8 +88,19 @@ namespace script.UIs
             //_uiZombieSelections[0].DisplaySelectionInformation(selection);
             //DisplayInformation(selection[0]);
         }
-        
+        private void PanelOnOnPanelClose(object sender, string e) {
+            _selectedAgents.Remove(e);
+            if( _selectedAgents!=null&& _selectedAgents.Count>=1) DisplayInformation(_selectedAgents.Values.First()[0]);
+            else ClosePanel();
+        }
 
+        private void ClosePanel()
+        {
+            CleanAllSelection();
+            _panelInfo.SetActive(false);
+            
+        }
+        
         private void CleanAllSelection() {
             foreach (var ui in _uiZombieSelections) {
                 ui.gameObject.SetActive(false);

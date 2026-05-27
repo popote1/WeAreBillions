@@ -1,8 +1,4 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Drawing;
-using System.Numerics;
+
 using script;
 using UnityEditor;
 using UnityEngine;
@@ -10,9 +6,18 @@ using Color = UnityEngine.Color;
 using Vector3 = UnityEngine.Vector3;
 
 [CustomEditor(typeof(GridManager))]
-public class EditorGridManager : UnityEditor.Editor
+public class EditorGridManager : Editor
 {
    private GridManager m_targget;
+   
+   public override void OnInspectorGUI()
+   {
+      base.OnInspectorGUI();
+      m_targget = (GridManager) target;
+      if (GUILayout.Button("ClearDebugsCells")) m_targget.ClearGrid();
+      GUILayout.Space(10);
+      if (GUILayout.Button("LoadLocomotionData")) m_targget.LoadLocomotionData();
+   }
    private void OnSceneGUI()
    {
       m_targget = (GridManager) target;
@@ -40,22 +45,6 @@ public class EditorGridManager : UnityEditor.Editor
       Handles.DrawAAConvexPolygon(point);
    }
 
-   public override void OnInspectorGUI()
-   {
-      base.OnInspectorGUI();
-      m_targget = (GridManager) target;
-
-      //if( GUILayout.Button("CalculatTheGrid"))m_targget.GenerateCells();
-      //if (GUILayout.Button("DisplayCells")) m_targget.GenerateDebugCells();
-      //if (GUILayout.Button("CalculateColliders")) m_targget.CheckColliders();
-      //if (GUILayout.Button("RecalculateChunks")) m_targget.RecalculateChunks();
-      //if (GUILayout.Button("ColorChunks")) m_targget.ColorChunks();
-      if (GUILayout.Button("ClearDebugsCells")) m_targget.ClearGrid();
-      GUILayout.Space(10);
-      if (GUILayout.Button("LoadLocomotionData")) m_targget.LoadLocomotionData();
-      //if (GUILayout.Button("SaveLocomotionData")) m_targget.SaveLocomotionData();
-      
-   }
 }
 [CustomEditor(typeof(TerrainLocomotionData))]
 public class EditorTerrainLocomotionData : UnityEditor.Editor

@@ -46,8 +46,16 @@ public class AlertSystemManager : MonoBehaviour
         }
 
         _currentAlertData = _alertLevelDatas[0];
+        StaticEvents.OnStartLoading += OnStartLoading;
     }
 
+    private void OnDestroy() {
+        StaticEvents.OnStartLoading -= OnStartLoading;
+    }
+
+    private void OnStartLoading() {
+        Instance = null;
+    }
     private void Update() {
         ManagerBurnDown();
         ManagerInGameCombatTimer();

@@ -13,6 +13,7 @@ public static class StaticSaveSystem {
     
     public static bool LoadGame() {
         
+        Debug.Log("LoadData");
         string path = Application.persistentDataPath + "/Save/Save.txt";
         
         if (!File.Exists(path)) {

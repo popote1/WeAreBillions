@@ -72,5 +72,6 @@ public class HUDEndGamePanel : MonoBehaviour
    private void ClickOnMainMenu() {
       if (_uiAsyncSceneLoader != null) _uiAsyncSceneLoader.StartLoadingScene("MainMenu");
       else SceneManager.LoadScene("0");
+      
    } 
 }

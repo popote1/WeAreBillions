@@ -35,7 +35,7 @@ public class DestroyTargetEvent : MonoBehaviour
         CheckAllTargetDestroy();
     }
 
-    private void TargetOnOnGridAgentDestroy(object sender, EventArgs e) {
+    private void TargetOnOnGridAgentDestroy(object sender, GridAgent e) {
         _agentCount--;
         CheckAllTargetDestroy();
     }

@@ -115,8 +115,9 @@ namespace script {
         }
 
         public static void DestroyElement() => _destroyElements++;
+
         public static void SetSoLevelInfoDataArray(SOLevelInfoDataArray so) => _soLevelInfoDataArray = so;
-        
+
         public static void SetCurrentAlertLevel(int lvl)
         {
             _currentAlertLVL = lvl;
@@ -129,10 +130,11 @@ namespace script {
             _prefabZombieEngineerAgent = engineer;
         }
 
-        public static void SetZombieSpawnChange(float standardZombie, float bruteZombie,float engineerZombie) {
-            _zombieSpawnChangeStandrard = standardZombie;
-            _zombieSpawnChangeBrute = bruteZombie;
-            _zombieSpawnChangeEngineer = engineerZombie;
+        public static void SetZombieSpawnChange(string sceneName) {
+            SOLevelInfoData so = _soLevelInfoDataArray.GetLevelInfoDataBySceneName(sceneName);
+            _zombieSpawnChangeStandrard = so._standardZombieSpawnChance;
+            _zombieSpawnChangeBrute = so._bruteZombieSpawnChance;
+            _zombieSpawnChangeEngineer = so._engineerZombieSpawnChance;
         }
 
 
@@ -208,6 +210,29 @@ namespace script {
                 returnList.Add(zombie);
             }
             return returnList;
+        }
+
+        public static void Clear() {
+            _zombieCount = 0;
+            _zombieMaxCount = 0;
+            _civiliansCounts = 0;
+            _civiliansKills = 0;
+            _defendersKill = 0; 
+            _defendersCount = 0;
+            _buildingsCounts = 0;
+            _destroyBuildingsCounts = 0;
+            _destroyElements = 0;
+            _currentAlertLVL = 0;
+            _alertMaxLVL = 0;
+            _gameTimer = 0;
+            _timeInAlertLVL1 = 0;
+            _timeInAlertLVL2 = 0;
+            _timeInAlertLVL3 = 0;
+            _timeInAlertLVL4 = 0;
+            _timeInAlertLVL5 = 0;
+            if (_allZombieAgents!=null)_allZombieAgents.Clear();
+            if (_allGridAgents!=null)_allGridAgents.Clear();;
+            if (_allHouses!=null)_allHouses.Clear();;
         }
         
         //public static void SetPause(bool value) {

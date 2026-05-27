@@ -15,7 +15,7 @@ GameObject:
   m_TagString: WalkBlocker
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!4 &5046864976842653872
 Transform:
@@ -116,6 +116,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Cailloux2Visual
+      objectReference: {fileID: 0}
+    - target: {fileID: 5359254429425828896, guid: 4f0d2a53865ed494e9790848a315193f,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

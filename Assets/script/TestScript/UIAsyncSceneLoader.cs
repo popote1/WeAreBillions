@@ -43,6 +43,7 @@ public class UIAsyncSceneLoader : MonoBehaviour
     {
         _canvasGroupPanal.DOFade(1, _fadeTime);
         _loadingStat = LoadingStat.PreLoading;
+        StaticEvents.OnStartLoading?.Invoke();
         //_panelLoading.SetActive(true);
 
 
@@ -100,6 +101,8 @@ public class UIAsyncSceneLoader : MonoBehaviour
             _loadingStat = LoadingStat.LoadNextScene;
             _startSceneIndex = SceneManager.GetActiveScene().buildIndex;
             loading= SceneManager.LoadSceneAsync(_sceneNameToLoad, LoadSceneMode.Additive);
+            StaticData.SetZombieSpawnChange(_sceneNameToLoad);
+            StaticData.Clear();
         }
     }
 

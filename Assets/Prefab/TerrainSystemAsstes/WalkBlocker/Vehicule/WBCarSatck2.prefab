@@ -15,7 +15,7 @@ GameObject:
   m_TagString: WalkBlocker
   m_Icon: {fileID: -5487077368411116049, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!4 &7598576461478553930
 Transform:
@@ -68,6 +68,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: NoColCar1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2426840094678835495, guid: e5833ba337a5918429e1ce2c594474fc,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
       objectReference: {fileID: 0}
     - target: {fileID: 4473378159446267521, guid: e5833ba337a5918429e1ce2c594474fc,
         type: 3}
@@ -203,6 +208,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: NoColCar6
       objectReference: {fileID: 0}
+    - target: {fileID: 7068185669484742678, guid: 4235bd792ddf8b643ada4bed140ad185,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -291,6 +301,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: NoColTruck3
+      objectReference: {fileID: 0}
+    - target: {fileID: 7740436002333978648, guid: 26a63fada6abe5a428b419d67cb1dd66,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
