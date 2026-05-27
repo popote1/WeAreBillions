@@ -10,23 +10,15 @@ using Random = UnityEngine.Random;
 namespace script
 {
     
-    public class GridManager : MonoBehaviour
-    {
+    public class GridManager : MonoBehaviour {
         public Vector2Int Size;
         public Vector3 Offset;
-        //public TestCell PrefabsDebugCell;
-        //[Header("FlowFiled")] public bool DisplayDebugDirection;
-        //public int MoveCost = 10;
-        //public int DiagonalMoveCost = 14;
-        //public LayerMask LayerMaskGrund;
-        //public Cell Origin;
-        //public bool IsCalculating;
-        //public int CellParFrame = 500;
-        //public bool DisplayChunkLinks;
+        
         [Header(" SaveData")] 
         [SerializeField] private bool _LoadLocoDataOnAwake=true;
         public TerrainLocomotionData TerrainLocomotionData;
 
+        
         private List<Chunk> _Chunks;
         private Cell[,] _cells;
 
