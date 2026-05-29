@@ -1,4 +1,4 @@
-// © 2024 EasyRoads3D
+// ï¿½ 2024 EasyRoads3D
 // A typical dirt track shader supporting fade in / out at the start / end. The face distance can be set in the Inspector for the first / last marker  
 // Standard 3D Project Usage: Set Material Render Queue to AlphaTest 2450 
 Shader "EasyRoads3D/ER Dirt Road Fade In - Out"
@@ -398,7 +398,7 @@ Shader "EasyRoads3D/ER Dirt Road Fade In - Out"
 					o.dynamicLightmapUV.xy = v.texcoord2.xy * unity_DynamicLightmapST.xy + unity_DynamicLightmapST.zw;
 				#endif
 
-				OUTPUT_SH4( vertexInput.positionWS, normalInput.normalWS.xyz, GetWorldSpaceNormalizeViewDir( vertexInput.positionWS ), o.lightmapUVOrVertexSH.xyz );
+				OUTPUT_SH( normalInput.normalWS.xyz, o.lightmapUVOrVertexSH.xyz );
 
 				#if defined(ENABLE_TERRAIN_PERPIXEL_NORMAL)
 					o.lightmapUVOrVertexSH.zw = v.texcoord.xy;
@@ -2573,7 +2573,7 @@ Shader "EasyRoads3D/ER Dirt Road Fade In - Out"
 					o.dynamicLightmapUV.xy = v.texcoord2.xy * unity_DynamicLightmapST.xy + unity_DynamicLightmapST.zw;
 				#endif
 
-				OUTPUT_SH4( vertexInput.positionWS, normalInput.normalWS.xyz, GetWorldSpaceNormalizeViewDir( vertexInput.positionWS ), o.lightmapUVOrVertexSH.xyz );
+				OUTPUT_SH( normalInput.normalWS.xyz, o.lightmapUVOrVertexSH.xyz );
 
 				#if defined(ENABLE_TERRAIN_PERPIXEL_NORMAL)
 					o.lightmapUVOrVertexSH.zw = v.texcoord.xy;

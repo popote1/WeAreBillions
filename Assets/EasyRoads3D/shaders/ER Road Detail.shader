@@ -1,4 +1,4 @@
-// © 2024 EasyRoads3D
+// ï¿½ 2024 EasyRoads3D
 // This shader blends a lightness / darkness texture over X units defined in UV4 which can be set in: Road Settings > Additional UD Data > Detail > Tile Distance
 // Standard 3D Project Usage: Set Material Render Queue to AlphaTest 2450 
 Shader "EasyRoads3D/ER Road Detail"
@@ -406,7 +406,7 @@ Shader "EasyRoads3D/ER Road Detail"
 					o.dynamicLightmapUV.xy = v.texcoord2.xy * unity_DynamicLightmapST.xy + unity_DynamicLightmapST.zw;
 				#endif
 
-				OUTPUT_SH4( vertexInput.positionWS, normalInput.normalWS.xyz, GetWorldSpaceNormalizeViewDir( vertexInput.positionWS ), o.lightmapUVOrVertexSH.xyz );
+				OUTPUT_SH( normalInput.normalWS.xyz, o.lightmapUVOrVertexSH.xyz );
 
 				#if defined(ENABLE_TERRAIN_PERPIXEL_NORMAL)
 					o.lightmapUVOrVertexSH.zw = v.texcoord.xy;
@@ -2581,7 +2581,7 @@ Shader "EasyRoads3D/ER Road Detail"
 					o.dynamicLightmapUV.xy = v.texcoord2.xy * unity_DynamicLightmapST.xy + unity_DynamicLightmapST.zw;
 				#endif
 
-				OUTPUT_SH4( vertexInput.positionWS, normalInput.normalWS.xyz, GetWorldSpaceNormalizeViewDir( vertexInput.positionWS ), o.lightmapUVOrVertexSH.xyz );
+				OUTPUT_SH( normalInput.normalWS.xyz, o.lightmapUVOrVertexSH.xyz);
 
 				#if defined(ENABLE_TERRAIN_PERPIXEL_NORMAL)
 					o.lightmapUVOrVertexSH.zw = v.texcoord.xy;
