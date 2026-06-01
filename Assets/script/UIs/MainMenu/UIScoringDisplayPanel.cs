@@ -23,8 +23,8 @@ public class UIScoringDisplayPanel:MonoBehaviour
     
 
     public void DisplayPanel(SOLevelInfoData info, StatRunSave save) {
-        _txtTitle.text = info.MenuName;
-        _txtSubTitile.text = info.Subtile;
+        _txtTitle.text = info.GetMenuName;
+        _txtSubTitile.text = info.GetSubTitle;
         _txtScore.text = save.Score.ToString();
         _txtDate.text = DateTime.FromBinary(save.Date).ToString();
         _txtZombie.text = save.zombieCount.ToString();

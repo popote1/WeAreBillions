@@ -33,8 +33,8 @@ public class HUDStatistiquePauseMenu : MonoBehaviour
         if (StaticData.SoLevelInfoDataArray != null) {
             SOLevelInfoData levelData =
                 StaticData.SoLevelInfoDataArray.GetLevelInfoDataBySceneName(SceneManager.GetActiveScene().name);
-            _txtTitle.text = levelData.MenuName;
-            _txtSubTitle.text = levelData.Subtile;
+            _txtTitle.text = levelData.GetMenuName;
+            _txtSubTitle.text = levelData.GetSubTitle;
         }
 
         _txtScore.text = StaticScoringSystem.CurrentScore.ToString();

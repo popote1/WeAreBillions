@@ -1,0 +1,155 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e9620f8c34305754d8cc9a7e49e852d9, type: 3}
+  m_Name: MainMenu_en
+  m_EditorClassIdentifier: 
+  m_LocaleId:
+    m_Code: en
+  m_SharedData: {fileID: 11400000, guid: a437287c15a0ae84c8510e9b967b3079, type: 2}
+  m_Metadata:
+    m_Items: []
+  m_TableData:
+  - m_Id: 30562033664
+    m_Localized: LEVELS
+    m_Metadata:
+      m_Items: []
+  - m_Id: 138921877504
+    m_Localized: SCORING
+    m_Metadata:
+      m_Items: []
+  - m_Id: 263723393024
+    m_Localized: OPTIONS
+    m_Metadata:
+      m_Items: []
+  - m_Id: 324939259904
+    m_Localized: CREDITS
+    m_Metadata:
+      m_Items: []
+  - m_Id: 432934199296
+    m_Localized: QUIT
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2860534439936
+    m_Localized: RETURN
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2954067419136
+    m_Localized: GAME
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3031502659584
+    m_Localized: AUDIO
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3193738338304
+    m_Localized: KeyBoard Camera Speed
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3564837773312
+    m_Localized: Panning Cameara Speed
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3804793905152
+    m_Localized: Allow the Cheat Menu
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3961858007040
+    m_Localized: Display Monitor
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4276233674752
+    m_Localized: Volume General
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4428788899840
+    m_Localized: Volume Ambiance
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4549429665792
+    m_Localized: Volume Music
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4731860918272
+    m_Localized: Vulume SFX
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9347331760128
+    m_Localized: START
+    m_Metadata:
+      m_Items: []
+  - m_Id: 38141291634688
+    m_Localized: Date
+    m_Metadata:
+      m_Items: []
+  - m_Id: 38233654403072
+    m_Localized: Score
+    m_Metadata:
+      m_Items: []
+  - m_Id: 38296468299776
+    m_Localized: Zombies
+    m_Metadata:
+      m_Items: []
+  - m_Id: 38413858480128
+    m_Localized: Max hord size
+    m_Metadata:
+      m_Items: []
+  - m_Id: 38599691313152
+    m_Localized: Civillians left
+    m_Metadata:
+      m_Items: []
+  - m_Id: 38792314724352
+    m_Localized: Defenders transform
+    m_Metadata:
+      m_Items: []
+  - m_Id: 39053628252160
+    m_Localized: Buildings destroy
+    m_Metadata:
+      m_Items: []
+  - m_Id: 39251024781312
+    m_Localized: Run time
+    m_Metadata:
+      m_Items: []
+  - m_Id: 41007741902848
+    m_Localized: Do you realy want to leave ?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 45262905253888
+    m_Localized: LEVEL1
+    m_Metadata:
+      m_Items: []
+  - m_Id: 45361236516864
+    m_Localized: Camping village
+    m_Metadata:
+      m_Items: []
+  - m_Id: 45391032852480
+    m_Localized: A walk in mountains when the city-boy's come for vacation
+    m_Metadata:
+      m_Items: []
+  - m_Id: 45434984964096
+    m_Localized: LEVEL2
+    m_Metadata:
+      m_Items: []
+  - m_Id: 45474117820416
+    m_Localized: Sherif Road
+    m_Metadata:
+      m_Items: []
+  - m_Id: 45504019013632
+    m_Localized: Went the autoritys take over, it's never end well
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49825607557120
+    m_Localized: English
+    m_Metadata:
+      m_Items: []
+  references:
+    version: 2
+    RefIds: []

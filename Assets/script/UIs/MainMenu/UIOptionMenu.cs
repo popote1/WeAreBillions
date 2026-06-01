@@ -5,6 +5,7 @@ using script;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Audio;
+using UnityEngine.Localization.Settings;
 using UnityEngine.UI;
 
 public class UIOptionMenu : MonoBehaviour
@@ -18,6 +19,8 @@ public class UIOptionMenu : MonoBehaviour
     [SerializeField] private Button _bpReturn;
     [Space(10)]
     [SerializeField] private Transform _panelGame;
+    [SerializeField] private Button _bpLanguagePreview;
+    [SerializeField] private Button _bpLanguageNext;
     [SerializeField] private Slider _sliderCameraKeybordSpeed;
     [SerializeField] private Slider _sliderCameraPanningSpeed;
     [SerializeField] private Toggle _toggleAllowCheatMenu;
@@ -88,6 +91,8 @@ public class UIOptionMenu : MonoBehaviour
     
     
     private void Awake() {
+        _bpLanguagePreview.onClick.AddListener(ChangeLanguagePrev);
+        _bpLanguageNext.onClick.AddListener(ChangeLanguageNext);
         _sliderCameraKeybordSpeed.onValueChanged.AddListener(UISetCameraKeyboardSpeed);
         _sliderCameraPanningSpeed.onValueChanged.AddListener(UISetCameraPanningSpeed);
         _toggleAllowCheatMenu.onValueChanged.AddListener(UISetAllowCheatMenu);
@@ -131,5 +136,14 @@ public class UIOptionMenu : MonoBehaviour
     private void UISliderAudioMasterChange(float value) {
         StaticData.AudioVolumeMaster = value;
         _audioMixer.SetFloat("MasterVolume", Mathf.Log10(value) * 20);
+    }
+
+    private void ChangeLanguagePrev() => ChangeLanguage(-1);
+    private void ChangeLanguageNext() => ChangeLanguage(1);
+    private void ChangeLanguage(int mod) {
+        int id = LocalizationSettings.AvailableLocales.Locales.IndexOf(LocalizationSettings.SelectedLocale)+mod;
+        if (id < 0) id = LocalizationSettings.AvailableLocales.Locales.Count - 1;
+        if (id >= LocalizationSettings.AvailableLocales.Locales.Count) id = 0;
+        LocalizationSettings.SelectedLocale = LocalizationSettings.AvailableLocales.Locales[id];
     }
 }

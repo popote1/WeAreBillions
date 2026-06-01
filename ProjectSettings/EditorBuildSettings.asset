@@ -23,5 +23,11 @@ EditorBuildSettings:
   - enabled: 0
     path: Assets/Scenes/LVL1-TestScene.unity
     guid: 175d24e79f68a1545ac48f3ecef80f3b
-  m_configObjects: {}
+  m_configObjects:
+    com.unity.addressableassets: {fileID: 11400000, guid: 6faadc3a99e1f9e419a63b83ede72c7c,
+      type: 2}
+    com.unity.localization.addressable-group-rules: {fileID: 11400000, guid: cad44fb7587996e4595869bd6061abb6,
+      type: 2}
+    com.unity.localization.settings: {fileID: 11400000, guid: 0d45f4adade820844bed9bd57edf5332,
+      type: 2}
   m_UseUCBPForAssetBundles: 0

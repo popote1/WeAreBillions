@@ -90,8 +90,8 @@ public class UIScoringPanel : MonoBehaviour
     }
     
     private void DisplayBestScore() {
-        _txtTitle.text = _currentLevel.MenuName;
-        _txtSubTitile.text = _currentLevel.Subtile;
+        _txtTitle.text = _currentLevel.GetMenuName;
+        _txtSubTitile.text = _currentLevel.GetSubTitle;
         _txtScore.text = _currentLevelSaveData.BestStats.Score.ToString();
         _txtZombie.text = _currentLevelSaveData.BestStats.zombieCount.ToString();
         _txtSHordeMaxSize.text = _currentLevelSaveData.BestStats.HordeMaxSize.ToString();

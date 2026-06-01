@@ -17,7 +17,7 @@ public class UILevelSelectionButton : MonoBehaviour
     public void SetUpButton(SOLevelInfoData data) {
         
         _levelData = data;
-        _txtLabel.text = _levelData.MenuName;
+        _txtLabel.text = _levelData.GetMenuName;
     }
     
     private void Start()

@@ -77,9 +77,9 @@ public class UILevelSelectionMenu : MonoBehaviour
         
         _selectedLevelInfoData = data;
 
-        _txtTitle.text = _selectedLevelInfoData.MenuName;
-        _txtSubTitile.text = _selectedLevelInfoData.Subtile;
-        _txtDescription.text = _selectedLevelInfoData.Description;
+        _txtTitle.text = _selectedLevelInfoData.GetMenuName;
+        _txtSubTitile.text = _selectedLevelInfoData.GetSubTitle;
+        _txtDescription.text = _selectedLevelInfoData.GetDescription;
         _imgLevel.sprite = _selectedLevelInfoData.Illustration;
     }
 }

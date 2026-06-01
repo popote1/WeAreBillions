@@ -13,8 +13,41 @@ MonoBehaviour:
   m_Name: SOLevelInfoDataLVL2
   m_EditorClassIdentifier: 
   MenuName: LEVEL2
+  LocalizedMenuName:
+    m_TableReference:
+      m_TableCollectionName: GUID:a437287c15a0ae84c8510e9b967b3079
+    m_TableEntryReference:
+      m_KeyId: 45434984964096
+      m_Key: 
+    m_FallbackState: 0
+    m_WaitForCompletion: 0
+    m_LocalVariables: []
   Subtile: "Sh\xE9rif road"
+  LocalizedSubtile:
+    m_TableReference:
+      m_TableCollectionName: GUID:a437287c15a0ae84c8510e9b967b3079
+    m_TableEntryReference:
+      m_KeyId: 45474117820416
+      m_Key: 
+    m_FallbackState: 0
+    m_WaitForCompletion: 0
+    m_LocalVariables: []
+  LocalizedDescription:
+    m_TableReference:
+      m_TableCollectionName: GUID:a437287c15a0ae84c8510e9b967b3079
+    m_TableEntryReference:
+      m_KeyId: 45504019013632
+      m_Key: 
+    m_FallbackState: 0
+    m_WaitForCompletion: 0
+    m_LocalVariables: []
   Description: "Quand les autorit\xE9es s'emmellent \xE7a ne finis jamais biens."
   Illustration: {fileID: 21300000, guid: bcc19ad51b0b9fe459e61614c6450257, type: 3}
   SceneName: Niveau2
   SoEndGameScoring: {fileID: 11400000, guid: 1115790c7f374da4cbdb6f448ae19ff9, type: 2}
+  _standardZombieSpawnChance: 1
+  _bruteZombieSpawnChance: 1
+  _engineerZombieSpawnChance: 1
+  references:
+    version: 2
+    RefIds: []

@@ -1,0 +1,193 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5b11a58205ec3474ca216360e9fa74a8, type: 3}
+  m_Name: MainMenu Shared Data
+  m_EditorClassIdentifier: 
+  m_TableCollectionName: MainMenu
+  m_TableCollectionNameGuidString: a437287c15a0ae84c8510e9b967b3079
+  m_Entries:
+  - m_Id: 30562033664
+    m_Key: MM_Level
+    m_Metadata:
+      m_Items: []
+  - m_Id: 138921877504
+    m_Key: MM_Score
+    m_Metadata:
+      m_Items: []
+  - m_Id: 263723393024
+    m_Key: MM_Options
+    m_Metadata:
+      m_Items: []
+  - m_Id: 324939259904
+    m_Key: MM_Credit
+    m_Metadata:
+      m_Items: []
+  - m_Id: 432934199296
+    m_Key: MM_Quite
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2860534439936
+    m_Key: MM_Return
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2954067419136
+    m_Key: MM_Opt_Game
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3031502659584
+    m_Key: MM_Opt_Audio
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3193738338304
+    m_Key: MM_Opti_KeybordCameraSpeed
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3564837773312
+    m_Key: MM_Opt_PanennigCameraSpeed
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3804793905152
+    m_Key: MM_Opt_CheatMenu
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3961858007040
+    m_Key: MM_Opt_DiplayMonitor
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4276233674752
+    m_Key: MM_Opt_VolumeGeneral
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4428788899840
+    m_Key: MM_Opt_VolumeAmbiance
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4549429665792
+    m_Key: MM_Opt_VolumeMusic
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49825607557120
+    m_Key: MM_Opt_Language
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4731860918272
+    m_Key: MM_Opt_VolumeSFX
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9347331760128
+    m_Key: MM_Level_Start
+    m_Metadata:
+      m_Items: []
+  - m_Id: 38141291634688
+    m_Key: MM_Sco_Date
+    m_Metadata:
+      m_Items: []
+  - m_Id: 38233654403072
+    m_Key: MM_Sco_Score
+    m_Metadata:
+      m_Items: []
+  - m_Id: 38296468299776
+    m_Key: MM_Sco_Zombies
+    m_Metadata:
+      m_Items: []
+  - m_Id: 38413858480128
+    m_Key: MM_Sco_MaxHorde
+    m_Metadata:
+      m_Items: []
+  - m_Id: 38599691313152
+    m_Key: MM_Sco_CivilliansLeft
+    m_Metadata:
+      m_Items: []
+  - m_Id: 38792314724352
+    m_Key: MM_Sco_DefendersTransform
+    m_Metadata:
+      m_Items: []
+  - m_Id: 39053628252160
+    m_Key: MM_Sco_BuildingDestroy
+    m_Metadata:
+      m_Items: []
+  - m_Id: 39251024781312
+    m_Key: MM_Sco_RunTime
+    m_Metadata:
+      m_Items: []
+  - m_Id: 41007741902848
+    m_Key: MM_QuiteText
+    m_Metadata:
+      m_Items: []
+  - m_Id: 45262905253888
+    m_Key: LD1_MenuName
+    m_Metadata:
+      m_Items: []
+  - m_Id: 45361236516864
+    m_Key: LD1_SubTitle
+    m_Metadata:
+      m_Items: []
+  - m_Id: 45391032852480
+    m_Key: LD1_Description
+    m_Metadata:
+      m_Items: []
+  - m_Id: 45434984964096
+    m_Key: LD2_MenuName
+    m_Metadata:
+      m_Items: []
+  - m_Id: 45474117820416
+    m_Key: LD2SubTitle
+    m_Metadata:
+      m_Items: []
+  - m_Id: 45504019013632
+    m_Key: LD2_Description
+    m_Metadata:
+      m_Items: []
+  - m_Id: 45528538914816
+    m_Key: LD3_MenuName
+    m_Metadata:
+      m_Items: []
+  - m_Id: 45584310575104
+    m_Key: LD3_Description
+    m_Metadata:
+      m_Items: []
+  - m_Id: 45635447529472
+    m_Key: LD4_MenuName
+    m_Metadata:
+      m_Items: []
+  - m_Id: 45675540881408
+    m_Key: LD4SubTitle
+    m_Metadata:
+      m_Items: []
+  - m_Id: 45702568976384
+    m_Key: LD4Description
+    m_Metadata:
+      m_Items: []
+  - m_Id: 45725658619904
+    m_Key: LD5MenuName
+    m_Metadata:
+      m_Items: []
+  - m_Id: 45764657258496
+    m_Key: LD5SubTitle
+    m_Metadata:
+      m_Items: []
+  - m_Id: 45789881802752
+    m_Key: LD5_Description
+    m_Metadata:
+      m_Items: []
+  m_Metadata:
+    m_Items: []
+  m_KeyGenerator:
+    rid: 2496142115118776591
+  references:
+    version: 2
+    RefIds:
+    - rid: 2496142115118776591
+      type: {class: DistributedUIDGenerator, ns: UnityEngine.Localization.Tables,
+        asm: Unity.Localization}
+      data:
+        m_CustomEpoch: 1780308292878
