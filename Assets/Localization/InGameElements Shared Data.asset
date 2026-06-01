@@ -1,0 +1,49 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5b11a58205ec3474ca216360e9fa74a8, type: 3}
+  m_Name: InGameElements Shared Data
+  m_EditorClassIdentifier: 
+  m_TableCollectionName: InGameElements
+  m_TableCollectionNameGuidString: 203ea1eca46aed74388bc5f1903fc4c5
+  m_Entries:
+  - m_Id: 200406179840
+    m_Key: "IG_Zombies\t"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 523560525824
+    m_Key: IG_Objectif
+    m_Metadata:
+      m_Items: []
+  - m_Id: 885302468608
+    m_Key: IG_Menu
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1715225206784
+    m_Key: IG_Level
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1945123397632
+    m_Key: IG_AlertLevel
+    m_Metadata:
+      m_Items: []
+  m_Metadata:
+    m_Items: []
+  m_KeyGenerator:
+    rid: 2496142115118776676
+  references:
+    version: 2
+    RefIds:
+    - rid: 2496142115118776676
+      type: {class: DistributedUIDGenerator, ns: UnityEngine.Localization.Tables,
+        asm: Unity.Localization}
+      data:
+        m_CustomEpoch: 1780329145640

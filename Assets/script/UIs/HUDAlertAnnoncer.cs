@@ -1,12 +1,13 @@
-using System.Linq;
 using DG.Tweening;
 using script;
 using TMPro;
 using UnityEngine;
+using UnityEngine.Localization;
 
 public class HUDAlertAnnoncer : MonoBehaviour
 {
     [SerializeField] private TMP_Text _txtLevel;
+    [SerializeField] private LocalizedString _localizeLevel;
     [SerializeField] private CanvasGroup _canvasGroupMainPanel;
     [SerializeField] private float _rotationAnimationTime = 1;
     [SerializeField] private AnimationCurve _animationCurveRotationAnimation = AnimationCurve.EaseInOut(0,0,1,1);
@@ -39,7 +40,7 @@ public class HUDAlertAnnoncer : MonoBehaviour
 
     private void PlayNewLevel(int value)
     {
-        _txtLevel.text = "Niveau " + value;
+        _txtLevel.text = _localizeLevel.GetLocalizedString()+" " + value;
         float delay = 0;
         _canvasGroupMainPanel.DOPause();
         _canvasGroupMainPanel.transform.localEulerAngles = new Vector3(-90,0, 0);
