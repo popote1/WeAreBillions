@@ -64,7 +64,7 @@ MonoBehaviour:
     m_Bits: 128
   _spawningBounds:
     m_Center: {x: 0.18761444, y: 0, z: 0.021865845}
-    m_Extent: {x: 1.4354324, y: 0, z: 0.91645813}
+    m_Extent: {x: 1.4354324, y: 0, z: 0.9164562}
   _zombieSpawnChanceStandrard: 0.7
   _zombieSpawnChanceBrute: 0.2
   _zombieSpawnChanceEngineer: 0.1
