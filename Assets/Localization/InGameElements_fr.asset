@@ -38,6 +38,78 @@ MonoBehaviour:
     m_Localized: ' Niveau D''alerte'
     m_Metadata:
       m_Items: []
+  - m_Id: 260269794369536
+    m_Localized: Tableau des Scores
+    m_Metadata:
+      m_Items: []
+  - m_Id: 278808785821696
+    m_Localized: Gagner
+    m_Metadata:
+      m_Items: []
+  - m_Id: 278941573292032
+    m_Localized: Perdu
+    m_Metadata:
+      m_Items: []
+  - m_Id: 279624959631360
+    m_Localized: Recommencer
+    m_Metadata:
+      m_Items: []
+  - m_Id: 280976410517504
+    m_Localized: Menu Principal
+    m_Metadata:
+      m_Items: []
+  - m_Id: 331071965339648
+    m_Localized: Score Total
+    m_Metadata:
+      m_Items: []
+  - m_Id: 331584467345408
+    m_Localized: Alert Maximum
+    m_Metadata:
+      m_Items: []
+  - m_Id: 331870237859840
+    m_Localized: "Ne pas d\xE9passer le niveaux 1 d'alert."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 332202040860672
+    m_Localized: 'Atteindre un niveux d''alert de 2 ou 3 '
+    m_Metadata:
+      m_Items: []
+  - m_Id: 332209485750272
+    m_Localized: "Atteindre un niveux d'alert sup\xE9rieur \xE0 3"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 332674269159424
+    m_Localized: Temps de Complition
+    m_Metadata:
+      m_Items: []
+  - m_Id: 332831849160704
+    m_Localized: Finir le niveau en moin de 8 min
+    m_Metadata:
+      m_Items: []
+  - m_Id: 332904943296512
+    m_Localized: Finir le niveau en moin de 12 min
+    m_Metadata:
+      m_Items: []
+  - m_Id: 332909250846720
+    m_Localized: Finir le niveau en plus de 12min
+    m_Metadata:
+      m_Items: []
+  - m_Id: 333374231388160
+    m_Localized: Taille de la horde
+    m_Metadata:
+      m_Items: []
+  - m_Id: 333814109020160
+    m_Localized: "La horde ne d\xE9passe pas les 75 zombie"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 333938625323008
+    m_Localized: Atteindre un horde de plus de 75 zombis
+    m_Metadata:
+      m_Items: []
+  - m_Id: 333956711161856
+    m_Localized: Atteindre une horde de plus de 120 zombis
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []

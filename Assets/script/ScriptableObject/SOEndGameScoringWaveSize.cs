@@ -9,7 +9,7 @@ public class SOEndGameScoringWaveSize : SoEndGameScoring {
     public override Tuple<string, int> GetScore() {
         foreach (var option in ScoringOptions) {
             if (option.IsValide(StaticData.zombieMaxCount)) {
-                return new Tuple<string, int>(option.Desctription, option.ScoreGain);
+                return new Tuple<string, int>(option._localizedDesciption.GetLocalizedString(), option.ScoreGain);
             }
         }  
         return new Tuple<string, int>("Pas de Scoring", 0);

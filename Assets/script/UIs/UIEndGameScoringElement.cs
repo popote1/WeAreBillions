@@ -10,7 +10,7 @@ public class UIEndGameScoringElement : MonoBehaviour {
     public void DiplayScoringElement(SoEndGameScoring egs) {
         Tuple<string, int> data= egs.GetScore();
 
-        _txtLabel.text = egs.Title;
+        _txtLabel.text = egs._localizeTitle.GetLocalizedString();
         _txtDescription.text = data.Item1;
         _txtScore.StartDisplaying(data.Item2);
         

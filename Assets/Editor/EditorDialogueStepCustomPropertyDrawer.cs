@@ -11,10 +11,12 @@ public class EditorDialogueStepCustomPropertyDrawer : PropertyDrawer
     public override void OnGUI(Rect position, SerializedProperty property, GUIContent label)
     {
         EditorGUI.BeginProperty(position, label, property);
-        Rect DialogueRect = new Rect(position.x, position.y, position.width , 60);
+        Rect LocalizeDialogueRect = new Rect(position.x, position.y, position.width , 20);
+        Rect DialogueRect = new Rect(position.x, position.y+20, position.width , 40);
         Rect LableCameraUsRect = new Rect(position.x, position.y+70, 120, 20);
         Rect CameraUsRect = new Rect(position.x+120, position.y+70, 20,20);
         Rect SpriteDialogue = new Rect(position.x+200, position.y+70, position.width-200,20);
+        EditorGUI.PropertyField(LocalizeDialogueRect, property.FindPropertyRelative("LocalizedDialogue"));
         EditorGUI.PropertyField(DialogueRect, property.FindPropertyRelative("TxtDialogue"));
         EditorGUI.LabelField(LableCameraUsRect, new GUIContent("Us Camera Scroll"));
         EditorGUI.PropertyField(CameraUsRect, property.FindPropertyRelative("UsCameraScroll"), GUIContent.none);

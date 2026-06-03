@@ -38,6 +38,78 @@ MonoBehaviour:
     m_Localized: Alert Level
     m_Metadata:
       m_Items: []
+  - m_Id: 260269794369536
+    m_Localized: Score Board
+    m_Metadata:
+      m_Items: []
+  - m_Id: 278808785821696
+    m_Localized: You Win
+    m_Metadata:
+      m_Items: []
+  - m_Id: 278941573292032
+    m_Localized: You Lose
+    m_Metadata:
+      m_Items: []
+  - m_Id: 279624959631360
+    m_Localized: Restart
+    m_Metadata:
+      m_Items: []
+  - m_Id: 280976410517504
+    m_Localized: MainMenu
+    m_Metadata:
+      m_Items: []
+  - m_Id: 331071965339648
+    m_Localized: Total Score
+    m_Metadata:
+      m_Items: []
+  - m_Id: 331584467345408
+    m_Localized: Max Alert
+    m_Metadata:
+      m_Items: []
+  - m_Id: 331870237859840
+    m_Localized: Don't go beyond alert level 1
+    m_Metadata:
+      m_Items: []
+  - m_Id: 332202040860672
+    m_Localized: Get to the second or third alert level
+    m_Metadata:
+      m_Items: []
+  - m_Id: 332209485750272
+    m_Localized: Get to alert level beyond level 3
+    m_Metadata:
+      m_Items: []
+  - m_Id: 332674269159424
+    m_Localized: Run Time
+    m_Metadata:
+      m_Items: []
+  - m_Id: 332831849160704
+    m_Localized: Finish the level under 8 minutes
+    m_Metadata:
+      m_Items: []
+  - m_Id: 332904943296512
+    m_Localized: Finish the level under 12 minutes
+    m_Metadata:
+      m_Items: []
+  - m_Id: 332909250846720
+    m_Localized: take more than 12 minutes to Finish the Level
+    m_Metadata:
+      m_Items: []
+  - m_Id: 333374231388160
+    m_Localized: Horde size
+    m_Metadata:
+      m_Items: []
+  - m_Id: 333814109020160
+    m_Localized: Your horde dont reach 75 zombies
+    m_Metadata:
+      m_Items: []
+  - m_Id: 333938625323008
+    m_Localized: Your horde  reach 75 zombies
+    m_Metadata:
+      m_Items: []
+  - m_Id: 333956711161856
+    m_Localized: Your horde  reach 120 zombies
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []

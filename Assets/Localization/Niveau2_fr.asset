@@ -1,0 +1,49 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e9620f8c34305754d8cc9a7e49e852d9, type: 3}
+  m_Name: Niveau2_fr
+  m_EditorClassIdentifier: 
+  m_LocaleId:
+    m_Code: fr
+  m_SharedData: {fileID: 11400000, guid: b8c53967afdb182479255062989a073e, type: 2}
+  m_Metadata:
+    m_Items: []
+  m_TableData:
+  - m_Id: 105220644864
+    m_Localized: "Les ing\xE9nieurs sont des zombie speciaux qui sont plus efficace
+      cotre les \xE9l\xE9ments d\xE9structibles mais moins r\xE9sistent au d\xE9g\xE2t."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 587062288384
+    m_Localized: La route est bloquer plus loin
+    m_Metadata:
+      m_Items: []
+  - m_Id: 726212517888
+    m_Localized: "Peut-\xEAtre des bodybuilder pourrait nous aider."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1112809906176
+    m_Localized: Le pont est bloquer, il devrait y avoir un autre passage
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1328355188736
+    m_Localized: "Il y a des tourelle plus loins, il dervait y avoir un moyen de
+      les d\xE9sactiver."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1619842539520
+    m_Localized: "Voila norte cibles, d\xE9truisez tout !"
+    m_Metadata:
+      m_Items: []
+  references:
+    version: 2
+    RefIds: []

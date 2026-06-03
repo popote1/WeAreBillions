@@ -42,7 +42,7 @@ namespace script.UIs
 
         private void StartPlayingStep(DialogueStep step) {
             _hudDialoguePanel.SetActive(true);
-            _txtDiaglogue.text = step.TxtDialogue;
+            _txtDiaglogue.text = step.GetDialogue();
             if(step.SpriteDialogue)_imgDialogue.texture = step.SpriteDialogue.texture;
             if (step.UsCameraScroll) StartCameraScroll(step);
         }

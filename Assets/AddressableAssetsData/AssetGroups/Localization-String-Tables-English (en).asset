@@ -20,6 +20,19 @@ MonoBehaviour:
     m_ReadOnly: 1
     m_SerializedLabels:
     - Locale-en
+    - Preload
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 435098deb7fa5a34ebfb422ccf98c047
+    m_Address: Niveau1_en
+    m_ReadOnly: 1
+    m_SerializedLabels:
+    - Locale-en
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: d69f0623d9f66714d8d2dbf788b0a18a
+    m_Address: Niveau2_en
+    m_ReadOnly: 1
+    m_SerializedLabels:
+    - Locale-en
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: fb4eb1bb76443114d87d3bddd7bb6ecf
     m_Address: InGameElements_en

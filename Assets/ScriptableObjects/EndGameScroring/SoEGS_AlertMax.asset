@@ -12,11 +12,30 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0f5115bf23564ded9ba1fe3f3b6fcb62, type: 3}
   m_Name: SoEGS_AlertMax
   m_EditorClassIdentifier: 
+  Title: 
+  _localizeTitle:
+    m_TableReference:
+      m_TableCollectionName: GUID:203ea1eca46aed74388bc5f1903fc4c5
+    m_TableEntryReference:
+      m_KeyId: 331584467345408
+      m_Key: 
+    m_FallbackState: 0
+    m_WaitForCompletion: 0
+    m_LocalVariables: []
   ScoringOptions:
   - _Conditions:
     - baseValue: 2
       Operator: 4
     ScoreGain: 20
+    _localizedDesciption:
+      m_TableReference:
+        m_TableCollectionName: GUID:203ea1eca46aed74388bc5f1903fc4c5
+      m_TableEntryReference:
+        m_KeyId: 331870237859840
+        m_Key: 
+      m_FallbackState: 0
+      m_WaitForCompletion: 0
+      m_LocalVariables: []
     Desctription: "Ne pas d\xE9passer le niveaux 1 d'alert."
   - _Conditions:
     - baseValue: 2
@@ -24,9 +43,30 @@ MonoBehaviour:
     - baseValue: 3
       Operator: 4
     ScoreGain: 50
+    _localizedDesciption:
+      m_TableReference:
+        m_TableCollectionName: GUID:203ea1eca46aed74388bc5f1903fc4c5
+      m_TableEntryReference:
+        m_KeyId: 332202040860672
+        m_Key: 
+      m_FallbackState: 0
+      m_WaitForCompletion: 0
+      m_LocalVariables: []
     Desctription: 'Atteindre un niveux d''alert de 2 ou 3 '
   - _Conditions:
     - baseValue: 3
       Operator: 0
     ScoreGain: 75
+    _localizedDesciption:
+      m_TableReference:
+        m_TableCollectionName: GUID:203ea1eca46aed74388bc5f1903fc4c5
+      m_TableEntryReference:
+        m_KeyId: 332209485750272
+        m_Key: 
+      m_FallbackState: 0
+      m_WaitForCompletion: 0
+      m_LocalVariables: []
     Desctription: "Atteindre un niveux d'alert sup\xE9rieur \xE0 3"
+  references:
+    version: 2
+    RefIds: []

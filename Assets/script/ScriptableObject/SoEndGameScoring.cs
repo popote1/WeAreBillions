@@ -1,15 +1,18 @@
 ﻿using System;
 using script;
 using UnityEngine;
-	
+using UnityEngine.Localization;
+
 public abstract class SoEndGameScoring : ScriptableObject
 {
         public string Title;
+        public LocalizedString _localizeTitle;
         public abstract Tuple<string, int> GetScore();
         [Serializable]
         public struct ScoringOption {
                 public ScoringCondition[] _Conditions;
                 public int ScoreGain;
+                public LocalizedString _localizedDesciption;
                 [TextArea]public string Desctription;
 
                 public bool IsValide(int compareValue) {

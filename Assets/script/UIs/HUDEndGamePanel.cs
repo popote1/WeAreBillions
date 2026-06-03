@@ -1,6 +1,7 @@
 using script;
 using TMPro;
 using UnityEngine;
+using UnityEngine.Localization;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
@@ -19,14 +20,16 @@ public class HUDEndGamePanel : MonoBehaviour
    [SerializeField] private TMP_Text _txtEndGameLable;
    [SerializeField] private Button _bpMainMenu;
    [SerializeField] private Button _bpRestart;
+   [SerializeField] private LocalizedString _localizedYouLose;
+   [SerializeField] private LocalizedString _localizedYouWin;
    
    [Space(10)] 
    [SerializeField] private SOEndGameScoringArray soEndGameScoringArray;
    [SerializeField] private UIEndGameScoringElement[] _endGameScoringElements;
 
    public void OpenEndGamePanel(bool isWin = true) {
-      if (isWin) _txtEndGameLable.text = "You Win";
-      else _txtEndGameLable.text = "You Lose";
+      if (isWin) _txtEndGameLable.text = _localizedYouWin.GetLocalizedString();
+      else _txtEndGameLable.text = _localizedYouLose.GetLocalizedString();
       
       AddEndGameScoring();
       SetupButtons();

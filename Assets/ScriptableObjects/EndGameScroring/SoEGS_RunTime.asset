@@ -12,11 +12,30 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 94452b298a9e424ba69a611bb6fac543, type: 3}
   m_Name: SoEGS_RunTime
   m_EditorClassIdentifier: 
+  Title: 
+  _localizeTitle:
+    m_TableReference:
+      m_TableCollectionName: GUID:203ea1eca46aed74388bc5f1903fc4c5
+    m_TableEntryReference:
+      m_KeyId: 332674269159424
+      m_Key: 
+    m_FallbackState: 0
+    m_WaitForCompletion: 0
+    m_LocalVariables: []
   ScoringOptions:
   - _Conditions:
     - baseValue: 480
       Operator: 4
     ScoreGain: 100
+    _localizedDesciption:
+      m_TableReference:
+        m_TableCollectionName: GUID:203ea1eca46aed74388bc5f1903fc4c5
+      m_TableEntryReference:
+        m_KeyId: 332831849160704
+        m_Key: 
+      m_FallbackState: 0
+      m_WaitForCompletion: 0
+      m_LocalVariables: []
     Desctription: Finir le niveau en moin de 8 min
   - _Conditions:
     - baseValue: 480
@@ -24,9 +43,30 @@ MonoBehaviour:
     - baseValue: 720
       Operator: 4
     ScoreGain: 75
+    _localizedDesciption:
+      m_TableReference:
+        m_TableCollectionName: GUID:203ea1eca46aed74388bc5f1903fc4c5
+      m_TableEntryReference:
+        m_KeyId: 332904943296512
+        m_Key: 
+      m_FallbackState: 0
+      m_WaitForCompletion: 0
+      m_LocalVariables: []
     Desctription: Finir le niveau en moin de 12 min
   - _Conditions:
     - baseValue: 720
       Operator: 1
     ScoreGain: 20
+    _localizedDesciption:
+      m_TableReference:
+        m_TableCollectionName: GUID:203ea1eca46aed74388bc5f1903fc4c5
+      m_TableEntryReference:
+        m_KeyId: 332909250846720
+        m_Key: 
+      m_FallbackState: 0
+      m_WaitForCompletion: 0
+      m_LocalVariables: []
     Desctription: Finir le niveau en plus de 12min
+  references:
+    version: 2
+    RefIds: []

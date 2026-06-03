@@ -12,11 +12,30 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 489e05eb262c478dbe60418cbf45dd41, type: 3}
   m_Name: SoEGS_WaveSize
   m_EditorClassIdentifier: 
+  Title: 
+  _localizeTitle:
+    m_TableReference:
+      m_TableCollectionName: GUID:203ea1eca46aed74388bc5f1903fc4c5
+    m_TableEntryReference:
+      m_KeyId: 333374231388160
+      m_Key: 
+    m_FallbackState: 0
+    m_WaitForCompletion: 0
+    m_LocalVariables: []
   ScoringOptions:
   - _Conditions:
     - baseValue: 75
       Operator: 4
     ScoreGain: 20
+    _localizedDesciption:
+      m_TableReference:
+        m_TableCollectionName: GUID:203ea1eca46aed74388bc5f1903fc4c5
+      m_TableEntryReference:
+        m_KeyId: 333814109020160
+        m_Key: 
+      m_FallbackState: 0
+      m_WaitForCompletion: 0
+      m_LocalVariables: []
     Desctription: "La horde ne d\xE9passe pas les 75 zombie"
   - _Conditions:
     - baseValue: 75
@@ -24,9 +43,30 @@ MonoBehaviour:
     - baseValue: 120
       Operator: 4
     ScoreGain: 50
+    _localizedDesciption:
+      m_TableReference:
+        m_TableCollectionName: GUID:203ea1eca46aed74388bc5f1903fc4c5
+      m_TableEntryReference:
+        m_KeyId: 333938625323008
+        m_Key: 
+      m_FallbackState: 0
+      m_WaitForCompletion: 0
+      m_LocalVariables: []
     Desctription: Atteindre un horde de plus de 75 zombis
   - _Conditions:
     - baseValue: 1210
       Operator: 1
     ScoreGain: 100
+    _localizedDesciption:
+      m_TableReference:
+        m_TableCollectionName: GUID:203ea1eca46aed74388bc5f1903fc4c5
+      m_TableEntryReference:
+        m_KeyId: 333956711161856
+        m_Key: 
+      m_FallbackState: 0
+      m_WaitForCompletion: 0
+      m_LocalVariables: []
     Desctription: Atteindre une horde de plus de 120 zombis
+  references:
+    version: 2
+    RefIds: []
