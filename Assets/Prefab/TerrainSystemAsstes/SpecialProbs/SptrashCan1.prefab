@@ -64,10 +64,12 @@ MeshRenderer:
   m_RayTracingAccelStructBuildFlagsOverride: 0
   m_RayTracingAccelStructBuildFlags: 1
   m_SmallMeshCulling: 1
+  m_ForceMeshLod: -1
+  m_MeshLodSelectionBias: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: -2310514774154243031, guid: 6281254b2d5587144bd7afbad0df1ff0, type: 3}
+  - {fileID: 2100000, guid: 36b081ec8b583484b98738e223646e77, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -85,9 +87,11 @@ MeshRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
+  m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
 --- !u!114 &6733820026207852508
 MonoBehaviour:
@@ -101,6 +105,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ea300078ef76460e9188f29059f8156b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  vfxType: 0
   prefabsFX: {fileID: 2394046344206922367, guid: 56e01c6b5b46e094eadfe77222e84e86,
     type: 3}
   _impulse: {fileID: 8116910291881627160}
